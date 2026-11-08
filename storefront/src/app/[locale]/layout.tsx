@@ -49,7 +49,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
               <main id="app">{children}</main>
             </div>
             <footer className="u">
-              <div className="m">{t("brand.copyright")}<br /><span style={{ color: "var(--accent)" }}>{t("notice.placeholder")}</span></div>
+              <div className="m">{t("brand.copyright")}</div>
               <div>
                 <div className="cols">
                   <a className="ln" href="https://www.instagram.com/samshit.sp/" target="_blank" rel="noopener">Instagram</a>
@@ -59,6 +59,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                   <Link className="ln" href="/about">{t("nav.about")}</Link>
                 </div>
                 <Subscribe />
+                <p className="m" style={{ margin: "14px 0 0", color: "var(--accent)" }}>{t("notice.placeholder")}</p>
               </div>
             </footer>
             <CartDrawer cart={view} />
