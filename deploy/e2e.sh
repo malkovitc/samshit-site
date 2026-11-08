@@ -5,7 +5,8 @@ set -eu
 cd "$(dirname "$0")"
 ADMIN_EMAIL=$(sed -n 's/^email: //p' admin-credentials.txt | head -1)
 ADMIN_PASSWORD=$(sed -n '2,3s/^password: //p' admin-credentials.txt | head -1)
-exec docker run --rm --ipc=host --network host \
+# от своего пользователя: иначе out/ и node_modules на боксе принадлежат root
+exec docker run --rm --ipc=host --network host --user "$(id -u):$(id -g)" -e HOME=/tmp \
   -e ADMIN_EMAIL="$ADMIN_EMAIL" -e ADMIN_PASSWORD="$ADMIN_PASSWORD" \
   -e BASE_URL="${BASE_URL:-https://samshit.linza-ai.xyz}" -e API_URL="${API_URL:-https://samshit-api.linza-ai.xyz}" \
   -v "$(cd ../e2e && pwd)":/e2e -w /e2e \
