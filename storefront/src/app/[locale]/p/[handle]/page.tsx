@@ -6,6 +6,8 @@ import { getProduct, listProducts } from "@/lib/data"
 import { Gallery, ProductBuy } from "@/components/product-buy"
 import { OpenSizes } from "@/components/chrome"
 import { ProductCard } from "@/components/product-card"
+import { WishlistButton } from "@/components/account"
+import { getWishlist } from "@/lib/session"
 
 type Params = { params: Promise<{ locale: Locale; handle: string }> }
 
@@ -35,6 +37,7 @@ export default async function Product({ params }: Params) {
         <div className="info">
           <h1>{p.title}</h1>
           <ProductBuy p={p} />
+          <WishlistButton handle={p.handle} inList={(await getWishlist()).includes(p.handle)} />
           {ed && (
             <div className="serial u">
               <span>{ed.current ? t("product.piece", { a: String(ed.current).padStart(2, "0"), b: ed.total }) : t("product.edition", { b: ed.total })}</span>

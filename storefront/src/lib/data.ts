@@ -2,6 +2,7 @@ import "server-only"
 import { cookies } from "next/headers"
 import type { HttpTypes } from "@medusajs/types"
 import { sdk } from "./medusa"
+import { authHeaders } from "./session"
 import type { Locale } from "@/i18n/routing"
 
 export const CURRENCIES = ["usd", "gel", "eur"] as const
@@ -128,12 +129,12 @@ export async function getCart() {
   try {
     const { cart } = await sdk.store.cart.retrieve(id, {
       fields: "*items,*items.variant,*items.product,+items.metadata,*region,*region.countries,*shipping_methods,*shipping_address,email,total,subtotal,shipping_total,item_subtotal,currency_code,metadata",
-    })
+    }, await authHeaders())
     return cart.completed_at ? null : cart
   } catch (e) {
     // корзины больше нет (удалена или чужая) — начнём новую; остальные ошибки не прячем,
     // иначе при недоступном бэкенде покупатель видит «корзина пуста»
-    if ((e as { status?: number }).status === 404) return null
+    if ([401, 403, 404].includes((e as { status?: number }).status ?? 0)) return null
     throw e
   }
 }

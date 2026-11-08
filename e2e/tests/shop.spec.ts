@@ -131,6 +131,7 @@ test.describe("корзина", () => {
     await expect(page.locator(".price")).toContainText("₾")
     await page.locator("header button", { hasText: /Bag/i }).click()
     await expect(page.locator(".drawer .line")).toContainText("₾")
+    await page.locator(".drawer button", { hasText: /Close/i }).click() // корзина закрывает шапку справа
     await page.locator("header [aria-label=Currency] button", { hasText: "EUR" }).click()
     await expect(page.locator(".price")).toContainText("€")
   })

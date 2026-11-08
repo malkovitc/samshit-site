@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useTransition, type Rea
 import { useLocale, useTranslations } from "next-intl"
 import { Link, usePathname, useRouter } from "@/i18n/navigation"
 import { setCurrency, setQuantity } from "@/lib/actions"
+import { subscribeNewsletter } from "@/lib/account-actions"
 import { money } from "@/lib/format"
 import type { CartView } from "@/lib/cart-view"
 import { track } from "./analytics"
@@ -76,7 +77,7 @@ function Switches({ currency, className }: { currency: string; className?: strin
 }
 
 /* ---------- шапка ---------- */
-export function Header({ currency, count }: { currency: string; count: number }) {
+export function Header({ currency, count, signedIn, wishCount }: { currency: string; count: number; signedIn: boolean; wishCount: number }) {
   const t = useTranslations()
   const ui = useUi()
   const [bump, setBump] = useState(false)
@@ -89,6 +90,8 @@ export function Header({ currency, count }: { currency: string; count: number })
         <Link className="logo u" href="/"><Sprig />{t("brand.name")}</Link>
         <div className="hr u">
           <Switches currency={currency} />
+          <Link className="ln hide-mob" href="/wishlist" aria-label={t("nav.wishlist")}>♡ <span className="tn">{wishCount}</span></Link>
+          <Link className="ln hide-mob" href="/account">{signedIn ? t("nav.account") : t("nav.signIn")}</Link>
           <button className="ln" onClick={() => { ui.setCartOpen(true); track("open-cart") }}>
             {t("nav.bag")} — <span className={`count tn${bump ? " bump" : ""}`} onAnimationEnd={() => setBump(false)}>{count}</span>
           </button>
@@ -101,7 +104,7 @@ export function Header({ currency, count }: { currency: string; count: number })
 
 /* ---------- меню слева ---------- */
 const CATS = ["jackets", "trousers", "sweatshirts", "long-sleeves"] as const
-export function SideNav({ currency }: { currency: string }) {
+export function SideNav({ currency, signedIn, wishCount }: { currency: string; signedIn: boolean; wishCount: number }) {
   const t = useTranslations()
   const ui = useUi()
   const pathname = usePathname()
@@ -121,6 +124,9 @@ export function SideNav({ currency }: { currency: string }) {
       <button className="ln" onClick={() => ui.setSizesOpen(true)}>{t("nav.sizes")}</button>
       <Link className="ln" href="/delivery" aria-current={cur("/delivery")}>{t("nav.delivery")}</Link>
       <Link className="ln" href="/contact" aria-current={cur("/contact")}>{t("nav.contact")}</Link>
+      <div className="sep" />
+      <Link className="ln" href="/wishlist" aria-current={cur("/wishlist")}>{t("nav.wishlist")} · <span className="tn">{wishCount}</span></Link>
+      <Link className="ln" href="/account" aria-current={pathname.startsWith("/account") ? "page" : undefined}>{signedIn ? t("nav.account") : t("nav.signIn")}</Link>
     </nav>
   )
 }
@@ -222,10 +228,25 @@ export function FontTweak() {
 /* ---------- подписка ---------- */
 export function Subscribe() {
   const t = useTranslations("footer")
+  const tn = useTranslations("newsletter")
+  const locale = useLocale()
   const ui = useUi()
   const [email, setEmail] = useState("")
+  const [pending, start] = useTransition()
   return (
-    <form onSubmit={(e) => { e.preventDefault(); track("subscribe"); ui.toast(t("subscribed")); setEmail("") }}>
+    <form
+      aria-busy={pending}
+      onSubmit={(e) => {
+        e.preventDefault()
+        start(async () => {
+          const r = await subscribeNewsletter(email, locale)
+          if (!r.ok) return ui.toast(tn("error"))
+          track("subscribe", { source: "footer" })
+          ui.toast(t("subscribed"))
+          setEmail("")
+        })
+      }}
+    >
       <input id="subEmail" type="email" required placeholder={t("emailPlaceholder")} value={email} onChange={(e) => setEmail(e.target.value)} />
       <button className="ln" type="submit">{t("subscribe")}</button>
     </form>

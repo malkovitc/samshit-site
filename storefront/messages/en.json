@@ -9,7 +9,10 @@
   "menu": "Menu",
   "bag": "Bag",
   "shipping": "Shipping",
-  "returns": "Returns & exchanges"
+  "returns": "Returns & exchanges",
+  "account": "Account",
+  "signIn": "Sign in",
+  "wishlist": "Wishlist"
  },
  "brand": {
   "name": "Samshit",
@@ -23,7 +26,7 @@
  "footer": {
   "emailPlaceholder": "EMAIL — new pieces and capsules",
   "subscribe": "Subscribe",
-  "subscribed": "Subscribed. The prototype sends no email"
+  "subscribed": "Thank you! Check your inbox"
  },
  "common": {
   "close": "Close",
@@ -189,5 +192,57 @@
   "where": "Tbilisi, Georgia. Fittings by appointment.",
   "write": "Message the maker",
   "phone": "Telegram and WhatsApp: number coming here"
+ },
+ "account": {
+  "signInTitle": "Sign in",
+  "registerTitle": "Create an account",
+  "registerNote": "Your account keeps your orders, making progress and wishlist. Your bag follows you across devices.",
+  "name": "Name",
+  "password": "Password",
+  "passwordHint": "At least 8 characters",
+  "newsletter": "Send me new pieces and capsules, a couple of emails a month at most",
+  "signInBtn": "Sign in",
+  "registerBtn": "Create account",
+  "errInvalid": "Check your name and email",
+  "errShort": "Password is shorter than 8 characters",
+  "errExists": "An account with this email already exists. Sign in instead",
+  "errCredentials": "Wrong email or password",
+  "errFailed": "Could not create the account. Try again",
+  "hello": "Hello, {name}",
+  "orders": "Orders",
+  "noOrders": "No orders yet.",
+  "order": "Order #{n}",
+  "profile": "Profile",
+  "save": "Save",
+  "saved": "Saved",
+  "signOut": "Sign out",
+  "back": "All orders",
+  "st_pending": "received",
+  "st_completed": "completed",
+  "st_canceled": "canceled",
+  "st_archived": "archived",
+  "st_requires_action": "needs action",
+  "ff_not_fulfilled": "being prepared",
+  "ff_fulfilled": "packed",
+  "ff_shipped": "shipped",
+  "ff_delivered": "delivered",
+  "ff_canceled": "canceled",
+  "forgot": "Forgot your password? Message the maker — email reset is coming later"
+ },
+ "wishlist": {
+  "title": "Wishlist",
+  "empty": "Pieces you mark with ♡ will appear here",
+  "add": "Add to wishlist",
+  "remove": "In wishlist",
+  "guestNote": "Your wishlist lives in this browser. Sign in to keep it everywhere"
+ },
+ "newsletter": {
+  "thanks": "Thank you! Check your inbox",
+  "error": "Check your email",
+  "unsubTitle": "You are unsubscribed",
+  "unsubText": "No more news emails. Order emails will still arrive.",
+  "unsubBad": "This link has expired. Message the maker to unsubscribe.",
+  "unsubBtn": "Unsubscribe",
+  "unsubAsk": "Unsubscribe from Samshit news emails?"
  }
 }

@@ -36,6 +36,11 @@ services:
       STORE_CORS: ${PUBLIC_STORE_URL:?}
       ADMIN_CORS: ${PUBLIC_API_URL}
       AUTH_CORS: ${PUBLIC_API_URL}
+      STORE_URL: ${PUBLIC_STORE_URL}
+      # Почта через ZAVU. До отдельного аккаунта магазина — ключ Linza (решение владельца 08.11.2026)
+      ZAVU_API_KEY: ${ZAVU_API_KEY:-}
+      ZAVU_SENDER_ID: ${ZAVU_SENDER_ID:-}
+      MAIL_REPLY_TO: ${MAIL_REPLY_TO:-}
     volumes: [static:/app/static]
     ports: ["127.0.0.1:19000:9000"]
     networks:

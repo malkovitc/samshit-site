@@ -17,7 +17,7 @@ const SHIP_KEYS: Record<string, [string, string]> = {
   "dhl-express": ["shipDhl", "shipDhlSub"],
 }
 
-export function CheckoutForm({ cart, countries, initialCountry }: { cart: CartView; countries: { code: string; name: string }[]; initialCountry: string }) {
+export function CheckoutForm({ cart, countries, initialCountry, prefill }: { cart: CartView; countries: { code: string; name: string }[]; initialCountry: string; prefill: { name: string; email: string; messenger: string } | null }) {
   const t = useTranslations("checkout")
   const tm = useTranslations("mode")
   const tc = useTranslations("common")
@@ -30,7 +30,7 @@ export function CheckoutForm({ cart, countries, initialCountry }: { cart: CartVi
   const [err, setErr] = useState("")
   const [loading, startLoad] = useTransition()
   const [paying, startPay] = useTransition()
-  const [f, setF] = useState({ name: "", email: "", messenger: "", city: "", address: "" })
+  const [f, setF] = useState({ name: prefill?.name ?? "", email: prefill?.email ?? "", messenger: prefill?.messenger ?? "", city: "", address: "" })
 
   useEffect(() => {
     startLoad(async () => {
@@ -64,7 +64,7 @@ export function CheckoutForm({ cart, countries, initialCountry }: { cart: CartVi
     if (!f.name.trim() || !f.email.trim()) return setErr(t("needName"))
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email)) return setErr(t("badEmail"))
     startPay(async () => {
-      const res = await placeOrder({ ...f, country, shippingOptionId: ship })
+      const res = await placeOrder({ ...f, country, shippingOptionId: ship, locale })
       if (!res.ok) { setErr(res.error === "invalid" ? t("badEmail") : t("error")); return }
       track("order", { total: Math.round(total), currency: cart.currency })
       router.push(`/order/${res.orderId}?n=${res.displayId}`)

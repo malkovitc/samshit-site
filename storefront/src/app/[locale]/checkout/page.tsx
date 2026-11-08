@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
 import { getCart, listRegions } from "@/lib/data"
+import { getCustomer } from "@/lib/session"
 import { cartView } from "@/lib/cart-view"
 import { CheckoutForm } from "@/components/checkout-form"
 
@@ -28,7 +29,12 @@ export default async function Checkout({ params }: { params: Promise<{ locale: L
     <div className="view">
       <div className="h u"><span>{t("title")}</span><Link className="ln m" href="/shop">{t("back")}</Link></div>
       <hr className="rule" style={{ marginBottom: 16 }} />
-      <CheckoutForm cart={view} countries={countries} initialCountry={cart.shipping_address?.country_code ?? fallback[cart.currency_code] ?? "us"} />
+      <CheckoutForm prefill={await prefillFor()} cart={view} countries={countries} initialCountry={cart.shipping_address?.country_code ?? fallback[cart.currency_code] ?? "us"} />
     </div>
   )
+}
+
+async function prefillFor() {
+  const c = await getCustomer()
+  return c ? { name: [c.first_name, c.last_name].filter(Boolean).join(" "), email: c.email, messenger: c.metadata?.messenger ?? "" } : null
 }

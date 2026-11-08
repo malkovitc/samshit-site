@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { routing, type Locale } from "@/i18n/routing"
 import { Link } from "@/i18n/navigation"
 import { currentCurrency, getCart } from "@/lib/data"
+import { getCustomer, getWishlist } from "@/lib/session"
 import { cartView } from "@/lib/cart-view"
 import { CartDrawer, FontTweak, Header, SideNav, SizesModal, Subscribe, UiProvider } from "@/components/chrome"
 import "../globals.css"
@@ -28,7 +29,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
   const t = await getTranslations()
-  const [currency, cart] = await Promise.all([currentCurrency(), getCart()])
+  const [currency, cart, customer] = await Promise.all([currentCurrency(), getCart(), getCustomer()])
+  const wishCount = (await getWishlist(customer)).length
   const view = cartView(cart, locale as Locale)
   const umamiSrc = process.env.UMAMI_SCRIPT_URL
   const umamiId = process.env.UMAMI_WEBSITE_ID
@@ -43,9 +45,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       <body>
         <NextIntlClientProvider>
           <UiProvider>
-            <Header currency={view?.currency ?? currency} count={view?.count ?? 0} />
+            <Header currency={view?.currency ?? currency} count={view?.count ?? 0} signedIn={!!customer} wishCount={wishCount} />
             <div className="shell">
-              <SideNav currency={view?.currency ?? currency} />
+              <SideNav currency={view?.currency ?? currency} signedIn={!!customer} wishCount={wishCount} />
               <main id="app">{children}</main>
             </div>
             <footer className="u">

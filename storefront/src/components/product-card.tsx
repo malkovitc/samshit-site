@@ -4,6 +4,8 @@ import type { ProductView } from "@/lib/data"
 import { SIZES } from "@/lib/data"
 import { money } from "@/lib/format"
 import { QuickAdd } from "./quick-add"
+import { WishlistButton } from "./account"
+import { getWishlist } from "@/lib/session"
 
 export async function StatusLabel({ p }: { p: ProductView }) {
   const t = await getTranslations("status")
@@ -17,6 +19,7 @@ export async function StatusLabel({ p }: { p: ProductView }) {
 
 export async function ProductCard({ p, i }: { p: ProductView; i: number }) {
   const locale = await getLocale()
+  const wished = (await getWishlist()).includes(p.handle)
   const quick =
     p.status === "stock"
       ? SIZES.map((s) => ({ label: s, variantId: p.variants[s], mode: "stock" as const, disabled: !p.stock[s] }))
@@ -27,6 +30,7 @@ export async function ProductCard({ p, i }: { p: ProductView; i: number }) {
         <img className="a" src={p.images[0]} alt="" loading="lazy" />
         {p.images[1] && <img className="b" src={p.images[1]} alt="" loading="lazy" />}
       </Link>
+      <WishlistButton handle={p.handle} inList={wished} compact />
       <div className="qwrap"><QuickAdd title={p.title} options={quick} /></div>
       <Link href={`/p/${p.handle}`} className="u name">{p.title}</Link>
       <div className="meta"><span className="m tn">{p.sku}</span><span className="tn">{money(p.price, p.currency, locale)}</span></div>

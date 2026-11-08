@@ -29,7 +29,10 @@ module.exports = defineConfig({
     // backendUrl не задаём: админка ходит в API того же домена, адрес не зашивается в сборку
     disable: process.env.DISABLE_ADMIN === "true",
   },
-  modules: process.env.REDIS_URL
+  modules: [
+    // подписчики рассылки (src/modules/newsletter)
+    { resolve: "./src/modules/newsletter" },
+    ...(process.env.REDIS_URL
     ? [
         { resolve: "@medusajs/medusa/event-bus-redis", options: { redisUrl: process.env.REDIS_URL } },
         { resolve: "@medusajs/medusa/workflow-engine-redis", options: { redis: { redisUrl: process.env.REDIS_URL } } },
@@ -45,5 +48,6 @@ module.exports = defineConfig({
           },
         },
       ]
-    : [],
+    : []),
+  ],
 })

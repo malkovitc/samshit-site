@@ -74,8 +74,9 @@ test("заказ доходит до Medusa, резервирует остато
   await expect(page.locator("header .count")).toHaveText("0")
 
   const token = await adminToken(request)
-  const r = await request.get(`${API}/admin/orders?email=${encodeURIComponent(email)}&fields=id,email,currency_code,metadata,*items`, { headers: { Authorization: `Bearer ${token}` } })
-  const { orders } = await r.json()
+  // фильтр email в /admin/orders не применяется — отбираем сами
+  const r = await request.get(`${API}/admin/orders?limit=100&order=-created_at&fields=id,email,currency_code,metadata,*items`, { headers: { Authorization: `Bearer ${token}` } })
+  const orders = ((await r.json()).orders as { email: string }[]).filter((o) => o.email === email) as any[]
   expect(orders).toHaveLength(1)
   expect(orders[0].currency_code).toBe("gel")
   expect(orders[0].items[0].metadata).toMatchObject({ mode: "stock" })
