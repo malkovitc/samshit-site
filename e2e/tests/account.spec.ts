@@ -16,6 +16,12 @@ async function registerVia(page: Page, email: string, name = "E2E Buyer") {
   await expect(page.locator(".h span").first()).toHaveText(/Hello, E2E/i, { timeout: 20_000 })
 }
 
+/** Выход: ждём, пока шапка покажет «Sign in», иначе следующий переход оборвёт запрос выхода. */
+async function signOutVia(page: Page) {
+  await page.locator("button", { hasText: /Sign out/i }).click()
+  await expect(page.locator("header")).toContainText(/Sign in/i, { timeout: 15_000 })
+}
+
 async function signInVia(page: Page, email: string, password = PASSWORD) {
   await page.goto("/en/account")
   await page.fill("#si-email", email)
@@ -40,8 +46,7 @@ test("регистрация: проверки формы и вход в каб�
   await expect(page.locator(".account")).toContainText(/No orders yet/i)
 
   // повторная регистрация того же адреса
-  await page.locator("button", { hasText: /Sign out/i }).click()
-  await expect(page.locator("header")).toContainText(/Sign in/i)
+  await signOutVia(page)
   await page.fill("#re-name", "E2E")
   await page.fill("#re-email", email)
   await page.fill("#re-password", PASSWORD)
@@ -52,7 +57,7 @@ test("регистрация: проверки формы и вход в каб�
 test("вход: неверный пароль не пускает", async ({ page }) => {
   const email = newEmail("pw")
   await registerVia(page, email)
-  await page.locator("button", { hasText: /Sign out/i }).click()
+  await signOutVia(page)
   await signInVia(page, email, "wrong-password")
   await expect(page.locator(".auth").first().locator(".hint")).toHaveText(/Wrong email or password/i)
 })
@@ -72,7 +77,7 @@ test("избранное гостя переезжает в аккаунт и ж
   await expect(page.locator("button.wish")).toHaveAttribute("aria-pressed", "true")
 
   await page.goto("/en/account")
-  await page.locator("button", { hasText: /Sign out/i }).click()
+  await signOutVia(page)
   await page.goto("/en/wishlist")
   await expect(page.locator(".grid .card")).toHaveCount(0) // гостевое ушло в профиль
 
@@ -89,7 +94,7 @@ test("избранное гостя переезжает в аккаунт и ж
 test("корзина: гостевая привязывается при входе и возвращается после выхода", async ({ page }) => {
   const email = newEmail("cart")
   await registerVia(page, email)
-  await page.locator("button", { hasText: /Sign out/i }).click()
+  await signOutVia(page)
 
   await addFromProduct(page, "petals-clay", { mode: "size", size: "M" })
   await expect(page.locator("header .count")).toHaveText("1")
@@ -97,7 +102,7 @@ test("корзина: гостевая привязывается при вхо�
   await expect(page.locator(".h span").first()).toHaveText(/Hello/i)
   await expect(page.locator("header .count")).toHaveText("1")
 
-  await page.locator("button", { hasText: /Sign out/i }).click()
+  await signOutVia(page)
   await expect(page.locator("header .count")).toHaveText("0") // после выхода корзины на устройстве нет
 
   await signInVia(page, email)
