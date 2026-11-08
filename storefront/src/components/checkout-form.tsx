@@ -34,9 +34,11 @@ export function CheckoutForm({ cart, countries, initialCountry }: { cart: CartVi
 
   useEffect(() => {
     startLoad(async () => {
-      const o = await shippingOptionsFor(country)
+      const { options: o, regionChanged } = await shippingOptionsFor(country)
       setOpts(o)
       setShip((s) => (o.some((x) => x.id === s) ? s : o[0]?.id ?? ""))
+      // страна из другого региона: корзина переехала в его валюту, обновляем цены на странице
+      if (regionChanged) router.refresh()
     })
   }, [country])
   useEffect(() => { track("checkout-start", { items: cart.count }) }, [cart.count])

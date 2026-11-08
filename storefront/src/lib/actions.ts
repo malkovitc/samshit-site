@@ -42,17 +42,28 @@ export async function setQuantity(lineId: string, quantity: number) {
   revalidatePath("/", "layout")
 }
 
-/** Адрес и варианты доставки для выбранной страны региона. */
+/**
+ * Варианты доставки для страны. Если страна из другого региона (например, Германия при ценах в USD),
+ * корзина переезжает в регион страны и его валюту: Medusa пересчитывает цены.
+ */
 export async function shippingOptionsFor(country: string) {
   const cart = await getCart()
-  if (!cart) return []
-  const allowed = (cart.region?.countries ?? []).map((c) => c.iso_2)
-  const code = allowed.includes(country) ? country : allowed[0]
-  if (cart.shipping_address?.country_code !== code) {
-    await sdk.store.cart.update(cart.id, { shipping_address: { country_code: code } })
+  if (!cart) return { options: [], regionChanged: false }
+  let regionChanged = false
+  const inCart = (cart.region?.countries ?? []).some((c) => c.iso_2 === country)
+  if (!inCart) {
+    const region = (await listRegions()).find((r) => r.countries?.some((c) => c.iso_2 === country))
+    if (!region) return { options: [], regionChanged: false }
+    await sdk.store.cart.update(cart.id, { region_id: region.id, shipping_address: { country_code: country } })
+    ;(await cookies()).set("currency", region.currency_code, { ...COOKIE, httpOnly: false })
+    regionChanged = true
+  } else if (cart.shipping_address?.country_code !== country) {
+    await sdk.store.cart.update(cart.id, { shipping_address: { country_code: country } })
   }
   const { shipping_options } = await sdk.store.fulfillment.listCartOptions({ cart_id: cart.id })
-  return shipping_options.map((o) => ({ id: o.id, name: o.name, code: (o as { type?: { code?: string } }).type?.code ?? "", amount: o.amount ?? 0 }))
+  const options = shipping_options.map((o) => ({ id: o.id, name: o.name, code: (o as { type?: { code?: string } }).type?.code ?? "", amount: o.amount ?? 0 }))
+  if (regionChanged) revalidatePath("/", "layout")
+  return { options, regionChanged }
 }
 
 export type PlaceOrderResult = { ok: true; orderId: string; displayId: number } | { ok: false; error: "empty" | "invalid" | "shipping" | "payment" | "complete" }

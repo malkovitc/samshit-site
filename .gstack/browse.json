@@ -1,8 +1,8 @@
 {
-  "pid": 77461,
-  "port": 47479,
-  "token": "be4bceb9-912e-4b4c-8e38-e066b2287b25",
-  "startedAt": "2026-11-08T12:26:11.576Z",
+  "pid": 4214,
+  "port": 46370,
+  "token": "28492b65-3abd-4f49-ab0c-78e32818c57d",
+  "startedAt": "2026-11-08T12:59:41.469Z",
   "serverPath": "/Users/malkovitc/.claude/skills/gstack/browse/src/server.ts",
   "mode": "launched"
 }
