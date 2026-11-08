@@ -25,7 +25,7 @@ export async function POST(req: MedusaRequest<Body>, res: MedusaResponse) {
   const test = req.body?.test_email
   if (test !== undefined) {
     if (!validEmail(test)) return res.status(400).json({ message: "invalid_email" })
-    const results = []
+    const results: string[] = []
     for (const l of filled) {
       const mail = newsletterEmail(l, content[l]!.subject!, content[l]!.body!, unsubscribeUrl(l, "test"))
       results.push((await sendEmail({ to: test, ...mail, idempotencyKey: `samshit-nl-test-${campaign}-${l}-${Date.now()}` }, log)).status)
