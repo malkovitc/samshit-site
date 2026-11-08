@@ -191,6 +191,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <a href="#sales">Как продаём</a>
     <a href="#tech">Платформа</a>
     <a href="#admin">Админка и аналитика</a>
+    <a href="#harness">Маркетинговый контур</a>
     <a href="#content">Контент к запуску</a>
     <a href="#plan">План работ</a>
     <a href="#questions">Решения</a>
@@ -202,7 +203,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
         <p class="cap muted" style="margin-bottom:14px">Сайт и интернет-магазин для @samshit.sp</p>
         <h1>Магазин мастерской, где каждая вещь <em>сшита одним человеком</em> и это видно на странице</h1>
         <p>Строгая витрина в духе Lady White Co., но с тем, чего у них нет: имя модели, номер экземпляра, срок пошива и видео процесса прямо в карточке товара. Заказ уходит с сайта, а не из директа.</p>
-        <p style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><a class="cta" href="./">Открыть кликабельный прототип →</a></p>
+        <p style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><a class="cta" href="./">Открыть кликабельный прототип →</a><a class="cta" href="https://samshit.linza-ai.xyz" target="_blank" rel="noopener">samshit.linza-ai.xyz ↗</a></p>
       </div>
       <img src="img/p03.jpg" alt="Мотокуртка из денима со съёмным нагрудником, на фоне мотоцикла">
     </div>
@@ -273,7 +274,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       </div>
       <div class="note">
         <span class="cap">Тон</span>
-        Тексты на сайте от первого лица, как в ленте («я сконструировал», «я шью»), но без эмодзи и без «пишите в директ». Два языка на старте: русский и английский. Грузинский добавить третьим, если появятся местные покупатели и партнёры.
+        Тексты на сайте от первого лица, как в ленте («я сконструировал», «я шью»), но без эмодзи и без «пишите в директ». Три языка с первого дня: русский, английский и грузинский. В моноширинных шрифтах Google нет грузинского алфавита, поэтому для него подключён Noto Sans Georgian в том же тонком весе. Грузинский перевод в прототипе черновой, его нужно вычитать носителю.
       </div>
     </section>
 
@@ -313,7 +314,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <div class="frame">
         <div class="bar"><span class="url">samshit.xyz</span><span class="cap muted">1440 px</span></div>
         <div class="body">
-          <div class="mhead"><span class="logo"><svg aria-hidden="true"><use href="#sprig"/></svg>САМШИТ</span><span class="cap">USD / GEL / EUR&nbsp;&nbsp; ПОИСК&nbsp;&nbsp; КОРЗИНА — 0</span></div>
+          <div class="mhead"><span class="logo"><svg aria-hidden="true"><use href="#sprig"/></svg>САМШИТ</span><span class="cap">RU EN GE · USD GEL EUR&nbsp;&nbsp; ПОИСК&nbsp;&nbsp; КОРЗИНА — 0</span></div>
           <div class="mgrid">
             <div class="mnav cap"><span>Магазин</span><span>Мастерская</span><span>О бренде</span><span>Размеры</span><span>Доставка</span><span>Контакты</span></div>
             <div>
@@ -474,6 +475,24 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       </div>
     </section>
 
+    <section id="harness">
+      <h2>Маркетинговый контур</h2>
+      <p>Отдельный инструмент: аналитика трафика и продаж, отбор блогеров, наблюдение за конкурентами в Instagram и разбор, какие стратегии работают. Готового open-source решения, которое делает всё это вместе, нет. Контур собирается из четырёх частей.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Задача</th><th>Чем делать</th><th>Ограничения</th></tr></thead>
+        <tbody>
+          <tr><td>Трафик и воронка сайта</td><td>Umami на своём сервере (MIT, 40k★, релиз 23.10.2026): UTM, источники, воронки, события «в корзину» и «оплата». GoatCounter на прототипе остаётся как быстрый старт.</td><td>У GoatCounter нет воронок, и обновления выходят редко. На Umami переходим вместе с магазином.</td></tr>
+          <tr><td>Свой Instagram</td><td>Перевести @samshit.sp в Business-аккаунт, Insights брать через официальный Graph API. Postiz (AGPL, 41k★): планирование публикаций и аналитика.</td><td>Нужна привязка к странице Facebook.</td></tr>
+          <tr><td>Конкуренты и блогеры</td><td>Официальный Business Discovery из Graph API: подписчики, посты, лайки, комментарии, просмотры, тип поста и дата для любого business- или creator-аккаунта. Где его не хватает, Instaloader без логина или платные выгрузки Apify.</td><td>Нет личных аккаунтов, stories и демографии. Scraping нарушает правила Meta. Только без логина и никогда через аккаунт бренда.</td></tr>
+          <tr><td>Анализ</td><td>Ежедневные снимки в Postgres (API отдаёт только текущие числа) → дашборд в Metabase или Grafana. LLM размечает посты по теме, крючку и формату, транскрибирует reels, ищет общее у постов из топ-10% по вовлечённости, проверяет блогеров на прошлые коллаборации и раз в неделю пишет сводку.</td><td>Демографию аудитории и детектор накруток open source не даёт. Если понадобятся, точечно Modash (от $199 в месяц) или HypeAuditor.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">
+        <span class="cap">Вопросы для старта</span>
+        Готовы ли вы перевести @samshit.sp в Business и привязать к Facebook? Сколько конкурентов и блогеров отслеживать и как часто: 20 аккаунтов раз в день помещаются в официальный API, сотни профилей обойдутся в $10–50 в месяц на Apify. Нужна ли демография аудитории блогеров?
+      </div>
+    </section>
+
     <section id="content">
       <h2>Контент к запуску</h2>
       <div class="cols3">
@@ -524,7 +543,9 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
           <tr><td>Имена моделей и тиражи</td><td>Пока заглушки, имена из Instagram</td><td>Из ленты взяты CUTAIR, RACE и «Лепестки», остальные названия условные.</td></tr>
           <tr><td>Цены</td><td>Публикуем открыто, пока заглушки</td><td>Цены в прототипе условные.</td></tr>
           <tr><td>Пошив</td><td>Все варианты</td><td>Готовая вещь, «в моём размере», «по моим меркам» с доплатой.</td></tr>
-          <tr><td>Домен</td><td>samshit.xyz, ещё не куплен</td><td>Пока прототип живёт на samshit.linza-ai.xyz.</td></tr>
+          <tr><td>Домен</td><td>samshit.xyz, ещё не куплен</td><td>Пока прототип живёт на samshit.linza-ai.xyz (GitHub Pages, прод Linza не затронут).</td></tr>
+          <tr><td>Языки</td><td>RU, EN, GE</td><td>Переключатель в шапке, язык запоминается. Грузинский перевод нужно вычитать носителю.</td></tr>
+          <tr><td>Админка</td><td>Нужна, с аналитикой трафика</td><td>Сейчас GoatCounter на прототипе, с запуском магазина добавится аналитика Shopify.</td></tr>
         </tbody>
       </table></div>
       <p style="margin-top:16px">Осталось уточнить: есть ли у шлюза банка модуль для Shopify, размер доплаты за пошив по меркам и адрес мастерской для самовывоза.</p>
