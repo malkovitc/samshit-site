@@ -13,6 +13,8 @@ const need = (name: string) => {
 module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
+    // Postgres живёт в той же docker-сети и без TLS; для внешней базы выставить DATABASE_SSL=true
+    databaseDriverOptions: process.env.DATABASE_SSL === "true" ? { connection: { ssl: { rejectUnauthorized: false } } } : { connection: { ssl: false } },
     redisUrl: process.env.REDIS_URL,
     workerMode: (process.env.MEDUSA_WORKER_MODE as "shared" | "worker" | "server") || "shared",
     http: {
