@@ -1,5 +1,5 @@
 # Самшит на боксе sd-105293. Отдельный compose-проект: своя сеть, свои Postgres и Redis,
-# лимиты памяти. С Linza ничего не делит. До публикации порты открыты только на 127.0.0.1.
+# лимиты памяти. С Linza делит только сеть общего Caddy (labsync_labsync) для публичных сервисов.
 name: samshit
 
 services:
@@ -38,6 +38,9 @@ services:
       AUTH_CORS: ${PUBLIC_API_URL}
     volumes: [static:/app/static]
     ports: ["127.0.0.1:19000:9000"]
+    networks:
+      default: {}
+      edge: { aliases: [samshit-backend] }
     mem_limit: 1536m
 
   storefront:
@@ -50,8 +53,34 @@ services:
       UMAMI_SCRIPT_URL: ${UMAMI_SCRIPT_URL:-}
       UMAMI_WEBSITE_ID: ${UMAMI_WEBSITE_ID:-}
     ports: ["127.0.0.1:18000:8000"]
+    networks:
+      default: {}
+      edge: { aliases: [samshit-storefront] }
     mem_limit: 768m
+
+  # Аналитика трафика без cookie; своя база umami в том же Postgres
+  umami:
+    image: ghcr.io/umami-software/umami:3.4.1
+    restart: unless-stopped
+    init: true
+    depends_on:
+      postgres: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgresql://samshit:${POSTGRES_PASSWORD}@postgres:5432/umami
+      APP_SECRET: ${UMAMI_APP_SECRET:?}
+    ports: ["127.0.0.1:13000:3000"]
+    networks:
+      default: {}
+      edge: { aliases: [samshit-umami] }
+    mem_limit: 512m
 
 volumes:
   pg:
   static:
+
+networks:
+  default: {}
+  # сеть общего Caddy (labsync); только публичные сервисы, база и Redis в неё не входят
+  edge:
+    external: true
+    name: labsync_labsync
