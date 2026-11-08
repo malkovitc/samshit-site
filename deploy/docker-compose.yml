@@ -1,0 +1,57 @@
+# Самшит на боксе sd-105293. Отдельный compose-проект: своя сеть, свои Postgres и Redis,
+# лимиты памяти. С Linza ничего не делит. До публикации порты открыты только на 127.0.0.1.
+name: samshit
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: samshit
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: medusa
+    volumes: [pg:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U samshit -d medusa"], interval: 5s, retries: 20 }
+    mem_limit: 768m
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "128mb"]
+    mem_limit: 192m
+
+  backend:
+    build: ../backend
+    restart: unless-stopped
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_started }
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://samshit:${POSTGRES_PASSWORD}@postgres:5432/medusa
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:?}
+      COOKIE_SECRET: ${COOKIE_SECRET:?}
+      MEDUSA_BACKEND_URL: ${PUBLIC_API_URL:?}
+      STORE_CORS: ${PUBLIC_STORE_URL:?}
+      ADMIN_CORS: ${PUBLIC_API_URL}
+      AUTH_CORS: ${PUBLIC_API_URL}
+    volumes: [static:/app/static]
+    ports: ["127.0.0.1:19000:9000"]
+    mem_limit: 1536m
+
+  storefront:
+    build: ../storefront
+    restart: unless-stopped
+    depends_on: [backend]
+    environment:
+      MEDUSA_INTERNAL_URL: http://backend:9000
+      MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+      UMAMI_SCRIPT_URL: ${UMAMI_SCRIPT_URL:-}
+      UMAMI_WEBSITE_ID: ${UMAMI_WEBSITE_ID:-}
+    ports: ["127.0.0.1:18000:8000"]
+    mem_limit: 768m
+
+volumes:
+  pg:
+  static:

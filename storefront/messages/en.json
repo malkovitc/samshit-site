@@ -1,0 +1,193 @@
+{
+ "nav": {
+  "shop": "Shop",
+  "workshop": "Workshop",
+  "about": "About",
+  "sizes": "Sizes",
+  "delivery": "Shipping & returns",
+  "contact": "Contact",
+  "menu": "Menu",
+  "bag": "Bag",
+  "shipping": "Shipping",
+  "returns": "Returns & exchanges"
+ },
+ "brand": {
+  "name": "Samshit",
+  "copyright": "© 2026 Samshit, Tbilisi"
+ },
+ "notice": {
+  "world": "Worldwide shipping · DHL Express",
+  "tbilisi": "Tbilisi · courier and fitting at the workshop",
+  "placeholder": "Prototype: prices, stock, lead times and editions are placeholders"
+ },
+ "footer": {
+  "emailPlaceholder": "EMAIL — new pieces and capsules",
+  "subscribe": "Subscribe",
+  "subscribed": "Subscribed. The prototype sends no email"
+ },
+ "common": {
+  "close": "Close",
+  "free": "free",
+  "font": "Font:"
+ },
+ "sizes": {
+  "title": "Sizes · garment measurements, cm",
+  "size": "Size",
+  "chest": "Chest",
+  "length": "Length",
+  "sleeve": "Sleeve",
+  "height": "Height",
+  "note": "Relaxed cuts. If you are between two sizes, choose “Made to my measurements”: after payment the maker will ask for six measurements and sew it for you. The chart is approximate."
+ },
+ "cat": {
+  "all": "All",
+  "jackets": "Jackets",
+  "trousers": "Trousers",
+  "sweatshirts": "Sweatshirts & hoodies",
+  "long-sleeves": "Long sleeves"
+ },
+ "status": {
+  "stock": "In stock",
+  "mto": "Made to order · {n} days",
+  "pre": "Pre-order · {d}",
+  "mtoShort": "Made to order",
+  "preShort": "Pre-order"
+ },
+ "home": {
+  "heroTitle": "Spring-27 · Sea and road",
+  "view": "View",
+  "new": "New",
+  "allPieces": "All pieces",
+  "fromWorkshop": "From the workshop",
+  "story": "I designed the Shield jacket after a winter ride to the sea to pick up a motorcycle. It has ten pockets, one fully waterproof, and a detachable bib that turns it from a riding jacket into a city piece.",
+  "howMade": "How it is made"
+ },
+ "shop": {
+  "handmade": "Every piece is handmade in Tbilisi",
+  "empty": "Nothing here right now.",
+  "seeAll": "See all pieces",
+  "quickMake": "Make, M",
+  "quickPre": "Pre-order, M",
+  "added": "{n}: added to bag"
+ },
+ "product": {
+  "piece": "Piece {a} of {b}",
+  "edition": "Edition of {b}",
+  "ready": "Ready",
+  "shipsFast": "ships in 1–2 days",
+  "notInStock": "not in stock now",
+  "inMySize": "In my size",
+  "mtoTerms": "{n} days, 50% deposit",
+  "mtm": "To my measurements",
+  "mtmTerms": "+{p}, {n} days",
+  "howToGet": "How to get it",
+  "sizeChart": "Size chart",
+  "selectSize": "Select a size",
+  "addedOk": "Added ✓",
+  "preorderBtn": "Pre-order · {s}",
+  "mtoBtn": "Make in size {s}",
+  "mtmBtn": "Make to my measurements",
+  "addBtn": "Add to bag · {s}",
+  "lastOne": "Last one in this size",
+  "mtmHint": "After payment the maker will ask for six measurements or invite you to a fitting in Tbilisi",
+  "construction": "Construction",
+  "material": "Fabric & care",
+  "fit": "Fit",
+  "howMade": "How it is made",
+  "shippingReturns": "Shipping & returns",
+  "fitText": "Relaxed fit. The model is 184 cm and wears M. Measurements for every size are in the chart.",
+  "videoText": "A 30–60 second process video will be here: cutting, assembly, final stitch. For now you can watch it on Instagram.",
+  "shippingText": "Tbilisi: next-day courier or a fitting at the workshop. Worldwide: DHL Express, 3–7 days after dispatch. Ready pieces can be returned within 14 days. Made-to-measure pieces cannot be returned, but the maker will adjust the fit for free.",
+  "ask": "Ask the maker about this piece →",
+  "more": "More from this section"
+ },
+ "mode": {
+  "stock": "ready",
+  "mto": "in size",
+  "mtm": "to my measurements",
+  "pre": "pre-order"
+ },
+ "cart": {
+  "remove": "Remove",
+  "empty": "Your bag is empty.",
+  "goShop": "Go to the shop",
+  "subtotal": "Subtotal",
+  "depositNote": "Pieces made for you: 50% now, the rest when ready. ",
+  "shipNote": "Shipping is calculated at the next step; pickup in Tbilisi is free.",
+  "checkout": "Checkout",
+  "continue": "Continue shopping"
+ },
+ "checkout": {
+  "emptyTitle": "Your bag is empty",
+  "emptyText": "Add pieces from the shop and checkout will appear here.",
+  "title": "Checkout",
+  "back": "Back to the shop",
+  "contact": "1 · Contact",
+  "name": "Full name",
+  "messenger": "Telegram or WhatsApp, to reach the maker",
+  "delivery": "2 · Delivery",
+  "country": "Country",
+  "city": "City",
+  "address": "Address and postcode",
+  "payment": "3 · Payment",
+  "card": "Visa, Mastercard, Apple Pay",
+  "cardSub": "Via a Georgian bank acquirer",
+  "pay": "Pay",
+  "depositPay": "For pieces made for you we charge 50% now. The rest is charged when the piece is ready, and we send you a photo.",
+  "fullPay": "Paid in full. The receipt will arrive by email.",
+  "badEmail": "Check your email: the order confirmation goes there",
+  "needName": "Enter your name and email",
+  "order": "Your order",
+  "items": "Items",
+  "total": "Total",
+  "dueNow": "Due now",
+  "done": "Order {n} received",
+  "doneText": "This is a prototype: no payment was made. In the live shop a confirmation goes to {e}, and the maker messages you with the ready date.",
+  "shipPickup": "Pick up at the workshop, Tbilisi",
+  "shipPickupSub": "Try on and adjust on the spot",
+  "shipCourier": "Courier in Tbilisi",
+  "shipCourierSub": "Next day after the piece is ready",
+  "shipDhl": "DHL Express worldwide",
+  "shipDhlSub": "3–7 days after dispatch, duties per the destination country",
+  "error": "Could not place the order. Try again or message the maker.",
+  "doneManual": "The maker will message you or email you with the ready date. Online card payment is not connected yet: the maker will send a payment link."
+ },
+ "workshop": {
+  "journal": "Journal",
+  "j1": "Lookbook: denim in the dunes",
+  "j1s": "12 frames",
+  "j2": "A jacket from a single cut of fabric",
+  "j2s": "a story in 4 videos",
+  "j3": "A capsule in a month: from pattern to fitting",
+  "j3s": "text and photos",
+  "j4": "Texture: denim inside out",
+  "j4s": "a note on fabric",
+  "j5": "Three textures in one piece",
+  "j5s": "process",
+  "j6": "The Samshit mark",
+  "j6s": "about the name"
+ },
+ "about": {
+  "p1": "Samshit is a one-person workshop in Tbilisi. I design every model myself and cut and sew it from the first pattern to the last stitch.",
+  "p2": "Pieces come out in small editions, many with a piece number. If your size is not available, I will make it for you: in a standard size or to your measurements.",
+  "p3": "Inspiration comes from the road, the sea and the old city. Clothes for travel and for every day, for those in love with life.",
+  "photoAlt": "The maker wearing his piece"
+ },
+ "delivery": {
+  "tbilisi": "Tbilisi",
+  "world": "Worldwide",
+  "times": "Lead times",
+  "returns": "Returns & exchanges",
+  "p1": "Free pickup at the workshop, with a fitting. Courier across the city the day after the piece is ready.",
+  "p2": "DHL Express, 3–7 business days after dispatch. The tracking number arrives by email and messenger. Duties and taxes follow the rules of the destination country.",
+  "p3": "Ready pieces ship in 1–2 days. Made-to-order pieces take 7 to 14 days; each model page shows its lead time. Capsule pre-orders ship from the date on the page.",
+  "p4": "Ready pieces can be returned or exchanged within 14 days. Made-to-measure pieces cannot be returned, but the maker will adjust the fit for free.",
+  "note": "Lead times and prices in the prototype are placeholders."
+ },
+ "contact": {
+  "workshop": "Workshop",
+  "where": "Tbilisi, Georgia. Fittings by appointment.",
+  "write": "Message the maker",
+  "phone": "Telegram and WhatsApp: number coming here"
+ }
+}

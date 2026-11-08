@@ -1,0 +1,414 @@
+[
+ {
+  "handle": "shield-indigo",
+  "category": "jk",
+  "sku": "SAM-JK02-DNM",
+  "price_usd": 420,
+  "images": [
+   "p06.jpg",
+   "p03.jpg",
+   "p02.jpg",
+   "p23.jpg"
+  ],
+  "stock": {
+   "M": 1,
+   "XL": 1
+  },
+  "lead_days": 14,
+  "edition": {
+   "current": 7,
+   "total": 12
+  },
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Куртка «Щит» — индиго",
+    "construction": "Съёмный нагрудный «щит» со встроенными карманами и подвесами. Десять карманов, один полностью непромокаемый для документов. Кулиса по низу меняет силуэт.",
+    "material": "100% хлопковый деним, 14 oz. Фурнитура из латуни. Стирка при 30°, наизнанку."
+   },
+   "en": {
+    "title": "Shield jacket — indigo",
+    "construction": "Detachable chest “shield” with built-in pockets and loops. Ten pockets, one fully waterproof for documents. A hem drawcord changes the silhouette.",
+    "material": "100% cotton denim, 14 oz. Brass hardware. Wash at 30°, inside out."
+   },
+   "ka": {
+    "title": "ქურთუკი „ფარი“ — ინდიგო",
+    "construction": "მოსახსნელი სამკერდე „ფარი“ ჩაშენებული ჯიბეებითა და საკიდებით. ათი ჯიბე, ერთი სრულიად წყალგაუმტარი საბუთებისთვის. ბოლოში ზონარი სილუეტს ცვლის.",
+    "material": "100% ბამბის დენიმი, 14 oz. სპილენძის ფურნიტურა. რეცხვა 30°-ზე, უკუღმა."
+   }
+  }
+ },
+ {
+  "handle": "shield-white",
+  "category": "jk",
+  "sku": "SAM-JK02-WHT",
+  "price_usd": 420,
+  "images": [
+   "p05.jpg",
+   "p04.jpg"
+  ],
+  "stock": {},
+  "lead_days": 14,
+  "edition": {
+   "current": 3,
+   "total": 12
+  },
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Куртка «Щит» — белый",
+    "construction": "Вторая часть модели мотокуртки. Съёмный нагрудник, десять карманов, один непромокаемый.",
+    "material": "100% хлопок, плотная саржа. Стирка при 30°."
+   },
+   "en": {
+    "title": "Shield jacket — white",
+    "construction": "The second chapter of the riding jacket. Detachable bib, ten pockets, one waterproof.",
+    "material": "100% cotton, heavy twill. Wash at 30°."
+   },
+   "ka": {
+    "title": "ქურთუკი „ფარი“ — თეთრი",
+    "construction": "მოტოქურთუკის მეორე ნაწილი. მოსახსნელი სამკერდე, ათი ჯიბე, ერთი წყალგაუმტარი.",
+    "material": "100% ბამბა, მკვრივი სარჟა. რეცხვა 30°-ზე."
+   }
+  }
+ },
+ {
+  "handle": "race-sand",
+  "category": "jk",
+  "sku": "SAM-JK05-NYL",
+  "price_usd": 360,
+  "images": [
+   "p38.jpg"
+  ],
+  "stock": {
+   "M": 1
+  },
+  "lead_days": 12,
+  "edition": {
+   "current": 6,
+   "total": 10
+  },
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Куртка RACE — песок",
+    "construction": "Укороченная куртка на молнии, высокий трикотажный воротник, контрастная чёрная окантовка, накладной сетчатый карман, кулиса по низу.",
+    "material": "Непродуваемый нейлон, отделка чёрным. Деликатная стирка при 30°."
+   },
+   "en": {
+    "title": "RACE jacket — sand",
+    "construction": "Cropped zip jacket with a tall rib collar, contrast black piping, a mesh patch pocket and a hem drawcord.",
+    "material": "Windproof nylon with black trim. Gentle wash at 30°."
+   },
+   "ka": {
+    "title": "ქურთუკი RACE — ქვიშისფერი",
+    "construction": "მოკლე ქურთუკი ელვაშესაკრავით, მაღალი ტრიკოტაჟის საყელო, კონტრასტული შავი არშია, ბადისებრი ჯიბე, ბოლოში ზონარი.",
+    "material": "ქარგაუმტარი ნეილონი, შავი მოპირკეთება. ნაზი რეცხვა 30°-ზე."
+   }
+  }
+ },
+ {
+  "handle": "work-navy",
+  "category": "jk",
+  "sku": "SAM-JK04-DNM",
+  "price_usd": 340,
+  "images": [
+   "p10.jpg",
+   "p12.jpg"
+  ],
+  "stock": {
+   "L": 1
+  },
+  "lead_days": 12,
+  "edition": {
+   "current": 4,
+   "total": 10
+  },
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Рабочая куртка — тёмный деним",
+    "construction": "Прямой укороченный силуэт, накладные карманы с фигурной строчкой, отложной воротник.",
+    "material": "100% хлопковый деним. Стирка при 30°, наизнанку."
+   },
+   "en": {
+    "title": "Work jacket — dark denim",
+    "construction": "Straight cropped silhouette, patch pockets with shaped stitching, turn-down collar.",
+    "material": "100% cotton denim. Wash at 30°, inside out."
+   },
+   "ka": {
+    "title": "სამუშაო ქურთუკი — მუქი დენიმი",
+    "construction": "სწორი მოკლე სილუეტი, ზედადებული ჯიბეები ფიგურული ნაკერით, გადაკეცილი საყელო.",
+    "material": "100% ბამბის დენიმი. რეცხვა 30°-ზე, უკუღმა."
+   }
+  }
+ },
+ {
+  "handle": "three-textures",
+  "category": "sw",
+  "sku": "SAM-HD02-BLK",
+  "price_usd": 260,
+  "images": [
+   "p22.jpg",
+   "p16.jpg",
+   "p21.jpg"
+  ],
+  "stock": {
+   "M": 1,
+   "L": 1
+  },
+  "lead_days": 10,
+  "edition": {
+   "current": 5,
+   "total": 8
+  },
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Куртка-худи, три фактуры — чёрный",
+    "construction": "Сочетание двух материалов и трёх фактур. Объёмный капюшон, двойная молния, мягкие вставки по бокам.",
+    "material": "Хлопковый трикотаж и мех-букле. Деликатная стирка при 30°."
+   },
+   "en": {
+    "title": "Jacket-hoodie, three textures — black",
+    "construction": "Two fabrics and three textures. Full hood, two-way zip, soft side panels.",
+    "material": "Cotton jersey and bouclé fleece. Gentle wash at 30°."
+   },
+   "ka": {
+    "title": "ქურთუკი-ჰუდი, სამი ფაქტურა — შავი",
+    "construction": "ორი ქსოვილი და სამი ფაქტურა. მოცულობითი კაპიუშონი, ორმაგი ელვა, რბილი გვერდითი ჩანართები.",
+    "material": "ბამბის ტრიკოტაჟი და ბუკლე. ნაზი რეცხვა 30°-ზე."
+   }
+  }
+ },
+ {
+  "handle": "membrane-olive",
+  "category": "sw",
+  "sku": "SAM-SW04-OLV",
+  "price_usd": 220,
+  "images": [
+   "p15.jpg",
+   "p14.jpg"
+  ],
+  "stock": {},
+  "lead_days": 10,
+  "edition": {
+   "current": 2,
+   "total": 15
+  },
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Бомбер из мембраны — олива",
+    "construction": "Свитшот-бомбер на фиксаторах: шнур по низу меняет силуэт. Носится как верхняя одежда весной или под куртку.",
+    "material": "Мембрана с начёсом. Стирка при 30°, без отбеливателя."
+   },
+   "en": {
+    "title": "Membrane bomber — olive",
+    "construction": "Sweatshirt-bomber with toggles: the hem cord changes the silhouette. Worn as outerwear in spring or under a jacket.",
+    "material": "Brushed membrane. Wash at 30°, no bleach."
+   },
+   "ka": {
+    "title": "მემბრანის ბომბერი — ზეთისხილისფერი",
+    "construction": "სვიტშოტ-ბომბერი ფიქსატორებით: ზონარი სილუეტს ცვლის. გაზაფხულზე ზედა ტანსაცმლად ან ქურთუკის ქვეშ.",
+    "material": "ხაოიანი მემბრანა. რეცხვა 30°-ზე, მათეთრებლის გარეშე."
+   }
+  }
+ },
+ {
+  "handle": "round-black",
+  "category": "sw",
+  "sku": "SAM-SW02-BLK",
+  "price_usd": 180,
+  "images": [
+   "p18.jpg",
+   "p20.jpg"
+  ],
+  "stock": {
+   "S": 1,
+   "M": 2
+  },
+  "lead_days": 8,
+  "edition": null,
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Свитшот, круглый рукав — чёрный",
+    "construction": "Рукав скроен так, что становится округлым и объёмным. Перед короче спинки.",
+    "material": "Двусторонний трикотаж. Стирка при 30°."
+   },
+   "en": {
+    "title": "Round-sleeve sweatshirt — black",
+    "construction": "The sleeve is cut to turn round and full. The front is shorter than the back.",
+    "material": "Double-faced jersey. Wash at 30°."
+   },
+   "ka": {
+    "title": "სვიტშოტი, მრგვალი სახელო — შავი",
+    "construction": "სახელო ისეა გამოჭრილი, რომ მრგვალი და მოცულობითი ხდება. წინა მხარე ზურგზე მოკლეა.",
+    "material": "ორმხრივი ტრიკოტაჟი. რეცხვა 30°-ზე."
+   }
+  }
+ },
+ {
+  "handle": "petals-taupe",
+  "category": "sw",
+  "sku": "SAM-SW03-TPE",
+  "price_usd": 190,
+  "images": [
+   "p13.jpg"
+  ],
+  "stock": {
+   "L": 1
+  },
+  "lead_days": 8,
+  "edition": {
+   "current": 1,
+   "total": 6
+  },
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Свитшот «Лепестки» — тауп",
+    "construction": "Смещённая линия плеча уходит в задний рельеф, воротник «лепестки» даёт мягкий силуэт.",
+    "material": "Футер, 100% хлопок. Стирка при 30°."
+   },
+   "en": {
+    "title": "Petals sweatshirt — taupe",
+    "construction": "A dropped shoulder line runs into the back seam; the petal collar gives a soft silhouette.",
+    "material": "Loopback, 100% cotton. Wash at 30°."
+   },
+   "ka": {
+    "title": "სვიტშოტი „ფურცლები“ — ტაუპი",
+    "construction": "გადაწეული მხრის ხაზი ზურგის ნაკერში გადადის, „ფურცლების“ საყელო რბილ სილუეტს ქმნის.",
+    "material": "ფუტერი, 100% ბამბა. რეცხვა 30°-ზე."
+   }
+  }
+ },
+ {
+  "handle": "petals-clay",
+  "category": "ls",
+  "sku": "SAM-LS01-VIS",
+  "price_usd": 150,
+  "images": [
+   "p00.jpg"
+  ],
+  "stock": {},
+  "lead_days": 7,
+  "edition": null,
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Лонгслив «Лепестки» — белая глина",
+    "construction": "Смещённая линия плеча и воротник «лепестки». Свободная посадка.",
+    "material": "100% вискоза. Ручная стирка или деликатный режим."
+   },
+   "en": {
+    "title": "Petals long sleeve — white clay",
+    "construction": "Dropped shoulder and petal collar. Relaxed fit.",
+    "material": "100% viscose. Hand wash or gentle cycle."
+   },
+   "ka": {
+    "title": "გრძელსახელოიანი „ფურცლები“ — თეთრი თიხა",
+    "construction": "გადაწეული მხარი და „ფურცლების“ საყელო. თავისუფალი მორგება.",
+    "material": "100% ვისკოზა. ხელით ან ნაზ რეჟიმში რეცხვა."
+   }
+  }
+ },
+ {
+  "handle": "cutair-grey",
+  "category": "pt",
+  "sku": "SAM-PT03-GRY",
+  "price_usd": 170,
+  "images": [
+   "p17.jpg",
+   "p07.jpg"
+  ],
+  "stock": {
+   "M": 1,
+   "L": 1
+  },
+  "lead_days": 7,
+  "edition": null,
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Брюки CUTAIR — серый",
+    "construction": "Свободная посадка со складками у пояса, декоративные открытые срезы сзади, необработанные края пояса и низа, регулировка низа кнопками.",
+    "material": "100% хлопок, 450 г/м². Стирка при 30°."
+   },
+   "en": {
+    "title": "CUTAIR trousers — grey",
+    "construction": "Relaxed fit with waist pleats, raw open seams at the back, raw waist and hem edges, snap-adjustable hem.",
+    "material": "100% cotton, 450 g/m². Wash at 30°."
+   },
+   "ka": {
+    "title": "შარვალი CUTAIR — ნაცრისფერი",
+    "construction": "თავისუფალი მორგება წელზე ნაკეცებით, უკან ღია ნაკერები, დაუმუშავებელი წელი და ბოლო, ბოლოს რეგულირება ღილებით.",
+    "material": "100% ბამბა, 450 გ/მ². რეცხვა 30°-ზე."
+   }
+  }
+ },
+ {
+  "handle": "lampas-black",
+  "category": "pt",
+  "sku": "SAM-PT05-BLK",
+  "price_usd": 190,
+  "images": [
+   "p09.jpg"
+  ],
+  "stock": {},
+  "lead_days": 9,
+  "edition": null,
+  "preorder_from": null,
+  "i18n": {
+   "ru": {
+    "title": "Брюки с лампасом — чёрный деним",
+    "construction": "Широкие брюки с возможностью менять ширину низа. Боковой лампас из контрастной ленты.",
+    "material": "Хлопковый деним. Стирка при 30°, наизнанку."
+   },
+   "en": {
+    "title": "Side-stripe trousers — black denim",
+    "construction": "Wide trousers with an adjustable hem width. Contrast tape side stripe.",
+    "material": "Cotton denim. Wash at 30°, inside out."
+   },
+   "ka": {
+    "title": "შარვალი ზოლით — შავი დენიმი",
+    "construction": "განიერი შარვალი ბოლოს რეგულირებადი სიგანით. კონტრასტული გვერდითი ზოლი.",
+    "material": "ბამბის დენიმი. რეცხვა 30°-ზე, უკუღმა."
+   }
+  }
+ },
+ {
+  "handle": "samshit-brown",
+  "category": "sw",
+  "sku": "SAM-HD03-TBC",
+  "price_usd": 210,
+  "images": [
+   "p11.jpg"
+  ],
+  "stock": {},
+  "lead_days": 0,
+  "edition": {
+   "current": 0,
+   "total": 20
+  },
+  "preorder_from": "2027-03-01",
+  "i18n": {
+   "ru": {
+    "title": "Худи «Самшит» — табак",
+    "construction": "Капсула весна-27. Рукописный знак «Самшит» на спине, открытые срезы по низу.",
+    "material": "Плотный футер, 100% хлопок."
+   },
+   "en": {
+    "title": "Samshit hoodie — tobacco",
+    "construction": "Spring-27 capsule. Hand-lettered Samshit mark on the back, raw hem.",
+    "material": "Heavy loopback, 100% cotton."
+   },
+   "ka": {
+    "title": "ჰუდი „სამშითი“ — თამბაქოსფერი",
+    "construction": "კაფსულა გაზაფხული-27. ხელნაწერი ნიშანი „სამშითი“ ზურგზე, ღია ბოლო.",
+    "material": "მკვრივი ფუტერი, 100% ბამბა."
+   }
+  }
+ }
+]
