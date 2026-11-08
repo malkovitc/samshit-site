@@ -16,7 +16,7 @@ export async function ShopView({ locale, category, st }: { locale: Locale; categ
   const label: Record<St, string> = { all: t("cat.all"), stock: t("status.stock"), mto: t("status.mtoShort"), pre: t("status.preShort") }
   return (
     <div className="view">
-      <div className="h u"><span>{category ? t(`cat.${category}`) : t("home.allPieces")}</span><span className="m">{t("shop.handmade")}</span></div>
+      <div className="h u"><span>{category ? t(`cat.${category}`) : t("home.allPieces")}</span><span className="m tagline">{t("shop.handmade")}</span></div>
       <hr className="rule" />
       <div className="filters" style={{ paddingTop: 10 }}>
         {ST.map((k) => {

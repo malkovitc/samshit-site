@@ -18,12 +18,12 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
   const [origin, setOrigin] = useState("50% 50%")
   const pick = (n: number) => { setFade(true); setTimeout(() => { setI(n); setFade(false) }, 220) }
   return (
-    <div className="gal">
-      <div className="thumbs">
+    <div className={`gal${images.length < 2 ? " single" : ""}`}>
+      {images.length > 1 && <div className="thumbs">
         {images.map((src, n) => (
           <button key={src} aria-pressed={n === i} aria-label={String(n + 1)} onClick={() => pick(n)}><img src={src} alt="" /></button>
         ))}
-      </div>
+      </div>}
       <div
         className={`stage${zoom ? " zoom" : ""}`}
         onClick={() => setZoom(!zoom)}

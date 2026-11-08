@@ -28,7 +28,7 @@ export async function ProductCard({ p, i }: { p: ProductView; i: number }) {
         {p.images[1] && <img className="b" src={p.images[1]} alt="" loading="lazy" />}
       </Link>
       <div className="qwrap"><QuickAdd title={p.title} options={quick} /></div>
-      <Link href={`/p/${p.handle}`} className="u">{p.title}</Link>
+      <Link href={`/p/${p.handle}`} className="u name">{p.title}</Link>
       <div className="meta"><span className="m tn">{p.sku}</span><span className="tn">{money(p.price, p.currency, locale)}</span></div>
       <StatusLabel p={p} />
     </article>
