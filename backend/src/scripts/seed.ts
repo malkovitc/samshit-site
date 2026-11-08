@@ -160,14 +160,11 @@ export default async function seed({ container }: ExecArgs) {
   })
 
   /* ---------- ключ витрины ---------- */
-  const { data: keys } = await query.graph({ entity: "api_key", fields: ["id", "token"], filters: { type: "publishable" } })
-  let key = keys[0]
-  if (!key) {
-    const { result } = await createApiKeysWorkflow(container).run({
-      input: { api_keys: [{ title: "Storefront", type: "publishable", created_by: "" }] },
-    })
-    key = result[0] as typeof key
-  }
+  // Свой ключ только с нашим каналом: у ключа по умолчанию уже есть стандартный канал,
+  // а с двумя каналами Medusa не считает остатки («Inventory availability cannot be calculated»).
+  const { result: [key] } = await createApiKeysWorkflow(container).run({
+    input: { api_keys: [{ title: "Storefront", type: "publishable", created_by: "" }] },
+  })
   await linkSalesChannelsToApiKeyWorkflow(container).run({ input: { id: key.id, add: [channel.id] } })
 
   /* ---------- категории и товары ---------- */
