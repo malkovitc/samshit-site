@@ -9,22 +9,22 @@
 <meta name="goatcounter-code" content="">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500&family=Lilex:wght@200;300;400;500&family=Iosevka+Charon+Mono:wght@300;400;500&family=JetBrains+Mono:wght@200;300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500&family=Lilex:wght@200;300;400;500&family=Iosevka+Charon+Mono:wght@300;400;500&family=JetBrains+Mono:wght@200;300;400;500&family=Noto+Sans+Georgian:wght@200;300;400;500&display=swap">
 <style>
 /* Layout: шапка между двумя линейками, левая колонка меню, справа поле; всё моноширинное, тонкое */
 :root{
   --bg:#ffffff; --fg:#141416; --muted:#7a7a84; --hair:#dedee4; --line:#141416;
   --tile:#f2f2f4; --accent:#1f2bd8; --scrim:rgba(20,20,22,.28); --ok:#1f2bd8;
-  --mono:"Source Code Pro", ui-monospace, Menlo, monospace;
+  --mono:"Source Code Pro", "Noto Sans Georgian", ui-monospace, Menlo, monospace;
   --w-body:300; --w-strong:500;
   --ease:cubic-bezier(.2,.7,.1,1);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f0f11;--fg:#e9e9ee;--muted:#8d8d98;--hair:#2a2a31;--line:#e9e9ee;--tile:#19191d;--accent:#8a93ff;--scrim:rgba(0,0,0,.5);color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#0f0f11;--fg:#e9e9ee;--muted:#8d8d98;--hair:#2a2a31;--line:#e9e9ee;--tile:#19191d;--accent:#8a93ff;--scrim:rgba(0,0,0,.5);color-scheme:dark}
-:root[data-font="lilex"]{--mono:"Lilex", ui-monospace, Menlo, monospace}
-:root[data-font="iosevka"]{--mono:"Iosevka Charon Mono", ui-monospace, Menlo, monospace;--w-body:300}
-:root[data-font="jetbrains"]{--mono:"JetBrains Mono", ui-monospace, Menlo, monospace;--w-body:200}
+:root[data-font="lilex"]{--mono:"Lilex", "Noto Sans Georgian", ui-monospace, Menlo, monospace}
+:root[data-font="iosevka"]{--mono:"Iosevka Charon Mono", "Noto Sans Georgian", ui-monospace, Menlo, monospace;--w-body:300}
+:root[data-font="jetbrains"]{--mono:"JetBrains Mono", "Noto Sans Georgian", ui-monospace, Menlo, monospace;--w-body:200}
 
 *{box-sizing:border-box}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -59,6 +59,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:va
 .count.bump{animation:bump .5s var(--ease)}
 @keyframes bump{0%{transform:translateY(0)}35%{transform:translateY(-4px);color:var(--accent)}100%{transform:translateY(0)}}
 .burger{display:none}
+.mob-only{display:none!important}
 
 /* ---------- каркас ---------- */
 .shell{display:grid;grid-template-columns:180px minmax(0,1fr);gap:32px;padding-block:22px 0}
@@ -66,6 +67,7 @@ nav.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 46px);align-sel
 nav.side .sub{padding-left:10px;display:flex;flex-direction:column;gap:2px;overflow:hidden;transition:max-height .4s var(--ease),opacity .3s;max-height:0;opacity:0}
 nav.side .sub.open{max-height:260px;opacity:1}
 nav.side .sep{height:14px}
+nav.side a,nav.side>button{align-self:flex-start}
 main{min-width:0;min-height:70vh}
 .view{animation:enter .55s var(--ease) both}
 @keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -91,9 +93,10 @@ main{min-width:0;min-height:70vh}
 .ph img.b{opacity:0}
 .card:hover .ph img.b{opacity:1}
 .card:hover .ph img{transform:scale(1.025)}
+.qwrap{position:relative;margin-top:-31px;height:31px;overflow:hidden}
 .quick{position:absolute;left:0;right:0;bottom:0;display:flex;gap:1px;background:var(--bg);transform:translateY(101%);transition:transform .35s var(--ease)}
 .card:hover .quick,.card:focus-within .quick{transform:none}
-.quick button{flex:1;padding:6px 0;background:var(--bg);border-top:1px solid var(--line)}
+.quick button{flex:1;height:31px;padding:0;background:var(--bg);border-top:1px solid var(--line)}
 .quick button:hover{background:var(--fg);color:var(--bg)}
 .quick button:disabled{color:var(--muted);text-decoration:line-through;cursor:default}
 .quick button:disabled:hover{background:var(--bg);color:var(--muted)}
@@ -236,6 +239,12 @@ footer form{display:flex;gap:10px;margin-top:14px;max-width:360px}
   .journal{grid-template-columns:minmax(0,1fr)}
   .quick{transform:none;position:static;border:0}
   .hr .cur{display:none}
+  .notice{gap:2px 12px;font-size:10px;padding-block:4px}
+  .notice span:nth-child(2){display:none}
+  .tweak{gap:4px 10px;padding:4px 8px;font-size:10px}
+  .tweak .m{display:none}
+  .mob-only{display:flex!important;gap:10px;flex-wrap:wrap;padding-bottom:10px}
+  .qwrap{margin-top:0;height:auto;overflow:visible}
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
 </style>
@@ -245,63 +254,67 @@ footer form{display:flex;gap:10px;margin-top:14px;max-width:360px}
   <symbol id="sprig" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 23c-.3-3.4-.7-6.6-1.6-9.4C8.6 13.9 6.1 12.6 5 10.1c2.4-.6 4.8.4 5.9 2.3-.4-2.2-.2-4.5.9-6.7C10 4.6 9.2 2.6 9.8.8c1.9 1 3 3 2.6 5 1.3-1.3 3.3-1.8 5.2-1.2-.6 2-2.5 3.3-4.6 3.3-.6 1.6-.7 3.3-.4 5 1-1.4 2.8-2.1 4.6-1.8-.4 1.9-2.1 3.3-4.1 3.4.6 2.6.9 5.3 1.1 8.5z"/></symbol>
 </svg>
 
-<div class="notice u"><span>Доставка по миру · DHL Express</span><span>Тбилиси · курьер и примерка в мастерской</span><span style="color:var(--accent)">Прототип: цены, остатки, сроки и тиражи — заглушки</span></div>
+<div class="notice u"><span data-t="Доставка по миру · DHL Express"></span><span data-t="Тбилиси · курьер и примерка в мастерской"></span><span style="color:var(--accent)" data-t="Прототип: цены, остатки, сроки и тиражи — заглушки"></span></div>
 <header>
-  <a class="logo u" href="#home"><svg aria-hidden="true"><use href="#sprig"/></svg>Самшит</a>
+  <a class="logo u" href="#home"><svg aria-hidden="true"><use href="#sprig"/></svg><span data-t="Самшит"></span></a>
   <div class="hr u">
-    <div class="cur" role="group" aria-label="Валюта">
+    <div class="cur" role="group" aria-label="Language">
+      <button data-lang="ru" aria-pressed="true">RU</button><button data-lang="en" aria-pressed="false">EN</button><button data-lang="ka" aria-pressed="false">GE</button>
+    </div>
+    <div class="cur" role="group" aria-label="Currency">
       <button data-cur="USD" aria-pressed="true">USD</button><button data-cur="GEL" aria-pressed="false">GEL</button><button data-cur="EUR" aria-pressed="false">EUR</button>
     </div>
-    <button class="ln" id="openCart">Корзина — <span class="count tn" id="count">0</span></button>
-    <button class="burger" id="burger" aria-expanded="false">Меню</button>
+    <button class="ln" id="openCart"><span data-t="Корзина"></span> — <span class="count tn" id="count">0</span></button>
+    <button class="burger" id="burger" aria-expanded="false" data-t="Меню"></button>
   </div>
 </header>
 
 <div class="shell">
-  <nav class="side u" id="side" aria-label="Разделы">
-    <a class="ln" href="#shop" data-nav="shop">Магазин</a>
+  <nav class="side u" id="side">
+    <div class="cur mob-only" role="group" aria-label="Language"><button data-lang="ru">RU</button><button data-lang="en">EN</button><button data-lang="ka">GE</button><span class="m">·</span><button data-cur="USD">USD</button><button data-cur="GEL">GEL</button><button data-cur="EUR">EUR</button></div>
+    <a class="ln" href="#shop" data-nav="shop" data-t="Магазин"></a>
     <div class="sub" id="subcats"></div>
-    <a class="ln" href="#workshop" data-nav="workshop">Мастерская</a>
-    <a class="ln" href="#about" data-nav="about">О бренде</a>
+    <a class="ln" href="#workshop" data-nav="workshop" data-t="Мастерская"></a>
+    <a class="ln" href="#about" data-nav="about" data-t="О бренде"></a>
     <div class="sep"></div>
-    <button class="ln" style="text-align:left" data-open-sizes>Размеры</button>
-    <a class="ln" href="#delivery" data-nav="delivery">Доставка и возврат</a>
-    <a class="ln" href="#contact" data-nav="contact">Контакты</a>
+    <button class="ln" style="text-align:left" data-open-sizes data-t="Размеры"></button>
+    <a class="ln" href="#delivery" data-nav="delivery" data-t="Доставка и возврат"></a>
+    <a class="ln" href="#contact" data-nav="contact" data-t="Контакты"></a>
   </nav>
   <main id="app" aria-live="polite"></main>
 </div>
 
 <footer class="u">
-  <div class="m">© 2026 Самшит, Тбилиси</div>
+  <div class="m" data-t="© 2026 Самшит, Тбилиси"></div>
   <div>
-    <div class="cols"><a class="ln" href="#contact">Instagram</a><a class="ln" href="#contact">Telegram</a><a class="ln" href="#delivery">Доставка</a><a class="ln" href="#delivery">Возврат и обмен</a><a class="ln" href="#about">О бренде</a></div>
-    <form id="sub"><input id="subEmail" type="email" required placeholder="EMAIL — новые вещи и капсулы"><button class="ln" type="submit">Подписаться</button></form>
+    <div class="cols"><a class="ln" href="https://www.instagram.com/samshit.sp/" target="_blank" rel="noopener">Instagram</a><a class="ln" href="#contact">Telegram</a><a class="ln" href="#delivery" data-t="Доставка"></a><a class="ln" href="#delivery" data-t="Возврат и обмен"></a><a class="ln" href="#about" data-t="О бренде"></a></div>
+    <form id="sub"><input id="subEmail" type="email" required data-tp="EMAIL — новые вещи и капсулы"><button class="ln" type="submit" data-t="Подписаться"></button></form>
   </div>
 </footer>
 
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer" aria-label="Корзина" aria-hidden="true">
-  <div class="top u"><span>Корзина</span><button class="ln" id="closeCart">Закрыть</button></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="top u"><span data-t="Корзина"></span><button class="ln" id="closeCart" data-t="Закрыть"></button></div>
   <div class="lines" id="lines"></div>
   <div class="sum" id="sum"></div>
 </aside>
 
 <div class="modal" id="sizesModal" role="dialog" aria-modal="true" aria-labelledby="szT">
   <div class="box">
-    <div class="h u" style="border-bottom:1px solid var(--line);margin-bottom:10px"><span id="szT">Размеры · замеры изделия, см</span><button class="ln" data-close-sizes>Закрыть</button></div>
+    <div class="h u" style="border-bottom:1px solid var(--line);margin-bottom:10px"><span id="szT" data-t="Размеры · замеры изделия, см"></span><button class="ln" data-close-sizes data-t="Закрыть"></button></div>
     <table class="tn">
-      <tr class="u m"><th>Размер</th><th>Грудь</th><th>Длина</th><th>Рукав</th><th>Рост</th></tr>
+      <tr class="u m"><th data-t="Размер"></th><th data-t="Грудь"></th><th data-t="Длина"></th><th data-t="Рукав"></th><th data-t="Рост"></th></tr>
       <tr><td>S</td><td>124</td><td>66</td><td>58</td><td>165–175</td></tr>
       <tr><td>M</td><td>130</td><td>68</td><td>60</td><td>172–182</td></tr>
       <tr><td>L</td><td>136</td><td>70</td><td>62</td><td>178–188</td></tr>
       <tr><td>XL</td><td>142</td><td>72</td><td>63</td><td>185–195</td></tr>
     </table>
-    <p class="m" style="margin:12px 0 0">Вещи свободного кроя. Если сомневаетесь между двумя размерами, выбирайте «По меркам»: после оплаты мастер попросит шесть замеров и сошьёт под вас. Таблица примерная.</p>
+    <p class="m" style="margin:12px 0 0" data-t="Вещи свободного кроя. Если сомневаетесь между двумя размерами, выберите «По моим меркам»: после оплаты мастер попросит шесть замеров и сошьёт под вас. Таблица примерная."></p>
   </div>
 </div>
 
-<div class="tweak u" role="group" aria-label="Шрифт прототипа">
-  <span class="m">Шрифт:</span>
+<div class="tweak u" role="group" aria-label="Font">
+  <span class="m" data-t="Шрифт:"></span>
   <button data-font="source" aria-pressed="true">Source Code Pro</button>
   <button data-font="lilex" aria-pressed="false">Lilex</button>
   <button data-font="iosevka" aria-pressed="false">Iosevka Charon</button>
@@ -312,6 +325,132 @@ footer form{display:flex;gap:10px;margin-top:14px;max-width:360px}
 <script>
 (function(){
 const IMG = n => "img/p" + n + ".jpg";
+
+/* ---------- языки ----------
+   Ключ — русская строка, к ней английский и грузинский варианты.
+   Грузинский — черновой перевод, нужна вычитка носителем. */
+const D = {
+"Самшит":["Samshit","სამშითი"],
+"Доставка по миру · DHL Express":["Worldwide shipping · DHL Express","მიწოდება მთელ მსოფლიოში · DHL Express"],
+"Тбилиси · курьер и примерка в мастерской":["Tbilisi · courier and fitting at the workshop","თბილისი · კურიერი და მორგება სახელოსნოში"],
+"Прототип: цены, остатки, сроки и тиражи — заглушки":["Prototype: prices, stock, lead times and editions are placeholders","პროტოტიპი: ფასები, მარაგი, ვადები და ტირაჟები პირობითია"],
+"Корзина":["Bag","კალათა"],
+"Меню":["Menu","მენიუ"],
+"Магазин":["Shop","მაღაზია"],
+"Мастерская":["Workshop","სახელოსნო"],
+"О бренде":["About","ბრენდის შესახებ"],
+"Размеры":["Sizes","ზომები"],
+"Доставка и возврат":["Shipping & returns","მიწოდება და დაბრუნება"],
+"Контакты":["Contact","კონტაქტი"],
+"© 2026 Самшит, Тбилиси":["© 2026 Samshit, Tbilisi","© 2026 სამშითი, თბილისი"],
+"Доставка":["Shipping","მიწოდება"],
+"Возврат и обмен":["Returns & exchanges","დაბრუნება და გაცვლა"],
+"EMAIL — новые вещи и капсулы":["EMAIL — new pieces and capsules","EMAIL — ახალი ნივთები და კაფსულები"],
+"Подписаться":["Subscribe","გამოწერა"],
+"Закрыть":["Close","დახურვა"],
+"Размеры · замеры изделия, см":["Sizes · garment measurements, cm","ზომები · ნივთის გაზომვები, სმ"],
+"Размер":["Size","ზომა"],"Грудь":["Chest","მკერდი"],"Длина":["Length","სიგრძე"],"Рукав":["Sleeve","სახელო"],"Рост":["Height","სიმაღლე"],
+"Вещи свободного кроя. Если сомневаетесь между двумя размерами, выберите «По моим меркам»: после оплаты мастер попросит шесть замеров и сошьёт под вас. Таблица примерная.":["Relaxed cuts. If you are between two sizes, choose “Made to my measurements”: after payment the maker will ask for six measurements and sew it for you. The chart is approximate.","თავისუფალი ჭრილი. თუ ორ ზომას შორის ყოყმანობთ, აირჩიეთ „ჩემი გაზომვებით“: გადახდის შემდეგ ოსტატი ექვს გაზომვას გთხოვთ და თქვენზე შეკერავს. ცხრილი მიახლოებითია."],
+"Шрифт:":["Font:","შრიფტი:"],
+"Куртки":["Jackets","ქურთუკები"],"Брюки":["Trousers","შარვლები"],"Свитшоты и худи":["Sweatshirts & hoodies","სვიტშოტები და ჰუდები"],"Лонгсливы":["Long sleeves","გრძელსახელოიანები"],"Все":["All","ყველა"],
+"В наличии":["In stock","მარაგშია"],
+"Под заказ · {n} дн.":["Made to order · {n} days","შეკვეთით · {n} დღე"],
+"Предзаказ · {d}":["Pre-order · {d}","წინასწარი შეკვეთა · {d}"],
+"с 1 марта":["from 1 March","1 მარტიდან"],
+"Весна-27 · Море и дорога":["Spring-27 · Sea and road","გაზაფხული-27 · ზღვა და გზა"],
+"Смотреть":["View","ნახვა"],
+"Новое":["New","ახალი"],"Все вещи":["All pieces","ყველა ნივთი"],
+"Из мастерской":["From the workshop","სახელოსნოდან"],
+"Куртку «Щит» я сконструировал после зимней поездки к морю за мотоциклом. В ней десять карманов, один полностью непромокаемый, и съёмный нагрудник, который превращает её из мотокуртки в городскую вещь.":["I designed the Shield jacket after a winter ride to the sea to pick up a motorcycle. It has ten pockets, one fully waterproof, and a detachable bib that turns it from a riding jacket into a city piece.","ქურთუკი „ფარი“ ზამთარში ზღვისკენ მოტოციკლის წამოსაყვანად მოგზაურობის შემდეგ შევქმენი. მას ათი ჯიბე აქვს, ერთი სრულიად წყალგაუმტარი, და მოსახსნელი სამკერდე, რომელიც მოტოქურთუკს ქალაქის ნივთად აქცევს."],
+"Как она сделана":["How it is made","როგორ შეიქმნა"],
+"Каждая вещь сшита вручную в Тбилиси":["Every piece is handmade in Tbilisi","ყველა ნივთი ხელით არის შეკერილი თბილისში"],
+"Под заказ":["Made to order","შეკვეთით"],"Предзаказ":["Pre-order","წინასწარი შეკვეთა"],
+"В этом разделе сейчас ничего нет.":["Nothing here right now.","ამ განყოფილებაში ახლა არაფერია."],
+"Посмотреть все вещи":["See all pieces","ყველა ნივთის ნახვა"],
+"Сшить, M":["Make, M","შეკერვა, M"],"Предзаказ, M":["Pre-order, M","წინასწარ, M"],
+"Экземпляр {a} из {b}":["Piece {a} of {b}","ეგზემპლარი {a} / {b}"],
+"Тираж {b} шт.":["Edition of {b}","ტირაჟი {b} ც."],
+"Готовая":["Ready","მზა"],"отправка за 1–2 дня":["ships in 1–2 days","იგზავნება 1–2 დღეში"],"сейчас нет в наличии":["not in stock now","ახლა არ არის მარაგში"],
+"В моём размере":["In my size","ჩემს ზომაზე"],"{n} дней, предоплата 50%":["{n} days, 50% deposit","{n} დღე, 50% წინასწარ"],
+"По моим меркам":["To my measurements","ჩემი გაზომვებით"],"+{p}, {n} дней":["+{p}, {n} days","+{p}, {n} დღე"],
+"Как получить":["How to get it","როგორ მიიღოთ"],
+"Таблица размеров":["Size chart","ზომების ცხრილი"],
+"Выберите размер":["Select a size","აირჩიეთ ზომა"],"Добавлено ✓":["Added ✓","დამატებულია ✓"],
+"Предзаказ · {s}":["Pre-order · {s}","წინასწარ · {s}"],"Сшить в размере {s}":["Make in size {s}","შეკერვა ზომით {s}"],"Сшить по моим меркам":["Make to my measurements","შეკერვა ჩემი გაზომვებით"],"В корзину · {s}":["Add to bag · {s}","კალათაში · {s}"],
+"Последняя в этом размере":["Last one in this size","ბოლოა ამ ზომაში"],
+"После оплаты мастер попросит шесть замеров или пригласит на примерку в Тбилиси":["After payment the maker will ask for six measurements or invite you to a fitting in Tbilisi","გადახდის შემდეგ ოსტატი ექვს გაზომვას გთხოვთ ან მოსარგებად თბილისში მოგიწვევთ"],
+"Конструкция":["Construction","კონსტრუქცია"],"Материал и уход":["Fabric & care","ქსოვილი და მოვლა"],"Посадка":["Fit","მორგება"],"Как сделана":["How it is made","როგორ შეიქმნა"],
+"Свободная посадка, модель на фото 184 см, носит M. Замеры каждого размера в таблице.":["Relaxed fit. The model is 184 cm and wears M. Measurements for every size are in the chart.","თავისუფალი მორგება. მოდელი 184 სმ-ია და აცვია M. ყველა ზომის გაზომვები ცხრილშია."],
+"Здесь будет видео процесса на 30–60 секунд: раскрой, сборка, финальная строчка. Пока его можно посмотреть в Instagram.":["A 30–60 second process video will be here: cutting, assembly, final stitch. For now you can watch it on Instagram.","აქ იქნება 30–60 წამიანი ვიდეო: გამოჭრა, აწყობა, ბოლო ნაკერი. ჯერჯერობით შეგიძლიათ ნახოთ Instagram-ზე."],
+"Тбилиси: курьер на следующий день или примерка в мастерской. По миру: DHL Express, 3–7 дней после отправки. Готовые вещи можно вернуть в течение 14 дней. Вещи по меркам не возвращаются, но мастер бесплатно подгонит посадку.":["Tbilisi: next-day courier or a fitting at the workshop. Worldwide: DHL Express, 3–7 days after dispatch. Ready pieces can be returned within 14 days. Made-to-measure pieces cannot be returned, but the maker will adjust the fit for free.","თბილისი: კურიერი მეორე დღეს ან მორგება სახელოსნოში. მსოფლიოში: DHL Express, გაგზავნიდან 3–7 დღე. მზა ნივთის დაბრუნება შესაძლებელია 14 დღეში. გაზომვებით შეკერილი ნივთი არ ბრუნდება, მაგრამ ოსტატი უფასოდ მოარგებს."],
+"Спросить мастера об этой вещи →":["Ask the maker about this piece →","ჰკითხეთ ოსტატს ამ ნივთზე →"],
+"Ещё из раздела":["More from this section","მეტი ამ განყოფილებიდან"],
+"готовая":["ready","მზა"],"в размере":["in size","ზომით"],"по моим меркам":["to my measurements","ჩემი გაზომვებით"],"предзаказ":["pre-order","წინასწარი"],
+"Убрать":["Remove","წაშლა"],
+"Корзина пуста.":["Your bag is empty.","კალათა ცარიელია."],"Перейти в магазин":["Go to the shop","მაღაზიაში გადასვლა"],
+"Сумма":["Subtotal","ჯამი"],
+"Вещи, которые шьются под вас: сейчас 50%, остаток при готовности. ":["Pieces made for you: 50% now, the rest when ready. ","თქვენთვის შესაკერი ნივთები: ახლა 50%, დანარჩენი მზადყოფნისას. "],
+"Доставка считается на следующем шаге, по Тбилиси самовывоз бесплатно.":["Shipping is calculated at the next step; pickup in Tbilisi is free.","მიწოდება გამოითვლება შემდეგ ეტაპზე, თბილისში თვითგატანა უფასოა."],
+"Оформить заказ":["Checkout","შეკვეთის გაფორმება"],"Продолжить покупки":["Continue shopping","ყიდვის გაგრძელება"],
+"{n}: в корзине":["{n}: added to bag","{n}: კალათაშია"],
+"Корзина пуста":["Your bag is empty","კალათა ცარიელია"],
+"Добавьте вещи из магазина, и здесь появится оформление заказа.":["Add pieces from the shop and checkout will appear here.","დაამატეთ ნივთები მაღაზიიდან და აქ გამოჩნდება შეკვეთის გაფორმება."],
+"Оформление заказа":["Checkout","შეკვეთის გაფორმება"],"Вернуться в магазин":["Back to the shop","მაღაზიაში დაბრუნება"],
+"1 · Контакт":["1 · Contact","1 · კონტაქტი"],"Имя и фамилия":["Full name","სახელი და გვარი"],"Telegram или WhatsApp, для связи с мастером":["Telegram or WhatsApp, to reach the maker","Telegram ან WhatsApp, ოსტატთან კავშირისთვის"],
+"2 · Получение":["2 · Delivery","2 · მიღება"],
+"Забрать в мастерской, Тбилиси":["Pick up at the workshop, Tbilisi","გატანა სახელოსნოდან, თბილისი"],"Можно примерить и подогнать на месте":["Try on and adjust on the spot","შეგიძლიათ ადგილზე მოიზომოთ და მოარგოთ"],"бесплатно":["free","უფასო"],
+"Курьер по Тбилиси":["Courier in Tbilisi","კურიერი თბილისში"],"На следующий день после готовности":["Next day after the piece is ready","მზადყოფნიდან მეორე დღეს"],
+"DHL Express по миру":["DHL Express worldwide","DHL Express მსოფლიოში"],"3–7 дней после отправки, пошлины по правилам страны получателя":["3–7 days after dispatch, duties per the destination country","გაგზავნიდან 3–7 დღე, ბაჟი მიმღები ქვეყნის წესებით"],
+"Страна":["Country","ქვეყანა"],"Город":["City","ქალაქი"],"Адрес и индекс":["Address and postcode","მისამართი და ინდექსი"],
+"3 · Оплата":["3 · Payment","3 · გადახდა"],"Карта Visa, Mastercard, Apple Pay":["Visa, Mastercard, Apple Pay","Visa, Mastercard, Apple Pay"],"Через грузинский банковский эквайринг":["Via a Georgian bank acquirer","ქართული ბანკის ეკვაირინგით"],
+"Оплатить":["Pay","გადახდა"],
+"За вещи, которые шьются под вас, сейчас списывается 50%. Остаток спишем, когда вещь будет готова, и пришлём её фото.":["For pieces made for you we charge 50% now. The rest is charged when the piece is ready, and we send you a photo.","თქვენთვის შესაკერ ნივთებზე ახლა ჩამოიჭრება 50%. დანარჩენს ჩამოვჭრით, როცა ნივთი მზად იქნება, და ფოტოს გამოგიგზავნით."],
+"Оплата целиком. Чек придёт на почту.":["Paid in full. The receipt will arrive by email.","სრული გადახდა. ქვითარი მოვა ელფოსტაზე."],
+"Проверьте email: на него придёт подтверждение заказа":["Check your email: the order confirmation goes there","შეამოწმეთ ელფოსტა: დადასტურება იქ მოვა"],"Заполните имя и email":["Enter your name and email","შეიყვანეთ სახელი და ელფოსტა"],
+"Ваш заказ":["Your order","თქვენი შეკვეთა"],"Вещи":["Items","ნივთები"],"Итого":["Total","სულ"],"К оплате сейчас":["Due now","გადასახდელი ახლა"],
+"Заказ {n} принят":["Order {n} received","შეკვეთა {n} მიღებულია"],
+"Это прототип: оплата не проводилась. В рабочем магазине на {e} придёт подтверждение, а мастер напишет в мессенджер со сроком готовности.":["This is a prototype: no payment was made. In the live shop a confirmation goes to {e}, and the maker messages you with the ready date.","ეს პროტოტიპია: გადახდა არ შესრულებულა. რეალურ მაღაზიაში {e}-ზე მოვა დადასტურება, ოსტატი კი მესენჯერში მოგწერთ მზადყოფნის ვადას."],
+"Журнал":["Journal","ჟურნალი"],
+"Лукбук: деним в песках":["Lookbook: denim in the dunes","ლუქბუქი: დენიმი ქვიშაში"],"12 кадров":["12 frames","12 კადრი"],
+"Куртка из цельного отреза ткани":["A jacket from a single cut of fabric","ქურთუკი ერთიანი ქსოვილისგან"],"история в 4 видео":["a story in 4 videos","ისტორია 4 ვიდეოში"],
+"Капсула за месяц: от выкройки до примерки":["A capsule in a month: from pattern to fitting","კაფსულა ერთ თვეში: თარგიდან მორგებამდე"],"текст и фото":["text and photos","ტექსტი და ფოტო"],
+"Фактура: деним наизнанку":["Texture: denim inside out","ფაქტურა: დენიმი შიგნიდან გარეთ"],"заметка о ткани":["a note on fabric","ჩანაწერი ქსოვილზე"],
+"Три фактуры в одной вещи":["Three textures in one piece","სამი ფაქტურა ერთ ნივთში"],"процесс":["process","პროცესი"],
+"Знак «Самшит»":["The Samshit mark","ნიშანი „სამშითი“"],"о названии":["about the name","სახელის შესახებ"],
+"ABOUT_1":["Samshit is a one-person workshop in Tbilisi. I design every model myself and cut and sew it from the first pattern to the last stitch.","სამშითი ერთი ადამიანის სახელოსნოა თბილისში. ყველა მოდელს თავად ვქმნი, ვჭრი და ვკერავ პირველი თარგიდან ბოლო ნაკერამდე."],
+"ABOUT_2":["Pieces come out in small editions, many with a piece number. If your size is not available, I will make it for you: in a standard size or to your measurements.","ნივთები მცირე ტირაჟით გამოდის, ბევრს ეგზემპლარის ნომერი აქვს. თუ თქვენი ზომა არ არის, შეგიკერავთ: სტანდარტული ზომით ან თქვენი გაზომვებით."],
+"ABOUT_3":["Inspiration comes from the road, the sea and the old city. Clothes for travel and for every day, for those in love with life.","შთაგონება მოდის გზიდან, ზღვიდან და ძველი ქალაქიდან. ტანსაცმელი მოგზაურობისა და ყოველდღიურობისთვის, მათთვის, ვინც ცხოვრებაზეა შეყვარებული."],
+"Мастер в своей вещи":["The maker wearing his piece","ოსტატი საკუთარ ნივთში"],
+"Тбилиси":["Tbilisi","თბილისი"],"По миру":["Worldwide","მსოფლიოში"],"Сроки":["Lead times","ვადები"],
+"DEL_1":["Free pickup at the workshop, with a fitting. Courier across the city the day after the piece is ready.","უფასო გატანა სახელოსნოდან, მორგებით. კურიერი ქალაქში მზადყოფნიდან მეორე დღეს."],
+"DEL_2":["DHL Express, 3–7 business days after dispatch. The tracking number arrives by email and messenger. Duties and taxes follow the rules of the destination country.","DHL Express, გაგზავნიდან 3–7 სამუშაო დღე. ტრეკ-ნომერი მოვა ელფოსტაზე და მესენჯერში. ბაჟი და გადასახადები მიმღები ქვეყნის წესებით."],
+"DEL_3":["Ready pieces ship in 1–2 days. Made-to-order pieces take 7 to 14 days; each model page shows its lead time. Capsule pre-orders ship from the date on the page.","მზა ნივთები იგზავნება 1–2 დღეში. შეკვეთით ნივთი იკერება 7-დან 14 დღემდე, ვადა მითითებულია თითოეული მოდელის გვერდზე. კაფსულის წინასწარი შეკვეთა იგზავნება გვერდზე მითითებული თარიღიდან."],
+"DEL_4":["Ready pieces can be returned or exchanged within 14 days. Made-to-measure pieces cannot be returned, but the maker will adjust the fit for free.","მზა ნივთის დაბრუნება ან გაცვლა შესაძლებელია 14 დღეში. გაზომვებით შეკერილი ნივთი არ ბრუნდება, მაგრამ ოსტატი უფასოდ მოარგებს."],
+"Сроки и стоимость в прототипе условные.":["Lead times and prices in the prototype are placeholders.","ვადები და ფასები პროტოტიპში პირობითია."],
+"Написать мастеру":["Message the maker","მისწერეთ ოსტატს"],
+"Тбилиси, Грузия. Примерка по договорённости.":["Tbilisi, Georgia. Fittings by appointment.","თბილისი, საქართველო. მორგება შეთანხმებით."],
+"Telegram и WhatsApp: номер будет здесь":["Telegram and WhatsApp: number coming here","Telegram და WhatsApp: ნომერი აქ იქნება"],
+"Подписка оформлена. В прототипе письмо не отправляется":["Subscribed. The prototype sends no email","გამოწერილია. პროტოტიპი წერილს არ აგზავნის"],
+"Грузия":["Georgia","საქართველო"],"Германия":["Germany","გერმანია"],"Израиль":["Israel","ისრაელი"],"Казахстан":["Kazakhstan","ყაზახეთი"],"Нидерланды":["Netherlands","ნიდერლანდები"],"ОАЭ":["UAE","არაბთა გაერთიანებული საამიროები"],"США":["USA","აშშ"],"Другая страна":["Other country","სხვა ქვეყანა"]
+};
+// русские тексты длинных абзацев
+const RU = {
+ ABOUT_1:"Самшит — мастерская одного человека в Тбилиси. Я сам конструирую каждую модель, крою и шью её от первой выкройки до последней строчки.",
+ ABOUT_2:"Вещи выходят малыми тиражами, у многих есть номер экземпляра. Если нужного размера нет, я сошью под вас: по стандартной сетке или по вашим меркам.",
+ ABOUT_3:"Вдохновение приходит из дороги, моря и старого города. Это одежда для поездок и для каждого дня, для тех, кто влюблён в жизнь.",
+ DEL_1:"Самовывоз из мастерской бесплатно, с примеркой. Курьер по городу на следующий день после готовности.",
+ DEL_2:"DHL Express, 3–7 рабочих дней после отправки. Трек-номер приходит на почту и в мессенджер. Пошлины и налоги считаются по правилам страны получателя.",
+ DEL_3:"Готовые вещи отправляем за 1–2 дня. Вещи под заказ шьются от 7 до 14 дней, срок указан в карточке каждой модели. Предзаказ капсулы отправляется с даты, указанной на странице.",
+ DEL_4:"Готовые вещи можно вернуть или обменять в течение 14 дней. Вещи, сшитые по меркам, не возвращаются, но мастер бесплатно подгонит посадку."
+};
+const LANGS = ["ru","en","ka"];
+let lang = "ru";
+const t = (k, v) => {
+  let s = lang==="ru" ? (RU[k] ?? k) : ((D[k]||[])[lang==="en"?0:1] ?? RU[k] ?? k);
+  if (v) for (const [a,b] of Object.entries(v)) s = s.split("{"+a+"}").join(b);
+  return s;
+};
+
 /* ---------- аналитика (GoatCounter, без cookie) ---------- */
 const GC = (document.querySelector('meta[name="goatcounter-code"]')||{}).content || "";
 const gcQueue = [];
@@ -327,209 +466,248 @@ if (GC) {
   sc.onload = () => gcQueue.splice(0).forEach(h => window.goatcounter.count(h));
   document.head.appendChild(sc);
 }
+
+/* ---------- каталог ----------
+   Цены, остатки, сроки и тиражи — заглушки. Имена CUTAIR, RACE и «Лепестки» взяты из Instagram, остальные условные.
+   Тексты: [ru, en, ka]. */
 const CATS = {jk:"Куртки", pt:"Брюки", sw:"Свитшоты и худи", ls:"Лонгсливы"};
-// Цены, остатки и сроки условные: владелец заполнит их позже.
 const P = [
- {id:"shield-indigo", cat:"jk", name:"Куртка «Щит» — индиго", sku:"SAM-JK02-DNM", usd:420, imgs:["06","03","02","23"], stock:{M:1,XL:1}, lead:14, ed:[7,12],
-  build:"Съёмный нагрудный «щит» со встроенными карманами и подвесами. Десять карманов, один полностью непромокаемый для документов. Кулиса по низу меняет силуэт.", mat:"100% хлопковый деним, 14 oz. Фурнитура из латуни. Стирка при 30°, наизнанку."},
- {id:"shield-white", cat:"jk", name:"Куртка «Щит» — белый", sku:"SAM-JK02-WHT", usd:420, imgs:["05","04"], stock:{}, lead:14, ed:[3,12],
-  build:"Вторая часть модели мотокуртки. Съёмный нагрудник, десять карманов, один непромокаемый.", mat:"100% хлопок, плотная саржа. Стирка при 30°."},
- {id:"work-navy", cat:"jk", name:"Рабочая куртка — тёмный деним", sku:"SAM-JK04-DNM", usd:340, imgs:["10","12"], stock:{L:1}, lead:12, ed:[4,10],
-  build:"Прямой укороченный силуэт, накладные карманы с фигурной строчкой, отложной воротник.", mat:"100% хлопковый деним. Стирка при 30°, наизнанку."},
- {id:"three-textures", cat:"sw", name:"Куртка-худи, три фактуры — чёрный", sku:"SAM-HD02-BLK", usd:260, imgs:["22","16","21"], stock:{M:1,L:1}, lead:10, ed:[5,8],
-  build:"Сочетание двух материалов и трёх фактур. Объёмный капюшон, двойная молния, мягкие вставки по бокам.", mat:"Хлопковый трикотаж и мех-букле. Деликатная стирка при 30°."},
- {id:"membrane-olive", cat:"sw", name:"Бомбер из мембраны — олива", sku:"SAM-SW04-OLV", usd:220, imgs:["15","14"], stock:{}, lead:10, ed:[2,15],
-  build:"Свитшот-бомбер на фиксаторах: шнур по низу меняет силуэт. Носится как верхняя одежда весной или под куртку.", mat:"Мембрана с начёсом. Стирка при 30°, без отбеливателя."},
- {id:"round-black", cat:"sw", name:"Свитшот, круглый рукав — чёрный", sku:"SAM-SW02-BLK", usd:180, imgs:["18","20"], stock:{S:1,M:2}, lead:8, ed:null,
-  build:"Рукав скроен так, что становится округлым и объёмным. Перед короче спинки.", mat:"Двусторонний трикотаж. Стирка при 30°."},
- {id:"petals-taupe", cat:"sw", name:"Свитшот «Лепестки» — тауп", sku:"SAM-SW03-TPE", usd:190, imgs:["13"], stock:{L:1}, lead:8, ed:[1,6],
-  build:"Смещённая линия плеча уходит в задний рельеф, воротник «лепестки» даёт мягкий силуэт.", mat:"Футер, 100% хлопок. Стирка при 30°."},
- {id:"petals-clay", cat:"ls", name:"Лонгслив «Лепестки» — белая глина", sku:"SAM-LS01-VIS", usd:150, imgs:["00"], stock:{}, lead:7, ed:null,
-  build:"Смещённая линия плеча и воротник «лепестки». Свободная посадка.", mat:"100% вискоза. Ручная стирка или деликатный режим."},
- {id:"cutair-grey", cat:"pt", name:"Брюки CUTAIR — серый", sku:"SAM-PT03-GRY", usd:170, imgs:["17","07"], stock:{M:1,L:1}, lead:7, ed:null,
-  build:"Свободная посадка со складками у пояса, декоративные открытые срезы сзади, необработанные края пояса и низа, регулировка низа кнопками.", mat:"100% хлопок, 450 г/м². Стирка при 30°."},
- {id:"lampas-black", cat:"pt", name:"Брюки с лампасом — чёрный деним", sku:"SAM-PT05-BLK", usd:190, imgs:["09"], stock:{}, lead:9, ed:null,
-  build:"Широкие брюки с возможностью менять ширину низа. Боковой лампас из контрастной ленты.", mat:"Хлопковый деним. Стирка при 30°, наизнанку."},
- {id:"race-sand", cat:"jk", name:"Куртка RACE — песок", sku:"SAM-JK05-NYL", usd:360, imgs:["38"], stock:{M:1}, lead:12, ed:[6,10],
-  build:"Укороченная куртка на молнии, высокий трикотажный воротник, контрастная чёрная окантовка, накладной сетчатый карман, кулиса по низу.", mat:"Непродуваемый нейлон, отделка чёрным. Деликатная стирка при 30°."},
- {id:"samshit-brown", cat:"sw", name:"Худи «Самшит» — табак", sku:"SAM-HD03-TBC", usd:210, imgs:["11"], stock:{}, lead:0, pre:"с 1 марта", ed:[0,20],
-  build:"Капсула весна-27. Рукописный знак «Самшит» на спине, открытые срезы по низу.", mat:"Плотный футер, 100% хлопок."}
+ {id:"shield-indigo", cat:"jk", sku:"SAM-JK02-DNM", usd:420, imgs:["06","03","02","23"], stock:{M:1,XL:1}, lead:14, ed:[7,12],
+  name:["Куртка «Щит» — индиго","Shield jacket — indigo","ქურთუკი „ფარი“ — ინდიგო"],
+  build:["Съёмный нагрудный «щит» со встроенными карманами и подвесами. Десять карманов, один полностью непромокаемый для документов. Кулиса по низу меняет силуэт.","Detachable chest “shield” with built-in pockets and loops. Ten pockets, one fully waterproof for documents. A hem drawcord changes the silhouette.","მოსახსნელი სამკერდე „ფარი“ ჩაშენებული ჯიბეებითა და საკიდებით. ათი ჯიბე, ერთი სრულიად წყალგაუმტარი საბუთებისთვის. ბოლოში ზონარი სილუეტს ცვლის."],
+  mat:["100% хлопковый деним, 14 oz. Фурнитура из латуни. Стирка при 30°, наизнанку.","100% cotton denim, 14 oz. Brass hardware. Wash at 30°, inside out.","100% ბამბის დენიმი, 14 oz. სპილენძის ფურნიტურა. რეცხვა 30°-ზე, უკუღმა."]},
+ {id:"shield-white", cat:"jk", sku:"SAM-JK02-WHT", usd:420, imgs:["05","04"], stock:{}, lead:14, ed:[3,12],
+  name:["Куртка «Щит» — белый","Shield jacket — white","ქურთუკი „ფარი“ — თეთრი"],
+  build:["Вторая часть модели мотокуртки. Съёмный нагрудник, десять карманов, один непромокаемый.","The second chapter of the riding jacket. Detachable bib, ten pockets, one waterproof.","მოტოქურთუკის მეორე ნაწილი. მოსახსნელი სამკერდე, ათი ჯიბე, ერთი წყალგაუმტარი."],
+  mat:["100% хлопок, плотная саржа. Стирка при 30°.","100% cotton, heavy twill. Wash at 30°.","100% ბამბა, მკვრივი სარჟა. რეცხვა 30°-ზე."]},
+ {id:"race-sand", cat:"jk", sku:"SAM-JK05-NYL", usd:360, imgs:["38"], stock:{M:1}, lead:12, ed:[6,10],
+  name:["Куртка RACE — песок","RACE jacket — sand","ქურთუკი RACE — ქვიშისფერი"],
+  build:["Укороченная куртка на молнии, высокий трикотажный воротник, контрастная чёрная окантовка, накладной сетчатый карман, кулиса по низу.","Cropped zip jacket with a tall rib collar, contrast black piping, a mesh patch pocket and a hem drawcord.","მოკლე ქურთუკი ელვაშესაკრავით, მაღალი ტრიკოტაჟის საყელო, კონტრასტული შავი არშია, ბადისებრი ჯიბე, ბოლოში ზონარი."],
+  mat:["Непродуваемый нейлон, отделка чёрным. Деликатная стирка при 30°.","Windproof nylon with black trim. Gentle wash at 30°.","ქარგაუმტარი ნეილონი, შავი მოპირკეთება. ნაზი რეცხვა 30°-ზე."]},
+ {id:"work-navy", cat:"jk", sku:"SAM-JK04-DNM", usd:340, imgs:["10","12"], stock:{L:1}, lead:12, ed:[4,10],
+  name:["Рабочая куртка — тёмный деним","Work jacket — dark denim","სამუშაო ქურთუკი — მუქი დენიმი"],
+  build:["Прямой укороченный силуэт, накладные карманы с фигурной строчкой, отложной воротник.","Straight cropped silhouette, patch pockets with shaped stitching, turn-down collar.","სწორი მოკლე სილუეტი, ზედადებული ჯიბეები ფიგურული ნაკერით, გადაკეცილი საყელო."],
+  mat:["100% хлопковый деним. Стирка при 30°, наизнанку.","100% cotton denim. Wash at 30°, inside out.","100% ბამბის დენიმი. რეცხვა 30°-ზე, უკუღმა."]},
+ {id:"three-textures", cat:"sw", sku:"SAM-HD02-BLK", usd:260, imgs:["22","16","21"], stock:{M:1,L:1}, lead:10, ed:[5,8],
+  name:["Куртка-худи, три фактуры — чёрный","Jacket-hoodie, three textures — black","ქურთუკი-ჰუდი, სამი ფაქტურა — შავი"],
+  build:["Сочетание двух материалов и трёх фактур. Объёмный капюшон, двойная молния, мягкие вставки по бокам.","Two fabrics and three textures. Full hood, two-way zip, soft side panels.","ორი ქსოვილი და სამი ფაქტურა. მოცულობითი კაპიუშონი, ორმაგი ელვა, რბილი გვერდითი ჩანართები."],
+  mat:["Хлопковый трикотаж и мех-букле. Деликатная стирка при 30°.","Cotton jersey and bouclé fleece. Gentle wash at 30°.","ბამბის ტრიკოტაჟი და ბუკლე. ნაზი რეცხვა 30°-ზე."]},
+ {id:"membrane-olive", cat:"sw", sku:"SAM-SW04-OLV", usd:220, imgs:["15","14"], stock:{}, lead:10, ed:[2,15],
+  name:["Бомбер из мембраны — олива","Membrane bomber — olive","მემბრანის ბომბერი — ზეთისხილისფერი"],
+  build:["Свитшот-бомбер на фиксаторах: шнур по низу меняет силуэт. Носится как верхняя одежда весной или под куртку.","Sweatshirt-bomber with toggles: the hem cord changes the silhouette. Worn as outerwear in spring or under a jacket.","სვიტშოტ-ბომბერი ფიქსატორებით: ზონარი სილუეტს ცვლის. გაზაფხულზე ზედა ტანსაცმლად ან ქურთუკის ქვეშ."],
+  mat:["Мембрана с начёсом. Стирка при 30°, без отбеливателя.","Brushed membrane. Wash at 30°, no bleach.","ხაოიანი მემბრანა. რეცხვა 30°-ზე, მათეთრებლის გარეშე."]},
+ {id:"round-black", cat:"sw", sku:"SAM-SW02-BLK", usd:180, imgs:["18","20"], stock:{S:1,M:2}, lead:8, ed:null,
+  name:["Свитшот, круглый рукав — чёрный","Round-sleeve sweatshirt — black","სვიტშოტი, მრგვალი სახელო — შავი"],
+  build:["Рукав скроен так, что становится округлым и объёмным. Перед короче спинки.","The sleeve is cut to turn round and full. The front is shorter than the back.","სახელო ისეა გამოჭრილი, რომ მრგვალი და მოცულობითი ხდება. წინა მხარე ზურგზე მოკლეა."],
+  mat:["Двусторонний трикотаж. Стирка при 30°.","Double-faced jersey. Wash at 30°.","ორმხრივი ტრიკოტაჟი. რეცხვა 30°-ზე."]},
+ {id:"petals-taupe", cat:"sw", sku:"SAM-SW03-TPE", usd:190, imgs:["13"], stock:{L:1}, lead:8, ed:[1,6],
+  name:["Свитшот «Лепестки» — тауп","Petals sweatshirt — taupe","სვიტშოტი „ფურცლები“ — ტაუპი"],
+  build:["Смещённая линия плеча уходит в задний рельеф, воротник «лепестки» даёт мягкий силуэт.","A dropped shoulder line runs into the back seam; the petal collar gives a soft silhouette.","გადაწეული მხრის ხაზი ზურგის ნაკერში გადადის, „ფურცლების“ საყელო რბილ სილუეტს ქმნის."],
+  mat:["Футер, 100% хлопок. Стирка при 30°.","Loopback, 100% cotton. Wash at 30°.","ფუტერი, 100% ბამბა. რეცხვა 30°-ზე."]},
+ {id:"petals-clay", cat:"ls", sku:"SAM-LS01-VIS", usd:150, imgs:["00"], stock:{}, lead:7, ed:null,
+  name:["Лонгслив «Лепестки» — белая глина","Petals long sleeve — white clay","გრძელსახელოიანი „ფურცლები“ — თეთრი თიხა"],
+  build:["Смещённая линия плеча и воротник «лепестки». Свободная посадка.","Dropped shoulder and petal collar. Relaxed fit.","გადაწეული მხარი და „ფურცლების“ საყელო. თავისუფალი მორგება."],
+  mat:["100% вискоза. Ручная стирка или деликатный режим.","100% viscose. Hand wash or gentle cycle.","100% ვისკოზა. ხელით ან ნაზ რეჟიმში რეცხვა."]},
+ {id:"cutair-grey", cat:"pt", sku:"SAM-PT03-GRY", usd:170, imgs:["17","07"], stock:{M:1,L:1}, lead:7, ed:null,
+  name:["Брюки CUTAIR — серый","CUTAIR trousers — grey","შარვალი CUTAIR — ნაცრისფერი"],
+  build:["Свободная посадка со складками у пояса, декоративные открытые срезы сзади, необработанные края пояса и низа, регулировка низа кнопками.","Relaxed fit with waist pleats, raw open seams at the back, raw waist and hem edges, snap-adjustable hem.","თავისუფალი მორგება წელზე ნაკეცებით, უკან ღია ნაკერები, დაუმუშავებელი წელი და ბოლო, ბოლოს რეგულირება ღილებით."],
+  mat:["100% хлопок, 450 г/м². Стирка при 30°.","100% cotton, 450 g/m². Wash at 30°.","100% ბამბა, 450 გ/მ². რეცხვა 30°-ზე."]},
+ {id:"lampas-black", cat:"pt", sku:"SAM-PT05-BLK", usd:190, imgs:["09"], stock:{}, lead:9, ed:null,
+  name:["Брюки с лампасом — чёрный деним","Side-stripe trousers — black denim","შარვალი ზოლით — შავი დენიმი"],
+  build:["Широкие брюки с возможностью менять ширину низа. Боковой лампас из контрастной ленты.","Wide trousers with an adjustable hem width. Contrast tape side stripe.","განიერი შარვალი ბოლოს რეგულირებადი სიგანით. კონტრასტული გვერდითი ზოლი."],
+  mat:["Хлопковый деним. Стирка при 30°, наизнанку.","Cotton denim. Wash at 30°, inside out.","ბამბის დენიმი. რეცხვა 30°-ზე, უკუღმა."]},
+ {id:"samshit-brown", cat:"sw", sku:"SAM-HD03-TBC", usd:210, imgs:["11"], stock:{}, lead:0, pre:"с 1 марта", ed:[0,20],
+  name:["Худи «Самшит» — табак","Samshit hoodie — tobacco","ჰუდი „სამშითი“ — თამბაქოსფერი"],
+  build:["Капсула весна-27. Рукописный знак «Самшит» на спине, открытые срезы по низу.","Spring-27 capsule. Hand-lettered Samshit mark on the back, raw hem.","კაფსულა გაზაფხული-27. ხელნაწერი ნიშანი „სამშითი“ ზურგზე, ღია ბოლო."],
+  mat:["Плотный футер, 100% хлопок.","Heavy loopback, 100% cotton.","მკვრივი ფუტერი, 100% ბამბა."]}
 ];
+const L = arr => arr[LANGS.indexOf(lang)] || arr[0];
 const SIZES = ["S","M","L","XL"];
 const MTM = 40; // доплата за пошив по меркам, заглушка
-const unit = l => byId(l.id).usd + (l.mode==="mtm"?MTM:0);
-const later = m => m==="mto"||m==="mtm";
 const RATE = {USD:1, GEL:2.7, EUR:.92}; // примерные курсы
 const SIGN = {USD:"$", GEL:"₾", EUR:"€"};
 let cur = "USD";
 let cart = [];
-try{ cart = JSON.parse(localStorage.getItem("samshit-cart")||"[]"); cur = localStorage.getItem("samshit-cur")||"USD"; }catch(e){}
-const save = () => { try{ localStorage.setItem("samshit-cart", JSON.stringify(cart)); localStorage.setItem("samshit-cur", cur);}catch(e){} };
-const money = usd => { const v = Math.round(usd*RATE[cur]/ (cur==="GEL"?5:1)) * (cur==="GEL"?5:1); return SIGN[cur]+" "+v.toLocaleString("ru-RU"); };
+try{
+  cart = JSON.parse(localStorage.getItem("samshit-cart")||"[]");
+  cur = localStorage.getItem("samshit-cur")||"USD";
+  lang = localStorage.getItem("samshit-lang") || (navigator.language||"").slice(0,2).replace("en","en").replace(/^(?!ru|en|ka).*/,"en");
+}catch(e){}
+if (!LANGS.includes(lang)) lang = "en";
+if (!RATE[cur]) cur = "USD";
 const byId = id => P.find(p=>p.id===id);
+cart = cart.filter(l=>byId(l.id));
+const save = () => { try{ localStorage.setItem("samshit-cart", JSON.stringify(cart)); localStorage.setItem("samshit-cur", cur); localStorage.setItem("samshit-lang", lang);}catch(e){} };
+const unit = l => byId(l.id).usd + (l.mode==="mtm"?MTM:0);
+const later = m => m==="mto"||m==="mtm";
+const money = usd => { const step = cur==="GEL"?5:1; const v = Math.round(usd*RATE[cur]/step)*step; return SIGN[cur]+" "+v.toLocaleString(lang==="ka"?"ka-GE":lang==="en"?"en-US":"ru-RU"); };
 const mode = p => p.pre ? "pre" : (Object.keys(p.stock).length ? "stock" : "mto");
-const stLabel = p => p.pre ? `Предзаказ · ${p.pre}` : Object.keys(p.stock).length ? "В наличии" : `Под заказ · ${p.lead} дн.`;
+const stLabel = p => p.pre ? t("Предзаказ · {d}",{d:t(p.pre)}) : Object.keys(p.stock).length ? t("В наличии") : t("Под заказ · {n} дн.",{n:p.lead});
+const modeName = m => t(m==="mto"?"в размере":m==="mtm"?"по моим меркам":m==="pre"?"предзаказ":"готовая");
+const lineDesc = l => l.mode==="mtm" ? modeName("mtm") : `${l.size} · ${modeName(l.mode)}`;
 const $ = s => document.querySelector(s);
 const app = $("#app");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
+/* ---------- статичные подписи ---------- */
+function applyStatic(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach(el => el.textContent = t(el.dataset.t));
+  document.querySelectorAll("[data-tp]").forEach(el => el.placeholder = t(el.dataset.tp));
+  document.querySelectorAll("[data-lang]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.lang===lang));
+  document.querySelectorAll("[data-cur]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.cur===cur));
+  $("#subcats").innerHTML = [["all","Все"],...Object.entries(CATS)].map(([k,v])=>`<a class="ln" href="#${k==="all"?"shop":"cat-"+k}">${t(v)}</a>`).join("");
+  document.title = t("Самшит") + " · " + (lang==="ru"?"прототип магазина":lang==="en"?"shop prototype":"მაღაზიის პროტოტიპი");
+}
+
 /* ---------- маршруты ---------- */
 let filter = {cat:"all", st:"all"};
-function route(){
+function route(keepScroll){
   const h = location.hash.slice(1) || "home";
   closeMenu(); closeCart(); closeSizes();
   let view;
   if (h==="home") view = home();
-  else if (h==="shop") view = shop();
-  else if (h.startsWith("cat-")) { filter.cat = h.slice(4); view = shop(); }
+  else if (h==="shop") { filter.cat = "all"; view = shop(); }
+  else if (h.startsWith("cat-") && CATS[h.slice(4)]) { filter.cat = h.slice(4); view = shop(); }
   else if (h.startsWith("p-") && byId(h.slice(2))) view = product(byId(h.slice(2)));
   else if (h==="checkout") view = checkout();
   else if (["workshop","about","delivery","contact"].includes(h)) view = page(h);
   else view = home();
+  const y = scrollY;
   app.innerHTML = `<div class="view">${view}</div>`;
   bindView(h);
-  document.querySelectorAll("[data-nav]").forEach(a => a.setAttribute("aria-current", h.startsWith(a.dataset.nav) || (a.dataset.nav==="shop" && (h.startsWith("cat-")||h.startsWith("p-"))) ? "page" : "false"));
-  $("#subcats").classList.toggle("open", h==="shop"||h.startsWith("cat-")||h.startsWith("p-"));
-  window.scrollTo({top:0});
-  track("/" + (h==="home"?"":h) + location.search, document.title + " · " + h);
+  const inShop = h==="shop"||h.startsWith("cat-")||h.startsWith("p-");
+  document.querySelectorAll("[data-nav]").forEach(a => a.setAttribute("aria-current", (a.dataset.nav===h || (a.dataset.nav==="shop" && inShop)) ? "page" : "false"));
+  $("#subcats").classList.toggle("open", inShop);
+  window.scrollTo({top: keepScroll ? y : 0});
+  if (!keepScroll) track("/" + (h==="home"?"":h) + location.search, t("Самшит") + " · " + h);
 }
-window.addEventListener("hashchange", route);
-
-$("#subcats").innerHTML = [["all","Все"],...Object.entries(CATS)].map(([k,v])=>`<a class="ln" href="#${k==="all"?"shop":"cat-"+k}">${v}</a>`).join("");
+window.addEventListener("hashchange", () => route(false));
 
 /* ---------- виды ---------- */
 function card(p,i){
   const a = IMG(p.imgs[0]), b = p.imgs[1] ? IMG(p.imgs[1]) : null;
   const q = mode(p)==="stock"
-    ? SIZES.map(s=>`<button data-quick="${p.id}" data-size="${s}" ${p.stock[s]?"":"disabled"} aria-label="Добавить ${s}">${s}</button>`).join("")
-    : `<button data-quick="${p.id}" data-size="M">${p.pre?"Предзаказ, M":"Сшить, M"}</button>`;
+    ? SIZES.map(s=>`<button data-quick="${p.id}" data-size="${s}" ${p.stock[s]?"":"disabled"}>${s}</button>`).join("")
+    : `<button data-quick="${p.id}" data-size="M">${t(p.pre?"Предзаказ, M":"Сшить, M")}</button>`;
   return `<article class="card" style="animation-delay:${Math.min(i,8)*55}ms">
-    <a class="ph" href="#p-${p.id}" aria-label="${esc(p.name)}"><img class="a" src="${a}" alt="" loading="lazy">${b?`<img class="b" src="${b}" alt="" loading="lazy">`:""}</a>
-    <div class="ph" style="aspect-ratio:auto;background:none;overflow:visible;margin-top:-34px;height:0"><div class="quick u">${q}</div></div>
-    <a href="#p-${p.id}" class="u" style="margin-top:34px">${esc(p.name)}</a>
+    <a class="ph" href="#p-${p.id}" aria-label="${esc(L(p.name))}"><img class="a" src="${a}" alt="" loading="lazy">${b?`<img class="b" src="${b}" alt="" loading="lazy">`:""}</a>
+    <div class="qwrap"><div class="quick u">${q}</div></div>
+    <a href="#p-${p.id}" class="u">${esc(L(p.name))}</a>
     <div class="meta"><span class="m tn">${p.sku}</span><span class="tn">${money(p.usd)}</span></div>
     <span class="st ${mode(p)}">${stLabel(p)}</span>
   </article>`;
 }
 function home(){
   const fresh = ["shield-indigo","race-sand","membrane-olive","cutair-grey"].map(byId);
-  return `<a class="hero" href="#shop" style="display:block"><img src="${IMG("04")}" alt="Белая куртка «Щит» рядом с мотоциклом"><div class="over u"><span>Весна-27 · Море и дорога</span><span class="ln" style="align-self:start">Смотреть</span></div></a>
-  <div class="h u"><span>Новое</span><a class="ln" href="#shop">Все вещи</a></div><hr class="rule">
+  return `<a class="hero" href="#shop" style="display:block"><img src="${IMG("04")}" alt=""><div class="over u"><span>${t("Весна-27 · Море и дорога")}</span><span class="ln" style="align-self:start">${t("Смотреть")}</span></div></a>
+  <div class="h u"><span>${t("Новое")}</span><a class="ln" href="#shop">${t("Все вещи")}</a></div><hr class="rule">
   <div class="grid">${fresh.map(card).join("")}</div>
   <hr class="rule">
-  <div class="story"><div><div class="u m" style="margin-bottom:10px">Из мастерской</div><p>Куртку «Щит» я сконструировал после зимней поездки к морю за мотоциклом. В ней десять карманов, один полностью непромокаемый, и съёмный нагрудник, который превращает её из мотокуртки в городскую вещь.</p><a class="u ln" href="#workshop">Как она сделана</a></div><a class="ph" href="#workshop" style="aspect-ratio:4/3"><img src="${IMG("02")}" alt="Деталь денимовой куртки"></a></div>`;
+  <div class="story"><div><div class="u m" style="margin-bottom:10px">${t("Из мастерской")}</div><p>${t("Куртку «Щит» я сконструировал после зимней поездки к морю за мотоциклом. В ней десять карманов, один полностью непромокаемый, и съёмный нагрудник, который превращает её из мотокуртки в городскую вещь.")}</p><a class="u ln" href="#workshop">${t("Как она сделана")}</a></div><a class="ph" href="#workshop" style="aspect-ratio:4/3"><img src="${IMG("02")}" alt=""></a></div>`;
 }
 function shop(){
-  const list = P.filter(p => (filter.cat==="all"||p.cat===filter.cat) && (filter.st==="all"||mode(p)===filter.st));
-  const cnt = st => P.filter(p => (filter.cat==="all"||p.cat===filter.cat) && (st==="all"||mode(p)===st)).length;
-  const fb = (k,l) => `<button class="u" data-st="${k}" aria-pressed="${filter.st===k}">${l} · <span class="tn">${cnt(k)}</span></button>`;
-  return `<div class="h u"><span>${filter.cat==="all"?"Все вещи":CATS[filter.cat]}</span><span class="m">Каждая вещь сшита вручную в Тбилиси</span></div><hr class="rule">
+  const inCat = p => filter.cat==="all"||p.cat===filter.cat;
+  const list = P.filter(p => inCat(p) && (filter.st==="all"||mode(p)===filter.st));
+  const cnt = st => P.filter(p => inCat(p) && (st==="all"||mode(p)===st)).length;
+  const fb = (k,l) => `<button class="u" data-st="${k}" aria-pressed="${filter.st===k}">${t(l)} · <span class="tn">${cnt(k)}</span></button>`;
+  return `<div class="h u"><span>${filter.cat==="all"?t("Все вещи"):t(CATS[filter.cat])}</span><span class="m">${t("Каждая вещь сшита вручную в Тбилиси")}</span></div><hr class="rule">
   <div class="filters" style="padding-top:10px">${fb("all","Все")}${fb("stock","В наличии")}${fb("mto","Под заказ")}${fb("pre","Предзаказ")}</div>
-  <div class="grid" id="grid">${list.length?list.map(card).join(""):`<p class="m">В этом разделе сейчас ничего нет. Посмотрите <a class="ln" href="#shop" data-reset>все вещи</a>.</p>`}</div>`;
+  <div class="grid">${list.length?list.map(card).join(""):`<p class="m">${t("В этом разделе сейчас ничего нет.")} <button class="ln" data-reset>${t("Посмотреть все вещи")}</button></p>`}</div>`;
 }
 let sel = {};
 function product(p){
   const m0 = mode(p);
-  sel = {id:p.id, mode: m0==="stock"?"stock":m0, size:null, img:0};
-  const ed = p.ed ? `<div class="serial u"><span>${p.ed[0]?`Экземпляр ${String(p.ed[0]).padStart(2,"0")} из ${p.ed[1]}`:`Тираж ${p.ed[1]} шт.`}</span><span class="dots" aria-hidden="true">${Array.from({length:p.ed[1]},(_,i)=>`<i class="${i<p.ed[0]?"f":""}"></i>`).join("")}</span></div>` : "";
+  if (sel.id!==p.id) sel = {id:p.id, mode:m0, size:null};
+  const ed = p.ed ? `<div class="serial u"><span>${p.ed[0]?t("Экземпляр {a} из {b}",{a:String(p.ed[0]).padStart(2,"0"),b:p.ed[1]}):t("Тираж {b} шт.",{b:p.ed[1]})}</span><span class="dots" aria-hidden="true">${Array.from({length:p.ed[1]},(_,i)=>`<i class="${i<p.ed[0]?"f":""}"></i>`).join("")}</span></div>` : "";
   const related = P.filter(x=>x.cat===p.cat && x.id!==p.id).slice(0,4);
-  return `<div class="h u"><span><a class="ln" href="#shop">Магазин</a> / <a class="ln" href="#cat-${p.cat}">${CATS[p.cat]}</a></span><span class="m tn">${p.sku}</span></div><hr class="rule" style="margin-bottom:14px">
+  return `<div class="h u"><span><a class="ln" href="#shop">${t("Магазин")}</a> / <a class="ln" href="#cat-${p.cat}">${t(CATS[p.cat])}</a></span><span class="m tn">${p.sku}</span></div><hr class="rule" style="margin-bottom:14px">
   <div class="pdp">
     <div class="gal">
-      <div class="thumbs">${p.imgs.map((n,i)=>`<button data-thumb="${i}" aria-pressed="${i===0}" aria-label="Фото ${i+1}"><img src="${IMG(n)}" alt=""></button>`).join("")}</div>
-      <div class="stage" id="stage" title="Нажмите, чтобы приблизить"><img src="${IMG(p.imgs[0])}" alt="${esc(p.name)}"></div>
+      <div class="thumbs">${p.imgs.map((n,i)=>`<button data-thumb="${i}" aria-pressed="${i===0}" aria-label="${i+1}"><img src="${IMG(n)}" alt=""></button>`).join("")}</div>
+      <div class="stage" id="stage"><img src="${IMG(p.imgs[0])}" alt="${esc(L(p.name))}"></div>
     </div>
     <div class="info">
-      <h1>${esc(p.name)}</h1>
-      <div class="row"><span class="price tn">${money(p.usd)}</span><span class="st ${m0}">${stLabel(p)}</span></div>
-      ${p.pre?"":`<div class="modes u" role="group" aria-label="Как получить">
-        <button data-mode="stock" aria-pressed="${sel.mode==="stock"}" ${m0==="stock"?"":"disabled"}>Готовая<small>${m0==="stock"?"отправка за 1–2 дня":"сейчас нет в наличии"}</small></button>
-        <button data-mode="mto" aria-pressed="${sel.mode==="mto"}">В моём размере<small>${p.lead} дней, предоплата 50%</small></button>
-        <button data-mode="mtm" aria-pressed="${sel.mode==="mtm"}">По моим меркам<small>+${money(MTM)}, ${p.lead+3} дней</small></button>
+      <h1>${esc(L(p.name))}</h1>
+      <div class="row"><span class="price tn" id="price"></span><span class="st ${m0}">${stLabel(p)}</span></div>
+      ${p.pre?"":`<div class="modes u" role="group" aria-label="${t("Как получить")}">
+        <button data-mode="stock" ${m0==="stock"?"":"disabled"}>${t("Готовая")}<small>${t(m0==="stock"?"отправка за 1–2 дня":"сейчас нет в наличии")}</small></button>
+        <button data-mode="mto">${t("В моём размере")}<small>${t("{n} дней, предоплата 50%",{n:p.lead})}</small></button>
+        <button data-mode="mtm">${t("По моим меркам")}<small>${t("+{p}, {n} дней",{p:money(MTM),n:p.lead+3})}</small></button>
       </div>`}
-      <div id="sizeBox"><div class="row u" style="margin-bottom:6px"><span>Размер</span><button class="ln m" data-open-sizes>Таблица размеров</button></div><div class="sizes u" id="sizes"></div></div>
-      <button class="add u" id="add" disabled><span class="a" id="addLabel">Выберите размер</span><span class="b">Добавлено ✓</span></button>
+      <div id="sizeBox"><div class="row u" style="margin-bottom:6px"><span>${t("Размер")}</span><button class="ln m" data-open-sizes>${t("Таблица размеров")}</button></div><div class="sizes u" id="sizes"></div></div>
+      <button class="add u" id="add" disabled><span class="a" id="addLabel"></span><span class="b">${t("Добавлено ✓")}</span></button>
       <div class="hint u" id="hint"></div>
       ${ed}
       <div class="acc">
-        <details open><summary class="u">Конструкция<i>+</i></summary><div class="inner"><p>${esc(p.build)}</p></div></details>
-        <details><summary class="u">Материал и уход<i>+</i></summary><div class="inner"><p>${esc(p.mat)}</p></div></details>
-        <details><summary class="u">Посадка<i>+</i></summary><div class="inner"><p>Свободная посадка, модель на фото 184 см, носит M. Замеры каждого размера в <button class="ln" data-open-sizes>таблице</button>.</p></div></details>
-        <details><summary class="u">Как сделана<i>+</i></summary><div class="inner"><p>Здесь будет видео процесса на 30–60 секунд из рилсов: раскрой, сборка, финальная строчка. Сейчас его можно посмотреть в <a class="ln" href="https://www.instagram.com/samshit.sp/" target="_blank" rel="noopener">Instagram</a>.</p></div></details>
-        <details><summary class="u">Доставка и возврат<i>+</i></summary><div class="inner"><p>Тбилиси: курьер на следующий день или примерка в мастерской. По миру: DHL Express, 3–7 дней после отправки. Готовые вещи можно вернуть в течение 14 дней. Вещи по меркам не возвращаются, но мастер бесплатно подгонит посадку.</p></div></details>
+        <details open><summary class="u">${t("Конструкция")}<i>+</i></summary><div class="inner"><p>${esc(L(p.build))}</p></div></details>
+        <details><summary class="u">${t("Материал и уход")}<i>+</i></summary><div class="inner"><p>${esc(L(p.mat))}</p></div></details>
+        <details><summary class="u">${t("Посадка")}<i>+</i></summary><div class="inner"><p>${t("Свободная посадка, модель на фото 184 см, носит M. Замеры каждого размера в таблице.")}</p></div></details>
+        <details><summary class="u">${t("Как сделана")}<i>+</i></summary><div class="inner"><p>${t("Здесь будет видео процесса на 30–60 секунд: раскрой, сборка, финальная строчка. Пока его можно посмотреть в Instagram.")} <a class="ln" href="https://www.instagram.com/samshit.sp/" target="_blank" rel="noopener">@samshit.sp</a></p></div></details>
+        <details><summary class="u">${t("Доставка и возврат")}<i>+</i></summary><div class="inner"><p>${t("Тбилиси: курьер на следующий день или примерка в мастерской. По миру: DHL Express, 3–7 дней после отправки. Готовые вещи можно вернуть в течение 14 дней. Вещи по меркам не возвращаются, но мастер бесплатно подгонит посадку.")}</p></div></details>
       </div>
-      <a class="u ask" href="#contact">Спросить мастера об этой вещи →</a>
+      <a class="u ask" href="#contact">${t("Спросить мастера об этой вещи →")}</a>
     </div>
   </div>
-  ${related.length?`<hr class="rule"><div class="h u"><span>Ещё из раздела</span></div><div class="grid">${related.map(card).join("")}</div>`:""}`;
-}
-function sizesHtml(p){
-  const opts = sel.mode==="stock" ? SIZES.map(s=>[s, !!p.stock[s]]) : SIZES.map(s=>[s,true]);
-  return opts.map(([s,ok])=>`<button data-size="${s}" aria-pressed="${sel.size===s}" ${ok?"":"disabled"}>${s}</button>`).join("");
+  ${related.length?`<hr class="rule"><div class="h u"><span>${t("Ещё из раздела")}</span></div><div class="grid">${related.map(card).join("")}</div>`:""}`;
 }
 function checkout(){
-  if (!cart.length) return `<div class="done-box"><h1>Корзина пуста</h1><p class="m">Добавьте вещи из <a class="ln" href="#shop">магазина</a>, и здесь появится оформление заказа.</p></div>`;
-  return `<div class="h u"><span>Оформление заказа</span><a class="ln m" href="#shop">Вернуться в магазин</a></div><hr class="rule" style="margin-bottom:16px">
+  if (!cart.length) return `<div class="done-box"><h1>${t("Корзина пуста")}</h1><p class="m">${t("Добавьте вещи из магазина, и здесь появится оформление заказа.")}</p><p><a class="u ln" href="#shop">${t("Перейти в магазин")}</a></p></div>`;
+  const opt = (v,title,sub,price,checked) => `<label class="opt"><input type="radio" name="ship" value="${v}" ${checked?"checked":""}><span>${t(title)}<small>${t(sub)}</small></span><span class="tn">${price}</span></label>`;
+  return `<div class="h u"><span>${t("Оформление заказа")}</span><a class="ln m" href="#shop">${t("Вернуться в магазин")}</a></div><hr class="rule" style="margin-bottom:16px">
   <form class="co" id="co" novalidate>
     <div>
-      <fieldset><legend class="u">1 · Контакт</legend>
-        <div class="f2"><div class="fld"><label for="c-name">Имя и фамилия</label><input id="c-name" required placeholder=" " autocomplete="name"></div>
+      <fieldset><legend class="u">${t("1 · Контакт")}</legend>
+        <div class="f2"><div class="fld"><label for="c-name">${t("Имя и фамилия")}</label><input id="c-name" required placeholder=" " autocomplete="name"></div>
         <div class="fld"><label for="c-email">Email</label><input id="c-email" type="email" required placeholder=" " autocomplete="email"></div></div>
-        <div class="fld"><label for="c-msg">Telegram или WhatsApp, для связи с мастером</label><input id="c-msg" placeholder="@username или +995…"></div>
+        <div class="fld"><label for="c-msg">${t("Telegram или WhatsApp, для связи с мастером")}</label><input id="c-msg" placeholder="@username / +995…"></div>
       </fieldset>
-      <fieldset><legend class="u">2 · Получение</legend>
-        <label class="opt"><input type="radio" name="ship" value="pickup" checked><span>Забрать в мастерской, Тбилиси<small>Можно примерить и подогнать на месте</small></span><span>бесплатно</span></label>
-        <label class="opt"><input type="radio" name="ship" value="tbilisi"><span>Курьер по Тбилиси<small>На следующий день после готовности</small></span><span class="tn" data-ship="5"></span></label>
-        <label class="opt"><input type="radio" name="ship" value="world"><span>DHL Express по миру<small>3–7 дней после отправки, пошлины по правилам страны получателя</small></span><span class="tn" data-ship="45"></span></label>
+      <fieldset><legend class="u">${t("2 · Получение")}</legend>
+        ${opt("pickup","Забрать в мастерской, Тбилиси","Можно примерить и подогнать на месте",t("бесплатно"),true)}
+        ${opt("tbilisi","Курьер по Тбилиси","На следующий день после готовности",money(5))}
+        ${opt("world","DHL Express по миру","3–7 дней после отправки, пошлины по правилам страны получателя",money(45))}
         <div id="addr" hidden>
-          <div class="f2" style="margin-top:12px"><div class="fld"><label for="c-country">Страна</label><select id="c-country"><option>Грузия</option><option>Германия</option><option>Израиль</option><option>Казахстан</option><option>Нидерланды</option><option>ОАЭ</option><option>США</option><option>Другая страна</option></select></div>
-          <div class="fld"><label for="c-city">Город</label><input id="c-city" placeholder=" "></div></div>
-          <div class="fld"><label for="c-addr">Адрес и индекс</label><input id="c-addr" placeholder=" "></div>
+          <div class="f2" style="margin-top:12px"><div class="fld"><label for="c-country">${t("Страна")}</label><select id="c-country">${["Грузия","Германия","Израиль","Казахстан","Нидерланды","ОАЭ","США","Другая страна"].map(c=>`<option>${t(c)}</option>`).join("")}</select></div>
+          <div class="fld"><label for="c-city">${t("Город")}</label><input id="c-city" placeholder=" "></div></div>
+          <div class="fld"><label for="c-addr">${t("Адрес и индекс")}</label><input id="c-addr" placeholder=" "></div>
         </div>
       </fieldset>
-      <fieldset><legend class="u">3 · Оплата</legend>
-        <label class="opt"><input type="radio" name="pay" value="card" checked><span>Карта Visa, Mastercard, Apple Pay<small>Через грузинский банковский эквайринг</small></span><span></span></label>
+      <fieldset><legend class="u">${t("3 · Оплата")}</legend>
+        <label class="opt"><input type="radio" name="pay" value="card" checked><span>${t("Карта Visa, Mastercard, Apple Pay")}<small>${t("Через грузинский банковский эквайринг")}</small></span><span></span></label>
         <p class="m" id="payNote" style="margin:10px 0 0;max-width:60ch"></p>
       </fieldset>
-      <button class="btn u" type="submit" id="pay">Оплатить</button>
+      <button class="btn u" type="submit">${t("Оплатить")}</button>
       <p class="hint u" id="coErr" style="margin-top:8px"></p>
     </div>
     <aside class="summary" id="summary"></aside>
   </form>`;
 }
+function shipCost(){ const v = document.querySelector('input[name=ship]:checked'); return !v||v.value==="pickup"?0:v.value==="tbilisi"?5:45; }
 function summaryHtml(){
   const ship = shipCost();
   const sub = cart.reduce((s,l)=>s+unit(l)*l.q,0);
   const due = cart.reduce((s,l)=>s+unit(l)*l.q*(later(l.mode)?.5:1),0)+ship;
-  return `<div class="u">Ваш заказ</div>${cart.map(l=>{const p=byId(l.id);return `<div class="sline"><img src="${IMG(p.imgs[0])}" alt=""><div><div class="u">${esc(p.name)}</div><div class="m">${lineDesc(l)}${l.q>1?` · ×${l.q}`:""}</div></div><span class="tn">${money(unit(l)*l.q)}</span></div>`}).join("")}
-  <div class="row"><span class="m">Вещи</span><span class="tn">${money(sub)}</span></div>
-  <div class="row"><span class="m">Доставка</span><span class="tn">${ship?money(ship):"бесплатно"}</span></div>
-  <div class="row total"><span class="u">Итого</span><span class="tn">${money(sub+ship)}</span></div>
-  ${due<sub+ship?`<div class="row" style="color:var(--accent)"><span class="u">К оплате сейчас</span><span class="tn">${money(due)}</span></div>`:""}`;
+  return `<div class="u">${t("Ваш заказ")}</div>${cart.map(l=>{const p=byId(l.id);return `<div class="sline"><img src="${IMG(p.imgs[0])}" alt=""><div><div class="u">${esc(L(p.name))}</div><div class="m">${lineDesc(l)}${l.q>1?` · ×${l.q}`:""}</div></div><span class="tn">${money(unit(l)*l.q)}</span></div>`}).join("")}
+  <div class="row"><span class="m">${t("Вещи")}</span><span class="tn">${money(sub)}</span></div>
+  <div class="row"><span class="m">${t("Доставка")}</span><span class="tn">${ship?money(ship):t("бесплатно")}</span></div>
+  <div class="row total"><span class="u">${t("Итого")}</span><span class="tn">${money(sub+ship)}</span></div>
+  ${due<sub+ship?`<div class="row" style="color:var(--accent)"><span class="u">${t("К оплате сейчас")}</span><span class="tn">${money(due)}</span></div>`:""}`;
 }
-const lineDesc = l => l.mode==="mtm" ? "по моим меркам" : `${l.size} · ${modeName(l.mode)}`;
-const modeName = m => m==="mto"?"сшить в размере":m==="mtm"?"по меркам":m==="pre"?"предзаказ":"готовая";
-function shipCost(){ const v = document.querySelector('input[name=ship]:checked'); return !v||v.value==="pickup"?0:v.value==="tbilisi"?5:45; }
 function page(k){
-  if (k==="workshop") return `<div class="h u"><span>Мастерская</span><span class="m">Журнал</span></div><hr class="rule" style="margin-bottom:14px">
-    <div class="journal">${[["23","Лукбук: деним в песках","12 кадров"],["01","Куртка из цельного отреза ткани","история в 4 видео"],["14","Капсула за месяц: от выкройки до примерки","текст и фото"],["12","Фактура: деним наизнанку","заметка о ткани"],["21","Три фактуры в одной вещи","процесс"],["19","Знак «Самшит»","о названии"]].map(([n,t,s],i)=>`<a class="card" style="animation-delay:${i*60}ms" href="#workshop"><span class="ph"><img src="${IMG(n)}" alt="" loading="lazy"></span><span class="u">${t}</span><span class="m">${s}</span></a>`).join("")}</div>`;
-  if (k==="about") return `<div class="h u"><span>О бренде</span></div><hr class="rule" style="margin-bottom:14px"><div class="story" style="padding-top:0"><div class="prose"><p>Самшит — мастерская одного человека в Тбилиси. Я сам конструирую каждую модель, кроить и шью её от первой выкройки до последней строчки.</p><p>Вещи выходят малыми тиражами, у многих есть номер экземпляра. Если нужного размера нет, я сошью под вас: по стандартной сетке или по вашим меркам.</p><p>Вдохновение приходит из дороги, моря и старого города. Это одежда для поездок и для каждого дня, для тех, кто влюблён в жизнь.</p></div><span class="ph" style="aspect-ratio:4/5"><img src="${IMG("20")}" alt="Мастер в своей вещи"></span></div>`;
-  if (k==="delivery") return `<div class="h u"><span>Доставка и возврат</span></div><hr class="rule" style="margin-bottom:14px"><div class="prose">
-    <p class="u">Тбилиси</p><p>Самовывоз из мастерской бесплатно, с примеркой. Курьер по городу на следующий день после готовности.</p>
-    <p class="u">По миру</p><p>DHL Express, 3–7 рабочих дней после отправки. Трек-номер приходит на почту и в мессенджер. Пошлины и налоги считаются по правилам страны получателя.</p>
-    <p class="u">Сроки</p><p>Готовые вещи отправляем за 1–2 дня. Вещи под заказ шьются от 7 до 14 дней, срок указан в карточке каждой модели. Предзаказ капсулы отправляется с даты, указанной на странице.</p>
-    <p class="u">Возврат и обмен</p><p>Готовые вещи можно вернуть или обменять в течение 14 дней. Вещи, сшитые по меркам, не возвращаются, но мастер бесплатно подгонит посадку.</p>
-    <p class="m">Сроки и стоимость в прототипе условные.</p></div>`;
-  return `<div class="h u"><span>Контакты</span></div><hr class="rule" style="margin-bottom:14px"><div class="prose">
-    <p class="u">Мастерская</p><p>Тбилиси, Грузия. Примерка по договорённости.</p>
-    <p class="u">Написать мастеру</p><p>Telegram и WhatsApp: номер будет здесь<br>Instagram: <a class="ln" href="https://www.instagram.com/samshit.sp/" target="_blank" rel="noopener">@samshit.sp</a></p></div>`;
+  if (k==="workshop") return `<div class="h u"><span>${t("Мастерская")}</span><span class="m">${t("Журнал")}</span></div><hr class="rule" style="margin-bottom:14px">
+    <div class="journal">${[["23","Лукбук: деним в песках","12 кадров"],["01","Куртка из цельного отреза ткани","история в 4 видео"],["14","Капсула за месяц: от выкройки до примерки","текст и фото"],["12","Фактура: деним наизнанку","заметка о ткани"],["21","Три фактуры в одной вещи","процесс"],["19","Знак «Самшит»","о названии"]].map(([n,a,b],i)=>`<a class="card" style="animation-delay:${i*60}ms" href="#workshop"><span class="ph"><img src="${IMG(n)}" alt="" loading="lazy"></span><span class="u">${t(a)}</span><span class="m">${t(b)}</span></a>`).join("")}</div>`;
+  if (k==="about") return `<div class="h u"><span>${t("О бренде")}</span></div><hr class="rule" style="margin-bottom:14px"><div class="story" style="padding-top:0"><div class="prose"><p>${t("ABOUT_1")}</p><p>${t("ABOUT_2")}</p><p>${t("ABOUT_3")}</p></div><span class="ph" style="aspect-ratio:4/5"><img src="${IMG("20")}" alt="${t("Мастер в своей вещи")}"></span></div>`;
+  if (k==="delivery") return `<div class="h u"><span>${t("Доставка и возврат")}</span></div><hr class="rule" style="margin-bottom:14px"><div class="prose">
+    <p class="u">${t("Тбилиси")}</p><p>${t("DEL_1")}</p><p class="u">${t("По миру")}</p><p>${t("DEL_2")}</p><p class="u">${t("Сроки")}</p><p>${t("DEL_3")}</p><p class="u">${t("Возврат и обмен")}</p><p>${t("DEL_4")}</p><p class="m">${t("Сроки и стоимость в прототипе условные.")}</p></div>`;
+  return `<div class="h u"><span>${t("Контакты")}</span></div><hr class="rule" style="margin-bottom:14px"><div class="prose">
+    <p class="u">${t("Мастерская")}</p><p>${t("Тбилиси, Грузия. Примерка по договорённости.")}</p>
+    <p class="u">${t("Написать мастеру")}</p><p>${t("Telegram и WhatsApp: номер будет здесь")}<br>Instagram: <a class="ln" href="https://www.instagram.com/samshit.sp/" target="_blank" rel="noopener">@samshit.sp</a></p></div>`;
 }
 
 /* ---------- поведение видов ---------- */
 function bindView(h){
-  app.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{filter.st=b.dataset.st; const y=scrollY; app.innerHTML=`<div>${shop()}</div>`; bindView("shop"); scrollTo({top:y});});
-  const reset = app.querySelector("[data-reset]"); if (reset) reset.onclick=()=>{filter={cat:"all",st:"all"};};
-  if (h==="shop") filter.cat = filter.cat; // сохраняем текущий раздел
+  app.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{ filter.st=b.dataset.st; route(true); });
+  const reset = app.querySelector("[data-reset]"); if (reset) reset.onclick=()=>{ filter.st="all"; location.hash="#shop"; };
   if (h.startsWith("p-")) bindProduct(byId(h.slice(2)));
   if (h==="checkout") bindCheckout();
 }
@@ -537,17 +715,19 @@ function bindProduct(p){
   if (!p) return;
   const stage = $("#stage"), sizes = $("#sizes"), add = $("#add"), label = $("#addLabel"), hint = $("#hint");
   const paint = () => {
-    if (sel.mode==="mtm") sel.size = "По меркам";
-    else if (sel.size==="По меркам") sel.size = null;
+    if (sel.mode==="mtm") sel.size = "MTM";
+    else if (sel.size==="MTM") sel.size = null;
     $("#sizeBox").hidden = sel.mode==="mtm";
-    $(".price").textContent = money(p.usd + (sel.mode==="mtm"?MTM:0));
-    sizes.innerHTML = sizesHtml(p);
+    $("#price").textContent = money(p.usd + (sel.mode==="mtm"?MTM:0));
+    app.querySelectorAll("[data-mode]").forEach(x=>x.setAttribute("aria-pressed", x.dataset.mode===sel.mode));
+    const ok = s => sel.mode!=="stock" || !!p.stock[s];
+    sizes.innerHTML = SIZES.map(s=>`<button data-size="${s}" aria-pressed="${sel.size===s}" ${ok(s)?"":"disabled"}>${s}</button>`).join("");
     add.disabled = !sel.size;
-    label.textContent = !sel.size ? "Выберите размер" : p.pre ? `Предзаказ · ${sel.size}` : sel.mode==="mto" ? `Сшить в размере ${sel.size}` : sel.mode==="mtm" ? "Сшить по моим меркам" : `В корзину · ${sel.size}`;
-    hint.textContent = sel.mode==="stock" && sel.size && p.stock[sel.size]===1 ? "Последняя в этом размере" : sel.mode==="mtm" ? "После оплаты мастер попросит шесть замеров или пригласит на примерку в Тбилиси" : "";
+    label.textContent = !sel.size ? t("Выберите размер") : p.pre ? t("Предзаказ · {s}",{s:sel.size}) : sel.mode==="mto" ? t("Сшить в размере {s}",{s:sel.size}) : sel.mode==="mtm" ? t("Сшить по моим меркам") : t("В корзину · {s}",{s:sel.size});
+    hint.textContent = sel.mode==="stock" && sel.size && p.stock[sel.size]===1 ? t("Последняя в этом размере") : sel.mode==="mtm" ? t("После оплаты мастер попросит шесть замеров или пригласит на примерку в Тбилиси") : "";
   };
   sizes.onclick = e => { const b = e.target.closest("button[data-size]"); if(!b||b.disabled) return; sel.size=b.dataset.size; paint(); };
-  app.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{ if(b.disabled) return; sel.mode=b.dataset.mode; if(sel.mode==="stock"&&!p.stock[sel.size]) sel.size=null; app.querySelectorAll("[data-mode]").forEach(x=>x.setAttribute("aria-pressed", x===b)); paint(); });
+  app.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{ if(b.disabled) return; sel.mode=b.dataset.mode; if(sel.mode==="stock"&&!p.stock[sel.size]) sel.size=null; paint(); });
   app.querySelectorAll("[data-thumb]").forEach(b=>b.onclick=()=>{
     const img = stage.querySelector("img"); img.style.opacity=0;
     setTimeout(()=>{ img.src = IMG(p.imgs[+b.dataset.thumb]); img.style.opacity=1; },220);
@@ -556,31 +736,30 @@ function bindProduct(p){
   stage.onclick = () => stage.classList.toggle("zoom");
   stage.onmousemove = e => { if(!stage.classList.contains("zoom")) return; const r=stage.getBoundingClientRect(); stage.querySelector("img").style.transformOrigin=`${(e.clientX-r.left)/r.width*100}% ${(e.clientY-r.top)/r.height*100}%`; };
   add.onclick = () => {
-    addToCart(p.id, sel.size, p.pre ? "pre" : sel.mode);
+    addToCart(p.id, sel.mode==="mtm" ? "MTM" : sel.size, p.pre ? "pre" : sel.mode);
     add.classList.add("done");
     setTimeout(()=>{ add.classList.remove("done"); openCart(); }, 900);
   };
   paint();
 }
 function bindCheckout(){
-  const form = $("#co"), sum = $("#summary"), addr = $("#addr"), note = $("#payNote");
+  const form = $("#co"); if (!form) return;
+  const sum = $("#summary"), addr = $("#addr"), note = $("#payNote");
   const repaint = () => {
     sum.innerHTML = summaryHtml();
     addr.hidden = !form.querySelector('input[name=ship][value=world]').checked;
-    form.querySelectorAll("[data-ship]").forEach(s=>s.textContent=money(+s.dataset.ship));
-    const mto = cart.some(l=>later(l.mode));
-    note.textContent = mto ? "За вещи, которые шьются под вас, сейчас списывается 50%. Остаток спишем, когда вещь будет готова, и пришлём её фото." : "Оплата целиком. Чек придёт на почту.";
+    note.textContent = cart.some(l=>later(l.mode)) ? t("За вещи, которые шьются под вас, сейчас списывается 50%. Остаток спишем, когда вещь будет готова, и пришлём её фото.") : t("Оплата целиком. Чек придёт на почту.");
   };
   form.addEventListener("change", repaint);
   form.addEventListener("submit", e => {
     e.preventDefault();
     const bad = [...form.querySelectorAll("input[required]")].find(i=>!i.checkValidity());
-    if (bad) { $("#coErr").textContent = bad.id==="c-email" ? "Проверьте email: на него придёт подтверждение заказа" : "Заполните имя и email"; bad.focus(); return; }
+    if (bad) { $("#coErr").textContent = bad.id==="c-email" ? t("Проверьте email: на него придёт подтверждение заказа") : t("Заполните имя и email"); bad.focus(); return; }
     const no = "S-" + String(Date.now()).slice(-5);
-    track("event/order", "Заказ оформлен", true);
+    track("event/order", "order", true);
     const email = $("#c-email").value;
     cart = []; save(); renderCart();
-    app.innerHTML = `<div class="view done-box"><svg class="tick" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M8 21l8 8 16-17" stroke="currentColor" stroke-width="1.5"/></svg><h1>Заказ ${no} принят</h1><p>Это прототип: оплата не проводилась. В рабочем магазине на ${esc(email)} придёт подтверждение, а мастер напишет в мессенджер со сроком готовности.</p><p><a class="u ln" href="#shop">Вернуться в магазин</a></p></div>`;
+    app.innerHTML = `<div class="view done-box"><svg class="tick" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M8 21l8 8 16-17" stroke="currentColor" stroke-width="1.5"/></svg><h1>${t("Заказ {n} принят",{n:no})}</h1><p>${t("Это прототип: оплата не проводилась. В рабочем магазине на {e} придёт подтверждение, а мастер напишет в мессенджер со сроком готовности.",{e:esc(email)})}</p><p><a class="u ln" href="#shop">${t("Вернуться в магазин")}</a></p></div>`;
     scrollTo({top:0});
   });
   repaint();
@@ -591,41 +770,42 @@ function addToCart(id,size,m){
   const l = cart.find(x=>x.id===id&&x.size===size&&x.mode===m);
   if (l) l.q++; else cart.push({id,size,mode:m,q:1});
   save(); renderCart(true);
-  track("event/add-to-cart/" + id + "/" + m, "В корзину: " + id + " (" + modeName(m) + ")", true);
+  track("event/add-to-cart/" + id + "/" + m, "add-to-cart " + id + " " + m, true);
 }
 function renderCart(bump){
   const n = cart.reduce((s,l)=>s+l.q,0), c = $("#count");
   c.textContent = n;
   if (bump){ c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); }
   const lines = $("#lines"), sum = $("#sum");
-  if (!cart.length){ lines.innerHTML = `<div class="empty">Корзина пуста.<br><a class="ln u" href="#shop" data-close>Перейти в магазин</a></div>`; sum.innerHTML=""; return; }
-  lines.innerHTML = cart.map((l,i)=>{ const p=byId(l.id); return `<div class="line" data-i="${i}"><a href="#p-${p.id}" data-close><img src="${IMG(p.imgs[0])}" alt=""></a><div><div class="u">${esc(p.name)}</div><div class="m">${lineDesc(l)}</div><div class="qty"><button data-dec="${i}" aria-label="Меньше">−</button><span class="tn">${l.q}</span><button data-inc="${i}" aria-label="Больше">+</button></div></div><div style="text-align:right"><div class="tn">${money(unit(l)*l.q)}</div><button class="ln m u" data-rm="${i}" style="margin-top:8px">Убрать</button></div></div>`; }).join("");
+  if (!cart.length){ lines.innerHTML = `<div class="empty">${t("Корзина пуста.")}<br><a class="ln u" href="#shop" data-close>${t("Перейти в магазин")}</a></div>`; sum.innerHTML=""; return; }
+  lines.innerHTML = cart.map((l,i)=>{ const p=byId(l.id); return `<div class="line" data-i="${i}"><a href="#p-${p.id}" data-close><img src="${IMG(p.imgs[0])}" alt=""></a><div><div class="u">${esc(L(p.name))}</div><div class="m">${lineDesc(l)}</div><div class="qty"><button data-dec="${i}" aria-label="−">−</button><span class="tn">${l.q}</span><button data-inc="${i}" aria-label="+">+</button></div></div><div style="text-align:right"><div class="tn">${money(unit(l)*l.q)}</div><button class="ln m u" data-rm="${i}" style="margin-top:8px">${t("Убрать")}</button></div></div>`; }).join("");
   const sub = cart.reduce((s,l)=>s+unit(l)*l.q,0), mto = cart.some(l=>later(l.mode));
-  sum.innerHTML = `<div class="row"><span class="u">Сумма</span><span class="tn">${money(sub)}</span></div>
-    <div class="m">${mto?"Вещи, которые шьются под вас: сейчас 50%, остаток при готовности. ":""}Доставка считается на следующем шаге, по Тбилиси самовывоз бесплатно.</div>
-    <a class="btn u" href="#checkout" data-close>Оформить заказ</a><button class="btn ghost u" id="keep">Продолжить покупки</button>`;
+  sum.innerHTML = `<div class="row"><span class="u">${t("Сумма")}</span><span class="tn">${money(sub)}</span></div>
+    <div class="m">${mto?t("Вещи, которые шьются под вас: сейчас 50%, остаток при готовности. "):""}${t("Доставка считается на следующем шаге, по Тбилиси самовывоз бесплатно.")}</div>
+    <a class="btn u" href="#checkout" data-close>${t("Оформить заказ")}</a><button class="btn ghost u" id="keep">${t("Продолжить покупки")}</button>`;
   $("#keep").onclick = closeCart;
 }
 $("#lines").addEventListener("click", e=>{
-  const t = e.target.closest("button,a"); if(!t) return;
-  if (t.dataset.close!==undefined) { closeCart(); return; }
-  const i = +(t.dataset.inc ?? t.dataset.dec ?? t.dataset.rm);
-  if (t.dataset.inc!==undefined){ cart[i].q++; save(); renderCart(true); }
-  else if (t.dataset.dec!==undefined){ if(cart[i].q>1){cart[i].q--; save(); renderCart();} else remove(i); }
-  else if (t.dataset.rm!==undefined) remove(i);
+  const b = e.target.closest("button,a"); if(!b) return;
+  if (b.dataset.close!==undefined) { closeCart(); return; }
+  const i = +(b.dataset.inc ?? b.dataset.dec ?? b.dataset.rm);
+  if (b.dataset.inc!==undefined){ cart[i].q++; save(); renderCart(true); }
+  else if (b.dataset.dec!==undefined){ if(cart[i].q>1){cart[i].q--; save(); renderCart();} else remove(i); }
+  else if (b.dataset.rm!==undefined) remove(i);
 });
 $("#sum").addEventListener("click", e=>{ if(e.target.closest("[data-close]")) closeCart(); });
-function remove(i){ const el = $(`.line[data-i="${i}"]`); el.classList.add("out"); setTimeout(()=>{ cart.splice(i,1); save(); renderCart(); if(location.hash==="#checkout") route(); },280); }
+function remove(i){ const el = $(`.line[data-i="${i}"]`); if (el) el.classList.add("out"); setTimeout(()=>{ cart.splice(i,1); save(); renderCart(); if(location.hash==="#checkout") route(true); },280); }
 function openCart(){ $("#drawer").classList.add("open"); $("#scrim").classList.add("open"); $("#drawer").setAttribute("aria-hidden","false"); }
 function closeCart(){ $("#drawer").classList.remove("open"); $("#scrim").classList.remove("open"); $("#drawer").setAttribute("aria-hidden","true"); }
-$("#openCart").onclick = () => { openCart(); track("event/open-cart", "Открыта корзина", true); }; $("#closeCart").onclick = closeCart; $("#scrim").onclick = ()=>{ closeCart(); closeSizes(); };
+$("#openCart").onclick = () => { openCart(); track("event/open-cart", "open-cart", true); };
+$("#closeCart").onclick = closeCart; $("#scrim").onclick = ()=>{ closeCart(); closeSizes(); };
 
 /* быстрое добавление из сетки */
 app.addEventListener("click", e=>{
   const b = e.target.closest("[data-quick]"); if(!b) return;
   const p = byId(b.dataset.quick);
   addToCart(p.id, b.dataset.size, mode(p));
-  toast(`${p.name.split(" — ")[0]}, ${b.dataset.size}: в корзине`);
+  toast(t("{n}: в корзине",{n:L(p.name).split(" — ")[0] + ", " + b.dataset.size}));
 });
 
 /* таблица размеров */
@@ -638,9 +818,10 @@ document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ closeCart(); clo
 function closeMenu(){ $("#side").classList.remove("open"); $("#burger").setAttribute("aria-expanded","false"); }
 $("#burger").onclick = ()=>{ const o = $("#side").classList.toggle("open"); $("#burger").setAttribute("aria-expanded", o); };
 
-/* валюта */
-function setCur(c){ cur=c; save(); document.querySelectorAll("[data-cur]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.cur===c)); renderCart(); const y=scrollY; route(); scrollTo({top:y}); }
-document.querySelectorAll("[data-cur]").forEach(b=>b.onclick=()=>setCur(b.dataset.cur));
+/* язык и валюта */
+const rerender = () => { save(); applyStatic(); renderCart(); route(true); };
+document.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{ lang=b.dataset.lang; rerender(); track("event/lang/"+lang, "lang "+lang, true); });
+document.querySelectorAll("[data-cur]").forEach(b=>b.onclick=()=>{ cur=b.dataset.cur; rerender(); });
 
 /* шрифт */
 document.querySelectorAll("[data-font]").forEach(b=>b.onclick=()=>{
@@ -651,12 +832,11 @@ document.querySelectorAll("[data-font]").forEach(b=>b.onclick=()=>{
 try{ const f = localStorage.getItem("samshit-font"); if(f){ const b=document.querySelector(`[data-font="${f}"]`); if(b) b.click(); } }catch(e){}
 
 /* подписка */
-$("#sub").addEventListener("submit", e=>{ e.preventDefault(); toast("Подписка оформлена. В прототипе письмо не отправляется"); $("#subEmail").value=""; });
+$("#sub").addEventListener("submit", e=>{ e.preventDefault(); toast(t("Подписка оформлена. В прототипе письмо не отправляется")); $("#subEmail").value=""; });
 
-let tt; function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),2200); }
+let tt; function toast(s){ const el=$("#toast"); el.textContent=s; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),2200); }
 
-document.querySelectorAll("[data-cur]").forEach(b=>b.setAttribute("aria-pressed", b.dataset.cur===cur));
-renderCart(); route();
+applyStatic(); renderCart(); route(false);
 })();
 </script>
 </body>
