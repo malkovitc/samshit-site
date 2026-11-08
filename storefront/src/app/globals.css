@@ -209,6 +209,7 @@ footer form{display:flex;gap:10px;margin-top:14px;max-width:360px}
 .tweak button[aria-pressed="true"]{color:var(--accent)}
 .toast{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 14px);z-index:45;background:var(--fg);color:var(--bg);padding:7px 12px;transform:translateY(160%);transition:transform .45s var(--ease)}
 .toast.show{transform:none}
+.toast:not(.show){visibility:hidden;transition:transform .45s var(--ease),visibility 0s .45s}
 
 @media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:820px){
