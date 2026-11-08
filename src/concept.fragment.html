@@ -1,0 +1,530 @@
+<title>Самшит: сайт и магазин</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500&family=Lilex:wght@200;300&family=Iosevka+Charon+Mono:wght@300&family=JetBrains+Mono:wght@200&display=swap">
+<style>
+/* Layout: как у референса — узкая левая колонка-оглавление, справа рабочее поле; тонкие линейки вместо карточек */
+:root{
+  --bg:#ffffff;
+  --fg:#111114;
+  --muted:#6b6b76;
+  --line:#111114;
+  --hair:#d9d9e0;
+  --tile:#f3f3f5;
+  --accent:#1f2bd8;      /* синий веточки самшита из аватара бренда */
+  --accent-ink:#ffffff;
+  --note:#f4f5ff;
+  --sans:"Source Code Pro", ui-monospace, Menlo, monospace;
+  --mono:"Source Code Pro", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f0f12;--fg:#ececf0;--muted:#9a9aa6;--line:#ececf0;--hair:#2c2c34;--tile:#1a1a20;--accent:#7f89ff;--accent-ink:#0f0f12;--note:#171a2e;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f0f12;--fg:#ececf0;--muted:#9a9aa6;--line:#ececf0;--hair:#2c2c34;--tile:#1a1a20;--accent:#7f89ff;--accent-ink:#0f0f12;--note:#171a2e;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-weight:300;font-size:14px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+.cap{text-transform:uppercase;letter-spacing:.06em;font-size:11.5px;font-weight:500}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+.muted{color:var(--muted)}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:20px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:5px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header.top .brand{font-weight:600;letter-spacing:.08em;font-size:13px;display:flex;align-items:center;gap:8px}
+header.top .brand svg{width:14px;height:14px;color:var(--accent)}
+
+.wrap{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px;max-width:1320px;margin:0 auto;padding-block:28px 80px}
+nav.toc{position:sticky;top:64px;align-self:start;display:flex;flex-direction:column;gap:4px}
+nav.toc a{text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent)}
+main{min-width:0}
+
+section{border-top:1px dotted var(--line);padding-block:14px 48px}
+section>h2{margin:0 0 22px;font-size:11.5px;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+h3{font-size:17px;font-weight:400;line-height:1.25;margin:0 0 10px;text-wrap:balance;letter-spacing:-.005em}
+p{margin:0 0 12px;max-width:66ch}
+ul.plain{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+ul.plain li{max-width:66ch;padding-left:16px;position:relative}
+ul.plain li::before{content:"";position:absolute;left:0;top:.72em;width:7px;border-top:1px solid var(--fg)}
+
+.lede{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:end}
+.lede h1{font-size:clamp(22px,3vw,34px);font-weight:300;line-height:1.2;letter-spacing:-.01em;margin:0 0 18px;text-wrap:balance}
+.lede h1 em{font-style:normal;color:var(--accent)}
+.lede img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);margin-top:28px}
+.facts div{padding:12px 12px 4px 0}
+.facts b{display:block;font-size:24px;font-weight:300;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.col h4{margin:0 0 10px;font-size:11.5px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;padding-bottom:6px;border-bottom:1px solid var(--hair)}
+
+table{border-collapse:collapse;width:100%;font-size:14px}
+.tbl{overflow-x:auto}
+th,td{text-align:left;vertical-align:top;padding:10px 14px 10px 0;border-bottom:1px solid var(--hair)}
+th{font-size:11.5px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--line)}
+td:first-child{white-space:nowrap}
+.yes{color:var(--accent)}
+
+.note{background:var(--note);padding:14px 16px;max-width:72ch;margin-top:18px}
+.note .cap{color:var(--accent);display:block;margin-bottom:4px}
+
+/* ---------- макеты ---------- */
+.frame{border:1px solid var(--line);background:var(--bg);margin-top:8px}
+.frame .bar{display:flex;gap:10px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 10px}
+.frame .bar .url{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.frame .body{padding:14px}
+.mhead{display:flex;justify-content:space-between;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:3px 0;margin-bottom:14px}
+.mhead .logo{font-weight:600;letter-spacing:.1em;font-size:12px;display:flex;gap:6px;align-items:center}
+.mhead .logo svg{width:12px;height:12px;color:var(--accent)}
+.mgrid{display:grid;grid-template-columns:120px minmax(0,1fr);gap:18px}
+.mnav{display:flex;flex-direction:column;gap:3px}
+.mnav .sub{padding-left:8px}
+.mnav .on{color:var(--accent)}
+.hero{position:relative}
+.hero img{width:100%;aspect-ratio:16/8;object-fit:cover;display:block;object-position:center 35%}
+.hero .over{position:absolute;left:14px;top:12px;color:#fff;display:flex;flex-direction:column;gap:14px;text-shadow:0 0 12px rgba(0,0,0,.35)}
+.prod{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+.prod .ph{background:var(--tile);aspect-ratio:2/3;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.prod .ph img{width:100%;height:100%;object-fit:cover}
+.prod .nm{margin-top:6px}
+.prod .tag{display:inline-block;margin-top:4px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--fg);padding:0 5px}
+.prod .tag.mto{border-color:var(--accent);color:var(--accent)}
+.rule{border-top:1px dotted var(--line);margin:14px 0 6px}
+.filters{display:flex;flex-wrap:wrap;gap:4px 14px;margin:2px 0 4px}
+.filters span[aria-current]{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+
+.pdp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.pdp .gal{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pdp .gal img{width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--tile);display:block}
+.pdp .gal img:first-child{grid-column:1/-1;aspect-ratio:4/4}
+.pdp h5{margin:0;font-size:15px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.sizes{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.sizes span{border:1px solid var(--fg);min-width:34px;text-align:center;padding:3px 6px;font-size:12px}
+.sizes span.off{color:var(--muted);border-color:var(--hair);text-decoration:line-through}
+.btn{display:block;text-align:center;background:var(--fg);color:var(--bg);padding:7px 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.btn.alt{background:transparent;color:var(--fg);border:1px solid var(--fg);margin-top:6px}
+.acc{margin-top:14px;border-top:1px dotted var(--line)}
+.acc div{border-bottom:1px dotted var(--line);padding:7px 0;display:flex;justify-content:space-between;gap:10px}
+.acc p{font-size:13px;margin:6px 0 2px}
+.serial{margin-top:12px;border:1px solid var(--accent);color:var(--accent);padding:8px 10px;font-family:var(--mono);font-size:12px;line-height:1.5}
+
+.journal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.journal img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.journal .t{margin-top:6px}
+
+.sitemap{font-family:var(--mono);font-size:13px;line-height:1.75;white-space:pre;overflow-x:auto;margin:0;padding:14px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.sitemap b{font-weight:400;color:var(--accent)}
+
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.steps>div{padding:12px 16px 0 0;border-right:1px solid var(--hair)}
+.steps>div:last-child{border-right:0}
+.steps h4{margin:4px 0 8px;font-size:15px;font-weight:400}
+.steps ul{font-size:13.5px}
+
+.q{counter-reset:q;display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.q li{counter-increment:q;display:grid;grid-template-columns:34px minmax(0,1fr);max-width:76ch}
+.q li::before{content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:12px;color:var(--accent);padding-top:3px}
+
+.spec{border-top:1px solid var(--hair);padding-block:12px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px}
+.spec .s1{font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.spec .s2{font-size:16px;margin-top:4px}
+.spec.pick{border-top:1px solid var(--accent)}
+.spec.pick .lbl{color:var(--accent)}
+.cta{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--fg);padding:6px 12px;text-decoration:none;text-transform:uppercase;letter-spacing:.08em;font-size:11.5px;transition:background .25s,color .25s}
+.cta:hover{background:var(--fg);color:var(--bg)}
+@media (max-width:720px){.spec{grid-template-columns:minmax(0,1fr);gap:4px}}
+footer{border-top:1px solid var(--line);padding-block:10px 30px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media (max-width:980px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  nav.toc{position:static;flex-direction:row;flex-wrap:wrap;gap:4px 14px;padding-bottom:16px}
+  .cols3{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps>div:nth-child(2){border-right:0}
+}
+@media (max-width:720px){
+  .lede,.cols2,.pdp{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mgrid{grid-template-columns:minmax(0,1fr)}
+  .mnav{flex-direction:row;flex-wrap:wrap;gap:3px 12px}
+  .mnav .sub{display:none}
+  .prod{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .journal{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .steps>div{border-right:0;border-bottom:1px solid var(--hair);padding-bottom:12px}
+}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sprig" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 23c-.3-3.4-.7-6.6-1.6-9.4C8.6 13.9 6.1 12.6 5 10.1c2.4-.6 4.8.4 5.9 2.3-.4-2.2-.2-4.5.9-6.7C10 4.6 9.2 2.6 9.8.8c1.9 1 3 3 2.6 5 1.3-1.3 3.3-1.8 5.2-1.2-.6 2-2.5 3.3-4.6 3.3-.6 1.6-.7 3.3-.4 5 1-1.4 2.8-2.1 4.6-1.8-.4 1.9-2.1 3.3-4.1 3.4.6 2.6.9 5.3 1.1 8.5z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="brand"><svg aria-hidden="true"><use href="#sprig"/></svg>САМШИТ / КОНЦЕПЦИЯ САЙТА</div>
+  <div class="cap muted">версия 2 · 08.11.2026</div>
+</header>
+
+<div class="wrap">
+  <nav class="toc cap" aria-label="Разделы">
+    <a href="#brand">Бренд сейчас</a>
+    <a href="#ref">Что берём у референса</a>
+    <a href="#idea">Идея сайта</a>
+    <a href="#type">Шрифты</a>
+    <a href="#map">Карта сайта</a>
+    <a href="#mock">Макеты</a>
+    <a href="#sales">Как продаём</a>
+    <a href="#tech">Платформа</a>
+    <a href="#admin">Админка и аналитика</a>
+    <a href="#content">Контент к запуску</a>
+    <a href="#plan">План работ</a>
+    <a href="#questions">Решения</a>
+  </nav>
+
+  <main>
+    <div class="lede" style="padding-bottom:36px">
+      <div>
+        <p class="cap muted" style="margin-bottom:14px">Сайт и интернет-магазин для @samshit.sp</p>
+        <h1>Магазин мастерской, где каждая вещь <em>сшита одним человеком</em> и это видно на странице</h1>
+        <p>Строгая витрина в духе Lady White Co., но с тем, чего у них нет: имя модели, номер экземпляра, срок пошива и видео процесса прямо в карточке товара. Заказ уходит с сайта, а не из директа.</p>
+        <p style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><a class="cta" href="prototype.html">Открыть кликабельный прототип →</a></p>
+      </div>
+      <img src="img/p03.jpg" alt="Мотокуртка из денима со съёмным нагрудником, на фоне мотоцикла">
+    </div>
+
+    <section id="brand">
+      <h2>Бренд сейчас</h2>
+      <div class="cols2">
+        <div class="col">
+          <h3>Что видно по профилю</h3>
+          <ul class="plain">
+            <li>Мастерская одного человека в Тбилиси. Владелец сам конструирует и шьёт («все вещи для бренда я отшиваю лично»).</li>
+            <li>Ассортимент: мотокуртки из денима и хлопка со съёмным нагрудником, брюки свободного кроя, свитшоты и худи из двух-трёх фактур, лонгсливы со смещённой плечевой линией и воротником «лепестки».</li>
+            <li>Язык постов детальный: плотность ткани (450 и 490 г), состав, число карманов, открытые срезы, регулировка низа кнопками. Это готовые описания товара.</li>
+            <li>Настроение: море, мотоцикл, дальние поездки, старый Тбилиси. Сам владелец пишет «униформа для романтиков, влюблённых в жизнь».</li>
+            <li>Знак: синяя веточка самшита в аватаре и рукописный логотип «Самшит» на вещах.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>Где теряются продажи</h3>
+          <ul class="plain">
+            <li>Почти каждый пост заканчивается «для заказа напишите в директ». Каждая продажа идёт через переписку, цены почти нигде не указаны (в одном рилсе: футболка 5500).</li>
+            <li>Ссылка в шапке ведёт на @samshit_catalog: 3 поста и 6 подписчиков. Каталога фактически нет.</li>
+            <li>В постах уже обещан сайт: «открываем сайт для вашего удобства», «скоро на нашем сайте», «доступны для предзаказа на сайте». Аудитория его ждёт.</li>
+            <li>Фото разнородные: предметка на белом, вешалка в мастерской, улица, студия. Для каталога нужен один стандарт.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="facts">
+        <div><b>596</b><span class="cap muted">постов</span></div>
+        <div><b>5 177</b><span class="cap muted">подписчиков</span></div>
+        <div><b>~30</b><span class="cap muted">моделей в ленте за год, оценка</span></div>
+        <div><b>1</b><span class="cap muted">мастер, Тбилиси</span></div>
+      </div>
+    </section>
+
+    <section id="ref">
+      <h2>Что берём у Lady White Co. и что нет</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Приём референса</th><th>Для Самшита</th><th>Почему</th></tr></thead>
+        <tbody>
+          <tr><td>Левая колонка-меню, капс мелким кеглем</td><td class="yes">берём</td><td>Тихая навигация, всё внимание на фото. Ассортимента мало, меню помещается целиком.</td></tr>
+          <tr><td>Тонкие линейки сверху и снизу шапки, пунктир между блоками</td><td class="yes">берём</td><td>Отсылка к выкройке и строчке, для швейной мастерской это родной язык.</td></tr>
+          <tr><td>Сетка 4 колонки, вещь на светло-сером поле</td><td class="yes">берём</td><td>Но нужно переснять предметку на одном фоне, иначе сетка развалится.</td></tr>
+          <tr><td>Артикул под названием (LW-T141-HGRY)</td><td class="yes">берём, со смыслом</td><td>Код модели + материал + номер экземпляра: SAM-JK02-DNM / 07. У референса это складской код, у нас это паспорт штучной вещи.</td></tr>
+          <tr><td>Features и Citations: лукбуки и тексты рядом с магазином</td><td class="yes">берём как «Мастерская»</td><td>Рилсы процесса и истории создания курток у бренда уже есть, их надо собрать в журнал.</td></tr>
+          <tr><td>Десятки подкатегорий (2-packs, Pocket T, Dry-lite…)</td><td>не берём</td><td>У Самшита 5–6 типов вещей. Пустые разделы выглядят хуже, чем их отсутствие.</td></tr>
+          <tr><td>Stockists, Careers, Gift Card</td><td>не на старте</td><td>Добавить, когда появятся магазины-партнёры и повторные покупатели.</td></tr>
+          <tr><td>Чёрно-белая гамма без акцента</td><td>меняем</td><td>Один фирменный цвет: синий веточки из аватара. Им отмечаем ссылки, статус «под заказ» и номер экземпляра.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="idea">
+      <h2>Идея сайта</h2>
+      <div class="cols3">
+        <div class="col">
+          <h4>Вещь как экземпляр</h4>
+          <p>У каждой модели есть имя («CUTAIR», «RACE» уже есть в ленте) и тираж. Покупатель видит, какой по счёту экземпляр он получит и сколько их всего сшито.</p>
+        </div>
+        <div class="col">
+          <h4>Конструкция на виду</h4>
+          <p>В карточке отдельный блок «Конструкция»: смещённая линия плеча, съёмный нагрудник, 10 карманов, один непромокаемый. Это то, за что платят, и в ленте это уже описано.</p>
+        </div>
+        <div class="col">
+          <h4>Процесс рядом с покупкой</h4>
+          <p>Короткое видео пошива из рилсов встроено в карточку товара (своим файлом, без плеера Instagram). Тот, кто сомневается в цене, видит, сколько там работы.</p>
+        </div>
+      </div>
+      <div class="note">
+        <span class="cap">Тон</span>
+        Тексты на сайте от первого лица, как в ленте («я сконструировал», «я шью»), но без эмодзи и без «пишите в директ». Два языка на старте: русский и английский. Грузинский добавить третьим, если появятся местные покупатели и партнёры.
+      </div>
+    </section>
+
+    <section id="type">
+      <h2>Шрифты</h2>
+      <p>Весь сайт набран одним тонким моноширинным шрифтом, как бирка или техническая карта изделия. Из 51 моноширинного семейства в Google Fonts кириллицу и тонкие начертания (200–300) имеют одиннадцать. На русском тексте в тонком весе я сравнил всех; ниже четыре лучших. В прототипе их можно переключать внизу экрана.</p>
+      <div class="spec pick"><div class="cap lbl">Source Code Pro 300<br><span class="muted" style="text-transform:none;letter-spacing:0">основной выбор</span></div><div style="font-family:'Source Code Pro';font-weight:300"><div class="s1">Куртка «Щит» — индиго &nbsp;SAM-JK02-DNM</div><div class="s2">Съёмный нагрудник, 10 карманов, один непромокаемый. Экземпляр 07 из 12 · ₾ 1 135</div></div></div>
+      <div class="spec"><div class="cap lbl">Lilex 200<br><span class="muted" style="text-transform:none;letter-spacing:0">мягче, ближе к гротеску</span></div><div style="font-family:'Lilex';font-weight:200"><div class="s1">Куртка «Щит» — индиго &nbsp;SAM-JK02-DNM</div><div class="s2">Съёмный нагрудник, 10 карманов, один непромокаемый. Экземпляр 07 из 12 · ₾ 1 135</div></div></div>
+      <div class="spec"><div class="cap lbl">Iosevka Charon 300<br><span class="muted" style="text-transform:none;letter-spacing:0">узкий, самый изящный</span></div><div style="font-family:'Iosevka Charon Mono';font-weight:300"><div class="s1">Куртка «Щит» — индиго &nbsp;SAM-JK02-DNM</div><div class="s2">Съёмный нагрудник, 10 карманов, один непромокаемый. Экземпляр 07 из 12 · ₾ 1 135</div></div></div>
+      <div class="spec"><div class="cap lbl">JetBrains Mono 200<br><span class="muted" style="text-transform:none;letter-spacing:0">самый технический</span></div><div style="font-family:'JetBrains Mono';font-weight:200"><div class="s1">Куртка «Щит» — индиго &nbsp;SAM-JK02-DNM</div><div class="s2">Съёмный нагрудник, 10 карманов, один непромокаемый. Экземпляр 07 из 12 · ₾ 1 135</div></div></div>
+      <div class="note">
+        <span class="cap">Почему Source Code Pro</span>
+        Самая ровная кириллица в тонком весе, спокойная ширина, читается мелким кеглем в карточке и в корзине. Отсеяны: Roboto Mono и IBM Plex Mono (слишком узнаваемы), Martian Mono (широкий, съедает строку), Fira Code и Overpass Mono (нет начертания тоньше 300, выглядят грубее). Платные варианты на будущее: Söhne Mono, Suisse Int'l Mono, ABC Diatype Mono. Перед покупкой лицензии нужно проверить, есть ли у них кириллица.
+      </div>
+    </section>
+
+    <section id="map">
+      <h2>Карта сайта</h2>
+<pre class="sitemap">Главная        лукбук-кадр сезона → новые вещи (8) → одна история из мастерской
+<b>Магазин</b>        Все · Куртки · Брюки · Свитшоты и худи · Лонгсливы · Футболки · Аксессуары
+                фильтр: в наличии / под заказ / предзаказ капсулы
+  └ Карточка   фото 4–6 · размеры · конструкция · материал · посадка и мерки
+                срок пошива · номер экземпляра · видео процесса · похожие
+<b>Мастерская</b>     журнал: лукбуки сезонов, «как сделана куртка», ткани
+<b>О бренде</b>       кто шьёт, где мастерская, принципы (штучно, вручную, Тбилиси)
+<b>Размеры</b>        таблица + как снять мерки + индивидуальная подгонка
+<b>Доставка и оплата</b>  Грузия · СНГ · мир; сроки пошива; возврат и обмен
+<b>Контакты</b>       Telegram, WhatsApp, Instagram, адрес примерки в Тбилиси
+Корзина → Оформление → Подтверждение (письмо + сообщение в мессенджер)</pre>
+    </section>
+
+    <section id="mock">
+      <h2>Макеты ключевых страниц</h2>
+      <p class="muted">Названия моделей кроме CUTAIR и RACE, артикулы и номера экземпляров условные. Цены не указаны, их задаёт владелец. Фото взяты из ленты как есть, на сайте их заменит единая съёмка.</p>
+
+      <h3 style="margin-top:22px">Главная</h3>
+      <div class="frame">
+        <div class="bar"><span class="url">samshit.xyz</span><span class="cap muted">1440 px</span></div>
+        <div class="body">
+          <div class="mhead"><span class="logo"><svg aria-hidden="true"><use href="#sprig"/></svg>САМШИТ</span><span class="cap">USD / GEL / EUR&nbsp;&nbsp; ПОИСК&nbsp;&nbsp; КОРЗИНА — 0</span></div>
+          <div class="mgrid">
+            <div class="mnav cap"><span>Магазин</span><span>Мастерская</span><span>О бренде</span><span>Размеры</span><span>Доставка</span><span>Контакты</span></div>
+            <div>
+              <div class="hero">
+                <img src="img/p04.jpg" alt="Белая куртка на фоне мотоцикла">
+                <div class="over cap"><span>Весна-27 · Море и дорога</span><span>Смотреть</span></div>
+              </div>
+              <div class="rule"></div>
+              <div class="cap">Новое</div>
+              <div class="prod">
+                <div><div class="ph"><img src="img/p06.jpg" alt=""></div><div class="cap nm">Куртка «Щит» — индиго</div><div class="mono muted">SAM-JK02-DNM</div><span class="tag">в наличии · 1</span></div>
+                <div><div class="ph"><img src="img/p05.jpg" alt=""></div><div class="cap nm">Куртка «Щит» — белый</div><div class="mono muted">SAM-JK02-WHT</div><span class="tag mto">под заказ · 14 дней</span></div>
+                <div><div class="ph"><img src="img/p15.jpg" alt=""></div><div class="cap nm">Бомбер из мембраны — олива</div><div class="mono muted">SAM-SW04-OLV</div><span class="tag mto">под заказ · 10 дней</span></div>
+                <div><div class="ph"><img src="img/p17.jpg" alt=""></div><div class="cap nm">Брюки, открытые срезы — меланж</div><div class="mono muted">SAM-PT03-GRY</div><span class="tag">в наличии · 2</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:34px">Каталог</h3>
+      <div class="frame">
+        <div class="bar"><span class="url">samshit.xyz/shop</span><span class="cap muted">1440 px</span></div>
+        <div class="body">
+          <div class="mhead"><span class="logo"><svg aria-hidden="true"><use href="#sprig"/></svg>САМШИТ</span><span class="cap">КОРЗИНА — 0</span></div>
+          <div class="mgrid">
+            <div class="mnav cap"><span class="on">Магазин</span><span class="sub">Все</span><span class="sub">Куртки</span><span class="sub">Брюки</span><span class="sub">Свитшоты и худи</span><span class="sub">Лонгсливы</span><span class="sub">Футболки</span><span>Мастерская</span><span>О бренде</span></div>
+            <div>
+              <div class="filters cap"><span aria-current="true">Все · 18</span><span>В наличии · 7</span><span>Под заказ · 9</span><span>Предзаказ капсулы · 2</span></div>
+              <div class="rule" style="margin-top:6px"></div>
+              <div class="prod">
+                <div><div class="ph"><img src="img/p00.jpg" alt=""></div><div class="cap nm">Лонгслив «Лепестки» — белая глина</div><div class="mono muted">SAM-LS01-VIS</div><span class="tag mto">под заказ</span></div>
+                <div><div class="ph"><img src="img/p22.jpg" alt=""></div><div class="cap nm">Куртка-худи, три фактуры — чёрный</div><div class="mono muted">SAM-HD02-BLK</div><span class="tag">в наличии · 1</span></div>
+                <div><div class="ph"><img src="img/p18.jpg" alt=""></div><div class="cap nm">Свитшот круглый рукав — чёрный</div><div class="mono muted">SAM-SW02-BLK</div><span class="tag mto">под заказ</span></div>
+                <div><div class="ph"><img src="img/p13.jpg" alt=""></div><div class="cap nm">Свитшот «Лепестки» — тауп</div><div class="mono muted">SAM-SW03-TPE</div><span class="tag">в наличии · 1</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:34px">Карточка товара</h3>
+      <div class="frame">
+        <div class="bar"><span class="url">samshit.xyz/shop/jacket-shield-indigo</span><span class="cap muted">1440 px</span></div>
+        <div class="body">
+          <div class="pdp">
+            <div class="gal">
+              <img src="img/p06.jpg" alt="Куртка «Щит» индиго, вид спереди">
+              <img src="img/p03.jpg" alt="Куртка на человеке">
+              <img src="img/p23.jpg" alt="Куртка из денима на человеке">
+            </div>
+            <div>
+              <h5>Куртка «Щит» — индиго</h5>
+              <div class="mono muted" style="margin-top:4px">SAM-JK02-DNM</div>
+              <div style="margin-top:14px" class="cap">₾ —</div>
+              <div class="sizes"><span>S</span><span>M</span><span class="off">L</span><span>XL</span><span>По меркам</span></div>
+              <span class="btn">В корзину · в наличии, M</span>
+              <span class="btn alt">Сшить под меня · 14 дней</span>
+              <div class="serial">Экземпляр 07 из 12<br>Сконструирована и сшита вручную в Тбилиси</div>
+              <div class="acc cap">
+                <div><span>Конструкция</span><span>−</span></div>
+                <p style="text-transform:none;letter-spacing:0;font-weight:400">Съёмный нагрудный «щит» со встроенными карманами и подвесами. 10 карманов, один полностью непромокаемый для документов. Кулиса по низу меняет силуэт.</p>
+                <div><span>Материал и уход</span><span>+</span></div>
+                <div><span>Посадка и мерки</span><span>+</span></div>
+                <div><span>Как сделана · видео 0:40</span><span>+</span></div>
+                <div><span>Доставка и возврат</span><span>+</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:34px">Мастерская</h3>
+      <div class="frame">
+        <div class="bar"><span class="url">samshit.xyz/workshop</span><span class="cap muted">1440 px</span></div>
+        <div class="body">
+          <div class="journal">
+            <div><img src="img/p23.jpg" alt=""><div class="cap t">Лукбук: деним в песках</div><div class="mono muted">12 кадров</div></div>
+            <div><img src="img/p01.jpg" alt=""><div class="cap t">Куртка из цельного отреза ткани</div><div class="mono muted">история в 4 видео</div></div>
+            <div><img src="img/p14.jpg" alt=""><div class="cap t">Капсула за месяц: от выкройки до примерки</div><div class="mono muted">текст + фото</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sales">
+      <h2>Как продаём</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Режим</th><th>Когда</th><th>Что видит покупатель</th><th>Оплата</th></tr></thead>
+        <tbody>
+          <tr><td>В наличии</td><td>Вещь сшита и лежит в мастерской</td><td>Размер, остаток («1 шт.»), отправка за 1–2 дня</td><td>100% при заказе</td></tr>
+          <tr><td>В моём размере</td><td>Любая модель, по стандартной сетке</td><td>Срок пошива, выбор размера S–XL</td><td>Предоплата 50%, остаток перед отправкой</td></tr>
+          <tr><td>По моим меркам</td><td>Любая модель, индивидуально</td><td>Доплату и шесть замеров после оплаты или примерку в Тбилиси</td><td>Предоплата 50% вместе с доплатой</td></tr>
+          <tr><td>Предзаказ капсулы</td><td>Новая коллекция ещё в работе</td><td>Дата начала отправок, ограниченное число мест</td><td>100% или фиксированный депозит</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">
+        <span class="cap">Директ остаётся, но вторым</span>
+        Кнопка «Спросить мастера» в карточке открывает Telegram или WhatsApp с уже вставленным названием вещи и размером. Вопрос приходит с контекстом, продажа всё равно оформляется на сайте.
+      </div>
+    </section>
+
+    <section id="tech">
+      <h2>Платформа</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Вариант</th><th>Плюсы</th><th>Минусы</th><th>Подходит, если</th></tr></thead>
+        <tbody>
+          <tr><td>Shopify</td><td>На нём сделан референс; готовые корзина, склад, налоги, письма; темы в этой эстетике есть</td><td>Shopify Payments в Грузии нет, нужен сторонний платёжный шлюз; абонентская плата в долларах</td><td>Ставка на международную аудиторию и рост</td></tr>
+          <tr><td>Tilda + корзина</td><td>Быстро, дёшево, знакома русскоязычным подрядчикам; лукбуки собираются легко</td><td>Слабый учёт остатков и вариантов; строгая сетка референса делается вручную</td><td>Нужен запуск за 2–3 недели и каталог до 30 позиций</td></tr>
+          <tr><td>Своя вёрстка + headless-магазин</td><td>Полный контроль над видом, номер экземпляра и режимы продаж как сущности</td><td>Дороже и дольше, нужен постоянный разработчик</td><td>Когда первая версия доказала продажи</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">
+        <span class="cap">Рекомендация</span>
+        Продаём по всему миру, поэтому Shopify: мультивалютность (USD, GEL, EUR), международная доставка и встроенная аналитика из коробки. Эквайринг на грузинское ИП владелец подключить может. Осталось проверить в банке, есть ли у его шлюза модуль для Shopify. Если нет, следующий вариант WooCommerce: насколько я знаю, у грузинских банков для него есть готовые модули. Tilda оставляем запасным вариантом.
+      </div>
+    </section>
+
+    <section id="admin">
+      <h2>Админка и аналитика</h2>
+      <div class="cols3">
+        <div class="col">
+          <h4>Заказы</h4>
+          <ul class="plain">
+            <li>Лента заказов со статусами: оплачен, в пошиве, готов, отправлен, получен.</li>
+            <li>Для вещей под заказ: срок готовности, мерки покупателя, остаток к оплате.</li>
+            <li>Уведомление мастеру в Telegram о каждом новом заказе.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Товары</h4>
+          <ul class="plain">
+            <li>Модель, цена, остатки по размерам, срок пошива, тираж и номер текущего экземпляра.</li>
+            <li>Режимы продаж включаются флажками: в наличии, в размере, по меркам, предзаказ.</li>
+            <li>В Shopify это стандартная админка плюс метаполя для тиража и сроков.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Трафик</h4>
+          <ul class="plain">
+            <li>Кто заходит и откуда: источники (Instagram, поиск, прямые), страны, города, устройства, браузеры.</li>
+            <li>Какие страницы и вещи смотрят, сколько добавляют в корзину и доходят до оплаты.</li>
+            <li>UTM-метки на каждую ссылку из Instagram: шапка профиля, сторис, конкретный пост.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tbl" style="margin-top:20px"><table>
+        <thead><tr><th>Инструмент</th><th>Что даёт</th><th>Когда</th></tr></thead>
+        <tbody>
+          <tr><td>GoatCounter</td><td>Простая панель трафика: страницы, источники, страны, устройства, события «в корзину» и «оплата». Без cookie, поэтому не нужен баннер согласия.</td><td class="yes">сейчас, на прототипе</td></tr>
+          <tr><td>Аналитика Shopify</td><td>Продажи, конверсия по шагам, средний чек, повторные покупатели, отчёты по странам.</td><td>с запуском магазина</td></tr>
+          <tr><td>Meta Pixel</td><td>Нужен, только если владелец будет запускать рекламу в Instagram.</td><td>по необходимости</td></tr>
+        </tbody>
+      </table></div>
+      <div class="note">
+        <span class="cap">Ссылки из Instagram</span>
+        В шапку профиля ставим ссылку <span class="mono">samshit.xyz/?utm_source=instagram&amp;utm_medium=bio</span>, в сторис <span class="mono">utm_medium=stories&amp;utm_campaign=название</span>. Тогда в панели видно, какой пост или сторис привёл покупателя.
+      </div>
+    </section>
+
+    <section id="content">
+      <h2>Контент к запуску</h2>
+      <div class="cols3">
+        <div class="col">
+          <h4>Предметная съёмка</h4>
+          <ul class="plain">
+            <li>Один фон, светло-серый, один свет. В ленте уже есть удобный уголок с фоном в мастерской.</li>
+            <li>На каждую вещь: спереди, сзади, деталь шва или фурнитуры, вещь на человеке.</li>
+            <li>Кадр 2:3, вещь занимает одинаковую долю кадра.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Тексты</h4>
+          <ul class="plain">
+            <li>Собрать описания из постов: состав, плотность, крой, карманы.</li>
+            <li>Замеры каждого размера: длина, ширина груди, рукав, для брюк шаговый и низ.</li>
+            <li>Страница «О бренде»: 3 абзаца от первого лица и портрет за работой.</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h4>Видео</h4>
+          <ul class="plain">
+            <li>Из рилсов вырезать по 30–60 секунд процесса на модель, без музыки, вертикально.</li>
+            <li>Хранить у себя, не встраивать плеер Instagram: он медленный и уводит с сайта.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="plan">
+      <h2>План работ</h2>
+      <div class="steps">
+        <div><span class="cap muted">Неделя 1</span><h4>Решения</h4><ul class="plain"><li>Ответы на вопросы ниже</li><li>Эквайринг и платформа</li><li>Домен и список моделей</li></ul></div>
+        <div><span class="cap muted">Недели 2–3</span><h4>Контент</h4><ul class="plain"><li>Съёмка 15–20 вещей</li><li>Тексты и мерки</li><li>Нарезка видео</li></ul></div>
+        <div><span class="cap muted">Недели 3–5</span><h4>Сборка</h4><ul class="plain"><li>Тема, сетка, карточка</li><li>Режимы продаж, доставка</li><li>RU и EN</li></ul></div>
+        <div><span class="cap muted">Неделя 6</span><h4>Запуск</h4><ul class="plain"><li>Тестовые заказы</li><li>Ссылка в шапке профиля на сайт</li><li>Капсула предзаказом как повод</li></ul></div>
+      </div>
+    </section>
+
+    <section id="questions">
+      <h2>Решения владельца</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Вопрос</th><th>Решение</th><th>Что это меняет</th></tr></thead>
+        <tbody>
+          <tr><td>Где покупатели</td><td>Весь мир, плюс отдельно Тбилиси</td><td>Валюта по умолчанию USD, переключатель GEL и EUR. DHL Express по миру, курьер и примерка в мастерской в Тбилиси.</td></tr>
+          <tr><td>Юрлицо и эквайринг</td><td>ИП в Грузии, онлайн-эквайринг подключить можно</td><td>Карты Visa, Mastercard, Apple Pay через грузинский банк.</td></tr>
+          <tr><td>Остатки и сроки пошива</td><td>Добавим позже</td><td>В прототипе условные значения с пометкой.</td></tr>
+          <tr><td>Имена моделей и тиражи</td><td>Пока заглушки, имена из Instagram</td><td>Из ленты взяты CUTAIR, RACE и «Лепестки», остальные названия условные.</td></tr>
+          <tr><td>Цены</td><td>Публикуем открыто, пока заглушки</td><td>Цены в прототипе условные.</td></tr>
+          <tr><td>Пошив</td><td>Все варианты</td><td>Готовая вещь, «в моём размере», «по моим меркам» с доплатой.</td></tr>
+          <tr><td>Домен</td><td>samshit.xyz, ещё не куплен</td><td>Пока прототип живёт на samshit.linza-ai.xyz.</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin-top:16px">Осталось уточнить: есть ли у шлюза банка модуль для Shopify, размер доплаты за пошив по меркам и адрес мастерской для самовывоза.</p>
+    </section>
+
+    <footer class="cap muted">
+      <span>Источники: профиль @samshit.sp и @samshit_catalog, ladywhiteco.com, 08.11.2026</span>
+      <span>Концепция, не рабочий магазин</span>
+    </footer>
+  </main>
+</div>
