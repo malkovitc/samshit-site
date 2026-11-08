@@ -84,7 +84,7 @@ export function Header({ currency, count }: { currency: string; count: number })
   if (count !== prev) { setPrev(count); if (count > prev) setBump(true) }
   return (
     <>
-      <div className="notice u"><span>{t("notice.world")}</span><span>{t("notice.tbilisi")}</span><span style={{ color: "var(--accent)" }}>{t("notice.placeholder")}</span></div>
+      <div className="notice u"><span>{t("notice.world")}</span><span>{t("notice.tbilisi")}</span></div>
       <header>
         <Link className="logo u" href="/"><Sprig />{t("brand.name")}</Link>
         <div className="hr u">
@@ -201,13 +201,18 @@ const FONTS = [["source", "Source Code Pro"], ["lilex", "Lilex"], ["iosevka", "I
 export function FontTweak() {
   const t = useTranslations("common")
   const [font, setFont] = useState("source")
-  useEffect(() => { try { const f = localStorage.getItem("samshit-font"); if (f) setFont(f) } catch {} }, [])
+  // панель сравнения шрифтов — инструмент для владельца: видна только по ?fonts
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    setVisible(new URLSearchParams(window.location.search).has("fonts"))
+    try { const f = localStorage.getItem("samshit-font"); if (f) setFont(f) } catch {}
+  }, [])
   useEffect(() => {
     document.documentElement.dataset.font = font
     try { localStorage.setItem("samshit-font", font) } catch {}
   }, [font])
   return (
-    <div className="tweak u" role="group" aria-label="Font">
+    <div className="tweak u" role="group" aria-label="Font" hidden={!visible}>
       <span className="m">{t("font")}</span>
       {FONTS.map(([k, n]) => <button key={k} aria-pressed={font === k} onClick={() => setFont(k)}>{n}</button>)}
     </div>

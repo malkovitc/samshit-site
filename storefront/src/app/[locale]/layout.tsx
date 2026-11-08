@@ -49,7 +49,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
               <main id="app">{children}</main>
             </div>
             <footer className="u">
-              <div className="m">{t("brand.copyright")}</div>
+              <div className="m">{t("brand.copyright")}<br /><span style={{ color: "var(--accent)" }}>{t("notice.placeholder")}</span></div>
               <div>
                 <div className="cols">
                   <a className="ln" href="https://www.instagram.com/samshit.sp/" target="_blank" rel="noopener">Instagram</a>

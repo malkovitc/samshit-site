@@ -16,11 +16,11 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
   const storyImg = all.find((p) => p.handle === "shield-indigo")?.images[2]
   return (
     <div className="view">
-      <Link className="hero" href="/shop" style={{ display: "block" }}>
-        {heroImg && <img src={heroImg} alt="" />}
-        <div className="over u"><span>{t("heroTitle")}</span><span className="ln" style={{ alignSelf: "start" }}>{t("view")}</span></div>
+      <Link className="hero" href="/shop">
+        <div className="frame">{heroImg && <img src={heroImg} alt="" />}</div>
+        <div className="hero-cap u"><span>{t("heroTitle")}</span><span>{t("view")} <span className="arrow">→</span></span></div>
       </Link>
-      <div className="h u"><span>{t("new")}</span><Link className="ln" href="/shop">{t("allPieces")}</Link></div>
+      <div className="h u" style={{ marginTop: 36 }}><span>{t("new")}</span><Link className="ln" href="/shop">{t("allPieces")}</Link></div>
       <hr className="rule" />
       <div className="grid">{fresh.map((p, i) => <ProductCard key={p.id} p={p} i={i} />)}</div>
       <hr className="rule" />
