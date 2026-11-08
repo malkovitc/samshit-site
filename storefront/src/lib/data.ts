@@ -130,8 +130,11 @@ export async function getCart() {
       fields: "*items,*items.variant,*items.product,+items.metadata,*region,*region.countries,*shipping_methods,*shipping_address,email,total,subtotal,shipping_total,item_subtotal,currency_code,metadata",
     })
     return cart.completed_at ? null : cart
-  } catch {
-    return null
+  } catch (e) {
+    // корзины больше нет (удалена или чужая) — начнём новую; остальные ошибки не прячем,
+    // иначе при недоступном бэкенде покупатель видит «корзина пуста»
+    if ((e as { status?: number }).status === 404) return null
+    throw e
   }
 }
 

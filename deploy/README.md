@@ -13,3 +13,9 @@ docker compose up -d --build storefront
 
 Предпросмотр до публикации: `ssh -L 18000:127.0.0.1:18000 -L 19000:127.0.0.1:19000 sd-105293`,
 витрина http://localhost:18000, админка http://localhost:19000/app.
+
+Обновление только витрины, не перезапуская бэкенд:
+
+```sh
+cd ~/samshit && git pull && cd deploy && docker compose up -d --build --no-deps storefront
+```
