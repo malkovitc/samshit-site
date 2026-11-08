@@ -31,7 +31,11 @@
  "common": {
   "close": "Close",
   "free": "free",
-  "font": "Font:"
+  "font": "Font:",
+  "offline": "No connection. Please try again",
+  "errorTitle": "Something went wrong",
+  "errorText": "The page did not load. Reloading usually helps.",
+  "reload": "Reload"
  },
  "sizes": {
   "title": "Sizes · garment measurements, cm",

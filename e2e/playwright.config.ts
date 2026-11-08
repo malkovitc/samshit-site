@@ -7,7 +7,7 @@ export default defineConfig({
   expect: { timeout: 10_000 },
   fullyParallel: false,
   workers: 1, // общая база: заказы и остатки, параллель путает счётчики
-  retries: 0,
+  retries: 1, // сеть бокса меняется (агенты Linza создают docker-сети): одиночный сбой — flaky, повтор — провал
   reporter: [["list"]],
   outputDir: "out/results",
   use: {

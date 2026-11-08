@@ -1,11 +1,10 @@
 "use client"
 
-import { useTransition } from "react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { addToCart } from "@/lib/actions"
 import type { LineMode } from "@/lib/data"
-import { useUi } from "./chrome"
+import { useUi, useSafeTransition } from "./chrome"
 import { track } from "./analytics"
 
 type Opt = { label: string; variantId: string; mode: LineMode; disabled: boolean; wide?: boolean }
@@ -14,7 +13,7 @@ export function QuickAdd({ title, options }: { title: string; options: Opt[] }) 
   const t = useTranslations("shop")
   const ui = useUi()
   const router = useRouter()
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   const add = (o: Opt) =>
     start(async () => {
       await addToCart(o.variantId, o.mode)

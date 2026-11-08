@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { register, signIn, signOut, toggleWishlist, unsubscribeNewsletter, updateProfile } from "@/lib/account-actions"
-import { useUi } from "./chrome"
+import { useUi, useSafeTransition } from "./chrome"
 import { track } from "./analytics"
 
 function Field({ id, label, hint, ...props }: { id: string; label: string; hint?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
@@ -21,7 +21,7 @@ export function SignInForm() {
   const t = useTranslations("account")
   const router = useRouter()
   const [err, setErr] = useState("")
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   return (
     <form
       className="auth"
@@ -52,7 +52,7 @@ export function RegisterForm() {
   const locale = useLocale()
   const router = useRouter()
   const [err, setErr] = useState("")
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   return (
     <form
       className="auth"
@@ -87,7 +87,7 @@ export function ProfileForm({ name, messenger }: { name: string; messenger: stri
   const t = useTranslations("account")
   const tc = useTranslations("checkout")
   const ui = useUi()
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   return (
     <form
       className="auth"
@@ -110,7 +110,7 @@ export function ProfileForm({ name, messenger }: { name: string; messenger: stri
 export function SignOutButton() {
   const t = useTranslations("account")
   const router = useRouter()
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   return <button className="ln u m" disabled={pending} onClick={() => start(async () => { await signOut(); router.refresh() })}>{t("signOut")}</button>
 }
 
@@ -118,7 +118,7 @@ export function WishlistButton({ handle, inList, compact }: { handle: string; in
   const t = useTranslations("wishlist")
   const router = useRouter()
   const [on, setOn] = useState(inList)
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   const toggle = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -145,7 +145,7 @@ export function WishlistButton({ handle, inList, compact }: { handle: string; in
 export function Unsubscribe({ token }: { token: string }) {
   const t = useTranslations("newsletter")
   const [state, setState] = useState<"idle" | "done" | "bad">("idle")
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   if (state !== "idle") return <p>{t(state === "done" ? "unsubText" : "unsubBad")}</p>
   return (
     <button className="btn u" style={{ maxWidth: 320 }} disabled={pending || !token}

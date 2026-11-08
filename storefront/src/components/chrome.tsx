@@ -47,6 +47,23 @@ export function UiProvider({ children }: { children: ReactNode }) {
   )
 }
 
+/**
+ * useTransition, который не роняет страницу при обрыве связи: серверное действие на мобильном
+ * интернете может не дойти, тогда покупатель видит тихое уведомление, а не страницу ошибки.
+ */
+export function useSafeTransition(): [boolean, (fn: () => Promise<unknown>) => void] {
+  const [pending, startTransition] = useTransition()
+  const ui = useUi()
+  const t = useTranslations("common")
+  return [pending, (fn) => startTransition(async () => {
+    try {
+      await fn()
+    } catch {
+      ui.toast(t("offline"))
+    }
+  })]
+}
+
 export function Sprig() {
   return <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 23c-.3-3.4-.7-6.6-1.6-9.4C8.6 13.9 6.1 12.6 5 10.1c2.4-.6 4.8.4 5.9 2.3-.4-2.2-.2-4.5.9-6.7C10 4.6 9.2 2.6 9.8.8c1.9 1 3 3 2.6 5 1.3-1.3 3.3-1.8 5.2-1.2-.6 2-2.5 3.3-4.6 3.3-.6 1.6-.7 3.3-.4 5 1-1.4 2.8-2.1 4.6-1.8-.4 1.9-2.1 3.3-4.1 3.4.6 2.6.9 5.3 1.1 8.5z"/></svg>
 }
@@ -59,7 +76,7 @@ function Switches({ currency, className }: { currency: string; className?: strin
   const locale = useLocale()
   const pathname = usePathname()
   const router = useRouter()
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   return (
     <>
       <div className={`cur ${className ?? ""}`} role="group" aria-label="Language">
@@ -137,7 +154,7 @@ export function CartDrawer({ cart }: { cart: CartView | null }) {
   const locale = useLocale()
   const ui = useUi()
   const router = useRouter()
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   const [leaving, setLeaving] = useState<string | null>(null)
   const change = (id: string, q: number) => {
     if (q <= 0) setLeaving(id)
@@ -232,7 +249,7 @@ export function Subscribe() {
   const locale = useLocale()
   const ui = useUi()
   const [email, setEmail] = useState("")
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   return (
     <form
       aria-busy={pending}

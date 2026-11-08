@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { addToCart } from "@/lib/actions"
 import type { LineMode, ProductView } from "@/lib/data"
 import { money } from "@/lib/format"
-import { OpenSizes, useUi } from "./chrome"
+import { OpenSizes, useUi, useSafeTransition } from "./chrome"
 import { track } from "./analytics"
 
 const SIZES = ["S", "M", "L", "XL"] as const
@@ -46,7 +46,7 @@ export function ProductBuy({ p }: { p: ProductView }) {
   const locale = useLocale()
   const ui = useUi()
   const router = useRouter()
-  const [pending, start] = useTransition()
+  const [pending, start] = useSafeTransition()
   const [mode, setMode] = useState<LineMode>(p.status)
   const [size, setSize] = useState<string | null>(null)
   const [done, setDone] = useState(false)

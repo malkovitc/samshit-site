@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useMemo, useState, useTransition } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "@/i18n/navigation"
 import { placeOrder, shippingOptionsFor } from "@/lib/actions"
 import type { CartView } from "@/lib/cart-view"
 import { money } from "@/lib/format"
 import { track } from "./analytics"
+import { useSafeTransition } from "./chrome"
 
 type Opt = { id: string; name: string; code: string; amount: number }
 
@@ -28,8 +29,8 @@ export function CheckoutForm({ cart, countries, initialCountry, prefill }: { car
   const [opts, setOpts] = useState<Opt[]>([])
   const [ship, setShip] = useState("")
   const [err, setErr] = useState("")
-  const [loading, startLoad] = useTransition()
-  const [paying, startPay] = useTransition()
+  const [loading, startLoad] = useSafeTransition()
+  const [paying, startPay] = useSafeTransition()
   const [f, setF] = useState({ name: prefill?.name ?? "", email: prefill?.email ?? "", messenger: prefill?.messenger ?? "", city: "", address: "" })
 
   useEffect(() => {
