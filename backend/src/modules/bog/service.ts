@@ -100,7 +100,7 @@ class BogPaymentProviderService extends AbstractPaymentProvider<BogOptions> {
 
   async retrievePayment({ data }: RetrievePaymentInput): Promise<RetrievePaymentOutput> {
     const d = (data ?? {}) as SessionData
-    return d.bog_order_id ? { ...d, receipt: await this.client.receipt(d.bog_order_id) } : d
+    return { data: d.bog_order_id ? { ...d, receipt: await this.client.receipt(d.bog_order_id) } : d }
   }
 
   async getWebhookActionAndData({ data, rawData, headers }: ProviderWebhookPayload["payload"]): Promise<WebhookActionResult> {
