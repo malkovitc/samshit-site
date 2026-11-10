@@ -141,3 +141,23 @@ export async function unsubscribeNewsletter(token: string): Promise<{ ok: boolea
     return { ok: false }
   }
 }
+
+/** Письмо со ссылкой для смены пароля. Ответ одинаковый для любого адреса: не раскрываем, есть ли аккаунт. */
+export async function requestPasswordReset(email: string, locale: string): Promise<{ ok: boolean }> {
+  const e = email.trim().toLowerCase()
+  if (!emailOk(e)) return { ok: false }
+  await sdk.auth.resetPassword("customer", "emailpass", { identifier: e, metadata: { locale: localeOk(locale) } }).catch(() => undefined)
+  return { ok: true }
+}
+
+/** Новый пароль по токену из письма; после смены — сразу вход. */
+export async function resetPassword(input: { token: string; email: string; password: string }): Promise<{ ok: true } | Fail<"short" | "expired">> {
+  if (input.password.length < 8) return { ok: false, error: "short" }
+  try {
+    await sdk.auth.updateProvider("customer", "emailpass", { password: input.password }, input.token)
+  } catch {
+    return { ok: false, error: "expired" }
+  }
+  const r = await signIn({ email: input.email, password: input.password })
+  return r.ok ? r : { ok: false, error: "expired" }
+}

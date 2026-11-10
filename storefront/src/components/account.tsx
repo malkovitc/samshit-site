@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "@/i18n/navigation"
-import { register, signIn, signOut, toggleWishlist, unsubscribeNewsletter, updateProfile } from "@/lib/account-actions"
+import { Link, useRouter } from "@/i18n/navigation"
+import { register, requestPasswordReset, resetPassword, signIn, signOut, toggleWishlist, unsubscribeNewsletter, updateProfile } from "@/lib/account-actions"
 import { useUi, useSafeTransition } from "./chrome"
 import { track } from "./analytics"
 
@@ -42,7 +42,7 @@ export function SignInForm() {
       <Field id="si-password" name="password" label={t("password")} type="password" autoComplete="current-password" required />
       <button className="btn u" disabled={pending}>{t("signInBtn")}</button>
       <p className="hint u">{err}</p>
-      <p className="m small">{t("forgot")}</p>
+      <p className="m small"><Link className="ln" href="/account/forgot">{t("forgot")}</Link></p>
     </form>
   )
 }
@@ -152,5 +152,57 @@ export function Unsubscribe({ token }: { token: string }) {
       onClick={() => start(async () => setState((await unsubscribeNewsletter(token)).ok ? "done" : "bad"))}>
       {t("unsubBtn")}
     </button>
+  )
+}
+
+export function ForgotForm() {
+  const t = useTranslations("account")
+  const locale = useLocale()
+  const [sent, setSent] = useState(false)
+  const [pending, start] = useSafeTransition()
+  if (sent) return <p className="m">{t("forgotSent")}</p>
+  return (
+    <form
+      className="auth"
+      onSubmit={(e) => {
+        e.preventDefault()
+        const email = String(new FormData(e.currentTarget).get("email"))
+        start(async () => {
+          if ((await requestPasswordReset(email, locale)).ok) setSent(true)
+        })
+      }}
+    >
+      <p className="m">{t("forgotText")}</p>
+      <Field id="fg-email" name="email" label="Email" type="email" autoComplete="email" required />
+      <button className="btn u" disabled={pending}>{t("forgotBtn")}</button>
+    </form>
+  )
+}
+
+export function ResetForm({ token, email }: { token: string; email: string }) {
+  const t = useTranslations("account")
+  const router = useRouter()
+  const [err, setErr] = useState("")
+  const [pending, start] = useSafeTransition()
+  return (
+    <form
+      className="auth"
+      onSubmit={(e) => {
+        e.preventDefault()
+        const password = String(new FormData(e.currentTarget).get("password"))
+        setErr("")
+        start(async () => {
+          const r = await resetPassword({ token, email, password })
+          if (!r.ok) return setErr(t(r.error === "short" ? "errShort" : "resetExpired"))
+          track("password-reset")
+          router.push("/account")
+        })
+      }}
+    >
+      <p className="m">{email}</p>
+      <Field id="rs-password" name="password" label={t("newPassword")} hint={t("passwordHint")} type="password" autoComplete="new-password" minLength={8} required />
+      <button className="btn u" disabled={pending}>{t("resetBtn")}</button>
+      <p className="hint u">{err}</p>
+    </form>
   )
 }

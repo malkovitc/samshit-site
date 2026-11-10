@@ -40,7 +40,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={FONTS} />
-        {umamiSrc && umamiId && <script defer src={umamiSrc} data-website-id={umamiId} />}
+        {umamiSrc && umamiId && <script defer src={umamiSrc} data-website-id={umamiId} data-exclude-search="true" />}
       </head>
       <body>
         <NextIntlClientProvider>

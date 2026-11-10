@@ -71,6 +71,15 @@ const T = {
       ka: "გამოგიგზავნით ახალ ნივთებს, კაფსულებს და ისტორიებს სახელოსნოდან. თვეში არაუმეტეს ორი წერილისა.",
     },
   },
+  reset: {
+    subject: { ru: "Новый пароль для Самшита", en: "Reset your Samshit password", ka: "სამშითის პაროლის აღდგენა" },
+    body: {
+      ru: "Кто-то, надеюсь вы, попросил сменить пароль от кабинета. Ссылка действует 15 минут.\n\nЕсли это были не вы, просто ничего не делайте: пароль останется прежним.",
+      en: "Someone, hopefully you, asked to reset the password for your account. The link works for 15 minutes.\n\nIf it was not you, do nothing: your password stays the same.",
+      ka: "ვიღაცამ, იმედია თქვენ, კაბინეტის პაროლის შეცვლა მოითხოვა. ბმული 15 წუთის განმავლობაში მოქმედებს.\n\nთუ ეს თქვენ არ იყავით, არაფერი გააკეთოთ: პაროლი იგივე დარჩება.",
+    },
+    cta: { ru: "Задать новый пароль", en: "Set a new password", ka: "ახალი პაროლის დაყენება" },
+  },
   footer: {
     ru: "Самшит · мастерская одного человека, Тбилиси",
     en: "Samshit · a one-person workshop, Tbilisi",
@@ -89,6 +98,12 @@ export function welcomeEmail(locale: Locale, name?: string | null) {
   const text = t.body[locale].replace("{name}", name ? `, ${name}` : "")
   const html = layout(locale, t.title[locale], paragraphs(text) + button(`${STORE()}/${locale}/account`, t.cta[locale]), esc(T.footer[locale]))
   return { subject: t.subject[locale], html, text: `${text}\n\n${STORE()}/${locale}/account` }
+}
+
+export function resetEmail(locale: Locale, url: string) {
+  const t = T.reset
+  const html = layout(locale, t.subject[locale], paragraphs(t.body[locale]) + button(url, t.cta[locale]), esc(T.footer[locale]))
+  return { subject: t.subject[locale], html, text: `${t.body[locale]}\n\n${url}` }
 }
 
 export function subscribedEmail(locale: Locale, unsubscribeUrl: string) {

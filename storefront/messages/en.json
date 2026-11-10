@@ -234,7 +234,16 @@
   "ff_shipped": "shipped",
   "ff_delivered": "delivered",
   "ff_canceled": "canceled",
-  "forgot": "Forgot your password? Message the maker — email reset is coming later"
+  "forgot": "Forgot your password?",
+  "forgotTitle": "Reset password",
+  "forgotText": "I will email you a link to set a new password.",
+  "forgotBtn": "Send link",
+  "forgotSent": "If there is an account with this email, the letter is on its way. The link works for 15 minutes.",
+  "resetTitle": "New password",
+  "newPassword": "New password",
+  "resetBtn": "Save and sign in",
+  "resetExpired": "The link has expired or was already used. Request a new one.",
+  "resetMissing": "The link is incomplete. Open it from the email in full or request a new one."
  },
  "wishlist": {
   "title": "Wishlist",

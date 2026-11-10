@@ -162,3 +162,19 @@ test("рассылка: подписка из подвала попадает в
   await page.locator(".done-box button").click()
   await expect(page.locator(".done-box")).toContainText(/Больше писем/i) // неизвестный токен не раскрывается
 })
+
+test("сброс пароля: ссылка из входа, ответ не раскрывает адрес, битая ссылка не ломает страницу", async ({ page }) => {
+  await page.goto("/en/account")
+  await page.locator("a", { hasText: /Forgot your password/i }).click()
+  await expect(page).toHaveURL(/\/en\/account\/forgot$/)
+  await page.fill("#fg-email", newEmail("nobody"))
+  await page.locator(".auth button.btn").click()
+  await expect(page.locator(".done-box")).toContainText(/If there is an account/i)
+
+  await page.goto("/en/account/reset")
+  await expect(page.locator(".done-box")).toContainText(/link is incomplete/i)
+  await page.goto(`/en/account/reset?token=bad.token.value&email=${encodeURIComponent(newEmail("x"))}`)
+  await page.fill("#rs-password", PASSWORD)
+  await page.locator(".auth button.btn").click()
+  await expect(page.locator(".auth .hint")).toHaveText(/expired/i)
+})
