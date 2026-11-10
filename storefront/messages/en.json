@@ -84,7 +84,7 @@
   "shipsFast": "ships in 1–2 days",
   "notInStock": "not in stock now",
   "inMySize": "In my size",
-  "mtoTerms": "{n} days, 50% deposit",
+  "mtoTerms": "{n} days",
   "mtm": "To my measurements",
   "mtmTerms": "+{p}, {n} days",
   "howToGet": "How to get it",

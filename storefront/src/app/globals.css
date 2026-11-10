@@ -7,8 +7,8 @@
   --ease:cubic-bezier(.2,.7,.1,1);
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f0f11;--fg:#e9e9ee;--muted:#8d8d98;--hair:#2a2a31;--line:#e9e9ee;--tile:#19191d;--accent:#8a93ff;--scrim:rgba(0,0,0,.5);color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f0f11;--fg:#e9e9ee;--muted:#8d8d98;--hair:#2a2a31;--line:#e9e9ee;--tile:#19191d;--accent:#8a93ff;--scrim:rgba(0,0,0,.5);color-scheme:dark}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f0f11;--fg:#e9e9ee;--muted:#8d8d98;--hair:#2a2a31;--line:#e9e9ee;--tile:#19191d;--accent:#8a93ff;--scrim:rgba(0,0,0,.5);--img-filter:brightness(.86);--btn-w:500;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f0f11;--fg:#e9e9ee;--muted:#8d8d98;--hair:#2a2a31;--line:#e9e9ee;--tile:#19191d;--accent:#8a93ff;--scrim:rgba(0,0,0,.5);--img-filter:brightness(.86);--btn-w:500;color-scheme:dark}
 :root[data-font="lilex"]{--mono:"Lilex", "Noto Sans Georgian", ui-monospace, Menlo, monospace}
 :root[data-font="iosevka"]{--mono:"Iosevka Charon Mono", "Noto Sans Georgian", ui-monospace, Menlo, monospace;--w-body:300}
 :root[data-font="jetbrains"]{--mono:"JetBrains Mono", "Noto Sans Georgian", ui-monospace, Menlo, monospace;--w-body:200}
@@ -169,7 +169,9 @@ a:hover .hero-cap .arrow{transform:translateX(4px)}
 .qty span{min-width:22px;text-align:center}
 .empty{padding-block:30px;color:var(--muted)}
 .sum{border-top:1px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px}
-.btn{display:flex;align-items:center;justify-content:center;height:36px;background:var(--fg);color:var(--bg);width:100%}
+.btn{display:flex;align-items:center;justify-content:center;height:36px;background:var(--fg);color:var(--bg);width:100%;font-weight:var(--btn-w,inherit)}
+/* в тёмной теме белые фоны фотографий слепят: чуть приглушаем, тонкий тёмный текст на светлой кнопке — плотнее */
+img{filter:var(--img-filter,none)}
 .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--fg)}
 .bar{height:1px;background:var(--hair);position:relative;margin:4px 0}
 .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);transition:width .6s var(--ease)}
@@ -250,10 +252,10 @@ footer form{display:flex;gap:10px;margin-top:14px;max-width:360px}
 .order-row .thumbs-row img{width:36px;aspect-ratio:4/5;object-fit:cover;background:var(--tile)}
 .order-detail{max-width:640px;padding-bottom:48px;display:flex;flex-direction:column;gap:6px}
 .order-detail .total{margin-top:6px}
-.heart{position:absolute;right:8px;top:8px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:var(--fg);opacity:0;transition:opacity .3s,transform .3s var(--ease);z-index:2}
+.heart{position:absolute;right:8px;top:8px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;color:#141416;opacity:0;transition:opacity .3s,transform .3s var(--ease);z-index:2}
 .card{position:relative}
 .card:hover .heart,.heart.on,.heart:focus-visible{opacity:1}
-.heart.on{color:var(--accent)}
+.heart.on{color:#1f2bd8} /* сердце лежит на фото со светлым фоном, поэтому цвета не зависят от темы */
 .heart:active{transform:scale(.85)}
 .wish{align-self:flex-start;color:var(--muted);transition:color .25s}
 .wish:hover{color:var(--fg)}
