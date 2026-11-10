@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test"
-import { API, TEST_EMAIL_DOMAIN, addFromProduct, adminToken, cancelTestOrders, quietAnalytics } from "./helpers"
+import { API, TEST_EMAIL_DOMAIN, addFromProduct, adminToken, cancelTestOrders, payOnBank, quietAnalytics } from "./helpers"
 
 test.beforeEach(async ({ page }) => quietAnalytics(page))
 test.afterAll(async ({ request }) => cancelTestOrders(request))
@@ -119,6 +119,7 @@ test("заказ вошедшего: email подставлен, заказ в �
   await page.selectOption("#c-country", "ge")
   await page.locator(".opt", { hasText: /Pick up/i }).click()
   await page.locator(".co button[type=submit]").click()
+  await payOnBank(page, "google_pay")
   await expect(page).toHaveURL(/\/en\/order\//, { timeout: 30_000 })
   const orderId = page.url().match(/order_[A-Z0-9]+/)![0]
 

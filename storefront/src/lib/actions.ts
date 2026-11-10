@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { sdk } from "./medusa"
 import { CURRENCIES, type Currency, type LineMode, currentRegion, getCart, listRegions } from "./data"
 import { COOKIE, authHeaders, getCustomer } from "./session"
-import { rememberCart } from "./cart-owner"
+import { forgetCart, rememberCart } from "./cart-owner"
 
 /**
  * Корзина вошедшего покупателя принадлежит ему: токен уходит во все вызовы корзины,
@@ -75,7 +75,7 @@ export async function shippingOptionsFor(country: string) {
   return { options, regionChanged }
 }
 
-export type PlaceOrderResult = { ok: true; orderId: string; displayId: number } | { ok: false; error: "empty" | "invalid" | "shipping" | "payment" | "complete" }
+export type PlaceOrderResult = { ok: true; orderId: string; displayId: number; redirect?: undefined } | { ok: true; redirect: string; orderId?: undefined; displayId?: undefined } | { ok: false; error: "empty" | "invalid" | "shipping" | "payment" | "complete" }
 
 export async function placeOrder(input: {
   name: string
@@ -112,20 +112,31 @@ export async function placeOrder(input: {
   } catch {
     return { ok: false, error: "shipping" }
   }
+  let redirect = ""
   try {
     const { cart: fresh } = await sdk.store.cart.retrieve(cart.id, {}, headers)
-    // Пока ручная оплата; модуль грузинского банка (BOG/TBC) встанет сюда же.
-    await sdk.store.payment.initiatePaymentSession(fresh, { provider_id: "pp_system_default" }, {}, headers)
+    // Bank of Georgia, если он включён в регионе корзины; иначе ручная оплата (ссылку пришлёт мастер)
+    const { payment_providers } = await sdk.store.payment.listPaymentProviders({ region_id: fresh.region_id! }, headers)
+    const provider = payment_providers.some((p) => p.id === BANK) ? BANK : "pp_system_default"
+    const { payment_collection } = await sdk.store.payment.initiatePaymentSession(
+      fresh,
+      { provider_id: provider, data: { locale: input.locale, cart_id: cart.id } },
+      {},
+      headers,
+    )
+    if (provider === BANK) {
+      redirect = String(payment_collection.payment_sessions?.find((s) => s.provider_id === BANK)?.data?.redirect_url ?? "")
+      if (!redirect) return { ok: false, error: "payment" }
+    }
   } catch {
     return { ok: false, error: "payment" }
   }
+  // заказ появится после оплаты: на возврате из банка (checkout/return) или по колбэку банка
+  if (redirect) return { ok: true, redirect }
   const res = await sdk.store.cart.complete(cart.id, {}, headers)
   if (res.type !== "order") return { ok: false, error: "complete" }
-  ;(await cookies()).delete("cart_id")
-  const customer = await getCustomer()
-  if (customer?.metadata?.cart_id === cart.id) {
-    await sdk.store.customer.update({ metadata: { ...customer.metadata, cart_id: "" } }, {}, headers)
-  }
-  revalidatePath("/", "layout")
+  await forgetCart(cart.id)
   return { ok: true, orderId: res.order.id, displayId: res.order.display_id ?? 0 }
 }
+
+const BANK = "pp_bog_bog"

@@ -42,3 +42,11 @@ export async function addFromProduct(page: Page, handle: string, opts: { mode?: 
 }
 
 export const money = (s: string) => Number(s.replace(/[^\d]/g, ""))
+
+/** Страница оплаты банка (на стенде — имитация Bank of Georgia): выбрать способ и вернуться в магазин. */
+export async function payOnBank(page: Page, how: "card" | "apple_pay" | "google_pay" | "decline" = "card") {
+  await expect(page).toHaveURL(/\/mock-bog\/pay\//, { timeout: 30_000 })
+  await expect(page.locator(".note")).toContainText(/No money is charged/i)
+  const label = { card: /Pay by card/i, apple_pay: /Apple Pay/i, google_pay: /Google Pay/i, decline: /Decline/i }[how]
+  await page.locator("a.b", { hasText: label }).click()
+}

@@ -1,10 +1,10 @@
 import "server-only"
 import type { HttpTypes } from "@medusajs/types"
 import type { Locale } from "@/i18n/routing"
-import { dueNow, type LineMode } from "./data"
+import type { LineMode } from "./data"
 
 export type CartLine = { id: string; handle: string; title: string; size: string; mode: LineMode; qty: number; total: number; img: string }
-export type CartView = { id: string; currency: string; lines: CartLine[]; subtotal: number; shipping: number; total: number; due: number; count: number }
+export type CartView = { id: string; currency: string; lines: CartLine[]; subtotal: number; shipping: number; total: number; count: number }
 
 export function cartView(cart: HttpTypes.StoreCart | null, locale: Locale): CartView | null {
   if (!cart) return null
@@ -28,7 +28,6 @@ export function cartView(cart: HttpTypes.StoreCart | null, locale: Locale): Cart
     subtotal: cart.item_subtotal ?? cart.subtotal ?? 0,
     shipping: cart.shipping_total ?? 0,
     total: cart.total ?? 0,
-    due: dueNow(cart),
     count: lines.reduce((s, l) => s + l.qty, 0),
   }
 }

@@ -139,12 +139,3 @@ export async function getCart() {
   }
 }
 
-/** Доля, которую покупатель платит сейчас: 50% за то, что шьётся под него, 100% за остальное. */
-export function dueNow(cart: HttpTypes.StoreCart) {
-  const items = (cart.items ?? []).reduce((s, i) => {
-    const mode = (i.metadata as { mode?: LineMode } | null)?.mode
-    const share = mode === "mto" || mode === "mtm" ? 0.5 : 1
-    return s + (i.total ?? i.subtotal ?? 0) * share
-  }, 0)
-  return items + (cart.shipping_total ?? 0)
-}

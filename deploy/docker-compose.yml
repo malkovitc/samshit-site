@@ -41,6 +41,10 @@ services:
       ZAVU_API_KEY: ${ZAVU_API_KEY:-}
       ZAVU_SENDER_ID: ${ZAVU_SENDER_ID:-}
       MAIL_REPLY_TO: ${MAIL_REPLY_TO:-}
+      # Bank of Georgia: ключи из договора эквайринга; до него BOG_MOCK=true — имитация банка (src/lib/bog-mock.ts)
+      BOG_CLIENT_ID: ${BOG_CLIENT_ID:-}
+      BOG_CLIENT_SECRET: ${BOG_CLIENT_SECRET:-}
+      BOG_MOCK: ${BOG_MOCK:-false}
     volumes: [static:/app/static]
     ports: ["127.0.0.1:19000:9000"]
     networks:

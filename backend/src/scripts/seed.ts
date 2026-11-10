@@ -41,6 +41,8 @@ const priceSet = (usd: number) => [
   { currency_code: "gel", amount: roundTo(usd * RATE.gel, 5) },
 ]
 
+// Bank of Georgia, если он подключён (medusa-config.ts); ручная оплата — запасная
+const PAYMENT = process.env.BOG_MOCK === "true" || process.env.BOG_CLIENT_ID ? ["pp_bog_bog", "pp_system_default"] : ["pp_system_default"]
 const GEORGIA = ["ge"]
 const EUROPE = ["de", "fr", "it", "es", "nl", "be", "at", "pt", "ie", "fi", "se", "dk", "pl", "cz", "lt", "lv", "ee", "gr", "cy"]
 // Россия и Беларусь не включены: DHL Express туда не возит. Вопрос владельцу.
@@ -95,9 +97,9 @@ export default async function seed({ container }: ExecArgs) {
   const { result: regions } = await createRegionsWorkflow(container).run({
     input: {
       regions: [
-        { name: "Georgia", currency_code: "gel", countries: GEORGIA, payment_providers: ["pp_system_default"] },
-        { name: "Europe", currency_code: "eur", countries: EUROPE, payment_providers: ["pp_system_default"] },
-        { name: "World", currency_code: "usd", countries: WORLD, payment_providers: ["pp_system_default"] },
+        { name: "Georgia", currency_code: "gel", countries: GEORGIA, payment_providers: PAYMENT },
+        { name: "Europe", currency_code: "eur", countries: EUROPE, payment_providers: PAYMENT },
+        { name: "World", currency_code: "usd", countries: WORLD, payment_providers: PAYMENT },
       ],
     },
   })

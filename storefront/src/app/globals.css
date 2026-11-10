@@ -194,6 +194,12 @@ input:invalid:not(:placeholder-shown){border-color:var(--accent)}
 .sline img{width:44px;aspect-ratio:4/5;object-fit:cover;background:var(--tile)}
 .total{font-weight:var(--w-strong);border-top:1px solid var(--line);padding-top:8px}
 .done-box{max-width:60ch;padding-block:40px}
+.paymarks{margin:10px 0 0;font-size:10px;letter-spacing:.12em;color:var(--muted)}
+.dots{display:flex;gap:6px;margin:18px 0}
+.dots span{width:4px;height:4px;background:var(--fg);animation:blink 1.2s infinite both}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.15}40%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.dots span{animation:none;opacity:.5}}
 .done-box h1{font-size:15px;font-weight:var(--w-strong);letter-spacing:.06em;text-transform:uppercase;margin:0 0 14px}
 .tick{width:40px;height:40px;color:var(--accent);margin-bottom:16px}
 .tick path{stroke-dasharray:40;stroke-dashoffset:40;animation:draw .8s .2s var(--ease) forwards}

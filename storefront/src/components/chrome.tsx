@@ -161,7 +161,6 @@ export function CartDrawer({ cart }: { cart: CartView | null }) {
     start(async () => { await setQuantity(id, q); setLeaving(null); router.refresh() })
   }
   const lines = cart?.lines ?? []
-  const later = lines.some((l) => l.mode === "mto" || l.mode === "mtm")
   return (
     <aside className={`drawer${ui.cartOpen ? " open" : ""}`} aria-hidden={!ui.cartOpen} aria-busy={pending}>
       <div className="top u"><span>{t("nav.bag")}</span><button className="ln" onClick={() => ui.setCartOpen(false)}>{t("common.close")}</button></div>
@@ -185,7 +184,7 @@ export function CartDrawer({ cart }: { cart: CartView | null }) {
       {!!lines.length && cart && (
         <div className="sum">
           <div className="row"><span className="u">{t("cart.subtotal")}</span><span className="tn">{money(cart.subtotal, cart.currency, locale)}</span></div>
-          <div className="m">{later ? t("cart.depositNote") : ""}{t("cart.shipNote")}</div>
+          <div className="m">{t("cart.shipNote")}</div>
           <Link className="btn u" href="/checkout">{t("cart.checkout")}</Link>
           <button className="btn ghost u" onClick={() => ui.setCartOpen(false)}>{t("cart.continue")}</button>
         </div>

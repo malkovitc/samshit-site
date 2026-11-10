@@ -6,7 +6,7 @@ const PAGES = [
   ["home", "/ru"], ["shop", "/ru/shop"], ["category", "/ru/shop/jackets"],
   ["product", "/ru/p/shield-indigo"], ["product-pre", "/ru/p/samshit-brown"], ["product-ka", "/ka/p/race-sand"],
   ["workshop", "/ru/workshop"], ["about", "/ru/about"], ["delivery", "/ru/delivery"], ["contact", "/ru/contact"],
-  ["empty-checkout", "/ru/checkout"], ["404", "/ru/p/nope"],
+  ["empty-checkout", "/ru/checkout"], ["404", "/ru/p/nope"], ["pay-wait", "/ru/checkout/wait?gone=1"],
 ] as const
 
 for (const scheme of ["light", "dark"] as const) {

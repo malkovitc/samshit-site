@@ -2,6 +2,32 @@ import { loadEnv, defineConfig } from "@medusajs/framework/utils"
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd())
 
+/**
+ * Оплата Bank of Georgia (src/modules/bog). С ключами банка — настоящий шлюз; при BOG_MOCK=true —
+ * имитация банка на этом же бэкенде (src/lib/bog-mock.ts) с её собственным ключом подписи.
+ */
+const BOG_MOCK = process.env.BOG_MOCK === "true"
+const API = process.env.MEDUSA_BACKEND_URL || "http://localhost:9000"
+const bogProvider = () => {
+  if (!BOG_MOCK && !process.env.BOG_CLIENT_ID) return []
+  // ключ имитации генерируется при старте процесса, читаем его лениво из того же модуля
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const mock = BOG_MOCK ? require("./src/lib/bog-mock") : null
+  return [{
+    resolve: "./src/modules/bog",
+    id: "bog",
+    options: {
+      clientId: BOG_MOCK ? "mock" : process.env.BOG_CLIENT_ID,
+      clientSecret: BOG_MOCK ? "mock" : process.env.BOG_CLIENT_SECRET,
+      apiUrl: BOG_MOCK ? "http://localhost:9000/mock-bog" : process.env.BOG_API_URL,
+      oauthUrl: BOG_MOCK ? "http://localhost:9000/mock-bog/oauth" : process.env.BOG_OAUTH_URL,
+      publicKey: BOG_MOCK ? mock.mockPublicKey() : process.env.BOG_PUBLIC_KEY,
+      callbackUrl: `${API}/hooks/payment/bog_bog`,
+      storeUrl: process.env.STORE_URL || "https://samshit.linza-ai.xyz",
+    },
+  }]
+}
+
 const need = (name: string) => {
   const v = process.env[name]
   if (!v && process.env.NODE_ENV === "production") {
@@ -32,6 +58,7 @@ module.exports = defineConfig({
   modules: [
     // подписчики рассылки (src/modules/newsletter)
     { resolve: "./src/modules/newsletter" },
+    { resolve: "@medusajs/medusa/payment", options: { providers: bogProvider() } },
     ...(process.env.REDIS_URL
     ? [
         { resolve: "@medusajs/medusa/event-bus-redis", options: { redisUrl: process.env.REDIS_URL } },

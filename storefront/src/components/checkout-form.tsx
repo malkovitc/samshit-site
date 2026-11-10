@@ -18,7 +18,7 @@ const SHIP_KEYS: Record<string, [string, string]> = {
   "dhl-express": ["shipDhl", "shipDhlSub"],
 }
 
-export function CheckoutForm({ cart, countries, initialCountry, prefill }: { cart: CartView; countries: { code: string; name: string }[]; initialCountry: string; prefill: { name: string; email: string; messenger: string } | null }) {
+export function CheckoutForm({ cart, countries, initialCountry, prefill, notice }: { cart: CartView; countries: { code: string; name: string }[]; initialCountry: string; prefill: { name: string; email: string; messenger: string } | null; notice?: "failed" | "pending" }) {
   const t = useTranslations("checkout")
   const tm = useTranslations("mode")
   const tc = useTranslations("common")
@@ -52,10 +52,7 @@ export function CheckoutForm({ cart, countries, initialCountry, prefill }: { car
 
   const opt = opts.find((o) => o.id === ship)
   const shipping = opt?.amount ?? 0
-  const later = cart.lines.some((l) => l.mode === "mto" || l.mode === "mtm")
-  const dueItems = cart.due - cart.shipping
   const total = cart.subtotal + shipping
-  const due = dueItems + shipping
   const needsAddress = opt?.code !== "pickup"
   const fmt = (n: number) => money(n, cart.currency, locale)
 
@@ -67,7 +64,9 @@ export function CheckoutForm({ cart, countries, initialCountry, prefill }: { car
     startPay(async () => {
       const res = await placeOrder({ ...f, country, shippingOptionId: ship, locale })
       if (!res.ok) { setErr(res.error === "invalid" ? t("badEmail") : t("error")); return }
-      track("order", { total: Math.round(total), currency: cart.currency })
+      track(res.redirect ? "payment-start" : "order", { total: Math.round(total), currency: cart.currency })
+      // страница оплаты банка; заказ появится, когда покупатель вернётся или банк пришлёт подтверждение
+      if (res.redirect) { window.location.assign(res.redirect); return }
       router.push(`/order/${res.orderId}?n=${res.displayId}`)
     })
   }
@@ -124,9 +123,11 @@ export function CheckoutForm({ cart, countries, initialCountry, prefill }: { car
         <fieldset>
           <legend className="u">{t("payment")}</legend>
           <label className="opt"><input type="radio" name="pay" defaultChecked /><span>{t("card")}<small>{t("cardSub")}</small></span><span /></label>
-          <p className="m" style={{ margin: "10px 0 0", maxWidth: "60ch" }}>{later ? t("depositPay") : t("fullPay")}</p>
+          <p className="paymarks u" aria-label={t("card")}>Visa · Mastercard · Amex · Apple Pay · Google Pay</p>
+          <p className="m" style={{ margin: "10px 0 0", maxWidth: "60ch" }}>{t("fullPay")}</p>
         </fieldset>
-        <button className="btn u" type="submit" disabled={paying || !ship}>{t("pay")} · {fmt(due)}</button>
+        {notice && <p className="hint u" role="alert" style={{ marginBottom: 10 }}>{t(notice === "failed" ? "payFailed" : "payPending")}</p>}
+        <button className="btn u" type="submit" disabled={paying || !ship}>{t("pay")} · {fmt(total)}</button>
         <p className="hint u" style={{ marginTop: 8 }}>{err}</p>
       </div>
 
@@ -142,7 +143,6 @@ export function CheckoutForm({ cart, countries, initialCountry, prefill }: { car
         <div className="row"><span className="m">{t("items")}</span><span className="tn">{fmt(cart.subtotal)}</span></div>
         <div className="row"><span className="m">{tn("shipping")}</span><span className="tn">{shipping ? fmt(shipping) : tc("free")}</span></div>
         <div className="row total"><span className="u">{t("total")}</span><span className="tn">{fmt(total)}</span></div>
-        {due < total && <div className="row" style={{ color: "var(--accent)" }}><span className="u">{t("dueNow")}</span><span className="tn">{fmt(due)}</span></div>}
       </aside>
     </form>
   )

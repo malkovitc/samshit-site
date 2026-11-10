@@ -6,8 +6,8 @@ import { getCustomer } from "@/lib/session"
 import { cartView } from "@/lib/cart-view"
 import { CheckoutForm } from "@/components/checkout-form"
 
-export default async function Checkout({ params }: { params: Promise<{ locale: Locale }> }) {
-  const { locale } = await params
+export default async function Checkout({ params, searchParams }: { params: Promise<{ locale: Locale }>; searchParams: Promise<{ pay?: string }> }) {
+  const [{ locale }, { pay }] = await Promise.all([params, searchParams])
   setRequestLocale(locale)
   const t = await getTranslations("checkout")
   const cart = await getCart()
@@ -29,7 +29,7 @@ export default async function Checkout({ params }: { params: Promise<{ locale: L
     <div className="view">
       <div className="h u"><span>{t("title")}</span><Link className="ln m" href="/shop">{t("back")}</Link></div>
       <hr className="rule" style={{ marginBottom: 16 }} />
-      <CheckoutForm prefill={await prefillFor()} cart={view} countries={countries} initialCountry={cart.shipping_address?.country_code ?? fallback[cart.currency_code] ?? "us"} />
+      <CheckoutForm notice={pay === "failed" || pay === "pending" ? pay : undefined} prefill={await prefillFor()} cart={view} countries={countries} initialCountry={cart.shipping_address?.country_code ?? fallback[cart.currency_code] ?? "us"} />
     </div>
   )
 }
