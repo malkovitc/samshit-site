@@ -19,3 +19,24 @@ docker compose up -d --build storefront
 ```sh
 cd ~/samshit && git pull && cd deploy && docker compose up -d --build --no-deps storefront
 ```
+
+Каталог на самом деле `~/samshit`. Не выкатывать во время релиза Linza: её гейт проверяет хосты магазина.
+
+## Оплата (Bank of Georgia)
+
+Пока нет договора эквайринга, в `.env` стоит `BOG_MOCK=true`: бэкенд сам изображает банк
+(`/mock-bog/*`, страница «оплаты» с пометкой Test mode), через неё проходит настоящий код провайдера.
+Когда банк выдаст ключи:
+
+```sh
+# в deploy/.env: BOG_MOCK=false, BOG_CLIENT_ID=..., BOG_CLIENT_SECRET=...
+docker compose up -d --no-deps backend
+docker compose exec backend yarn medusa exec ./src/scripts/enable-bog.js   # если регионы ещё без pp_bog_bog
+```
+
+В кабинете мерчанта банка включить способы: карта, Apple Pay, Google Pay. Колбэк банк шлёт на
+`https://samshit-api.linza-ai.xyz/hooks/payment/bog_bog` (адрес задаётся в каждом заказе).
+
+## Пароль сотрудника
+
+Не через `-p` в командной строке (виден в `ps`): см. `backend/src/scripts/set-admin-password.ts`.

@@ -4,7 +4,7 @@ import { updateRegionsWorkflow } from "@medusajs/medusa/core-flows"
 
 /**
  * Включает оплату Bank of Georgia (pp_bog_bog) во всех регионах; ручная оплата остаётся запасной.
- * Запуск: yarn medusa exec ./src/scripts/enable-bog.ts
+ * Запуск: docker compose exec backend yarn medusa exec ./src/scripts/enable-bog.js
  */
 export default async function enableBog({ container }: ExecArgs) {
   const log = container.resolve(ContainerRegistrationKeys.LOGGER)

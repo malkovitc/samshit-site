@@ -5,7 +5,7 @@ import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
 /**
  * Смена пароля сотрудника без писем. Пароль не в аргументах (видны в ps): файл /tmp/admin-pass
  * внутри контейнера, строки «email» и «пароль»; файл удаляется сразу после чтения.
- * Запуск: yarn medusa exec ./src/scripts/set-admin-password.ts
+ * Запуск: docker compose exec backend yarn medusa exec ./src/scripts/set-admin-password.js
  */
 export default async function setAdminPassword({ container }: ExecArgs) {
   const log = container.resolve(ContainerRegistrationKeys.LOGGER)
