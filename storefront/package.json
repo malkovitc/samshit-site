@@ -6,7 +6,8 @@
     "dev": "next dev -p 8000",
     "build": "next build",
     "start": "next start -p 8000",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:unit": "node --no-warnings --experimental-strip-types --test src/lib/__tests__/*.test.mjs"
   },
   "dependencies": {
     "@medusajs/js-sdk": "2.22.1",

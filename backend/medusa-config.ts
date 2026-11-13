@@ -8,6 +8,29 @@ loadEnv(process.env.NODE_ENV || "development", process.cwd())
  */
 const BOG_MOCK = process.env.BOG_MOCK === "true"
 const API = process.env.MEDUSA_BACKEND_URL || "http://localhost:9000"
+const S3_ENABLED = !!process.env.S3_FILE_URL
+if (S3_ENABLED) {
+  for (const name of ["S3_ACCESS_KEY_ID", "S3_SECRET_ACCESS_KEY", "S3_REGION", "S3_BUCKET"]) {
+    if (!process.env[name]) throw new Error(`${name} is required when S3_FILE_URL is set`)
+  }
+}
+const fileProvider = S3_ENABLED ? {
+  resolve: "@medusajs/medusa/file-s3",
+  id: "s3",
+  options: {
+    file_url: process.env.S3_FILE_URL,
+    access_key_id: process.env.S3_ACCESS_KEY_ID,
+    secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
+    region: process.env.S3_REGION,
+    bucket: process.env.S3_BUCKET,
+    endpoint: process.env.S3_ENDPOINT,
+    ...(process.env.S3_FORCE_PATH_STYLE === "true" ? { additional_client_config: { forcePathStyle: true } } : {}),
+  },
+} : {
+  resolve: "@medusajs/medusa/file-local",
+  id: "local",
+  options: { upload_dir: "static", backend_url: `${API}/static` },
+}
 const bogProvider = () => {
   if (!BOG_MOCK && !process.env.BOG_CLIENT_ID) return []
   // ключ имитации генерируется при старте процесса, читаем его лениво из того же модуля
@@ -59,21 +82,12 @@ module.exports = defineConfig({
     // подписчики рассылки (src/modules/newsletter)
     { resolve: "./src/modules/newsletter" },
     { resolve: "@medusajs/medusa/payment", options: { providers: bogProvider() } },
+    { resolve: "@medusajs/medusa/file", options: { providers: [fileProvider] } },
     ...(process.env.REDIS_URL
     ? [
         { resolve: "@medusajs/medusa/event-bus-redis", options: { redisUrl: process.env.REDIS_URL } },
         { resolve: "@medusajs/medusa/workflow-engine-redis", options: { redis: { redisUrl: process.env.REDIS_URL } } },
         { resolve: "@medusajs/medusa/locking", options: { providers: [{ resolve: "@medusajs/medusa/locking-redis", id: "locking-redis", is_default: true, options: { redisUrl: process.env.REDIS_URL } }] } },
-        {
-          resolve: "@medusajs/medusa/file",
-          options: {
-            providers: [{
-              resolve: "@medusajs/medusa/file-local",
-              id: "local",
-              options: { upload_dir: "static", backend_url: `${process.env.MEDUSA_BACKEND_URL}/static` },
-            }],
-          },
-        },
       ]
     : []),
   ],

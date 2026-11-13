@@ -2,16 +2,15 @@ import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
 import { listProducts } from "@/lib/data"
+import { newestProducts } from "@/lib/catalog-list"
 import { ProductCard } from "@/components/product-card"
-
-const FRESH = ["shield-indigo", "race-sand", "membrane-olive", "cutair-grey"]
 
 export default async function Home({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations("home")
   const all = await listProducts(locale)
-  const fresh = FRESH.map((h) => all.find((p) => p.handle === h)).filter((p) => !!p)
+  const fresh = newestProducts(all)
   const heroImg = all.find((p) => p.handle === "shield-white")?.images[1]
   const storyImg = all.find((p) => p.handle === "shield-indigo")?.images[2]
   return (

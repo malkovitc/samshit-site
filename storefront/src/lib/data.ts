@@ -4,6 +4,7 @@ import type { HttpTypes } from "@medusajs/types"
 import { sdk } from "./medusa"
 import { authHeaders } from "./session"
 import type { Locale } from "@/i18n/routing"
+import { collectPages, visibleProduct } from "./catalog-list"
 
 export const CURRENCIES = ["usd", "gel", "eur"] as const
 export type Currency = (typeof CURRENCIES)[number]
@@ -31,6 +32,7 @@ export async function currentRegion() {
 type I18n = Record<Locale, { title: string; construction: string; material: string }>
 export type ProductView = {
   id: string
+  createdAt: string
   handle: string
   sku: string
   category: string
@@ -50,7 +52,7 @@ export type ProductView = {
 }
 
 const FIELDS =
-  "id,handle,title,subtitle,metadata,thumbnail,*images,*categories,*variants,*variants.options,+variants.inventory_quantity,*variants.calculated_price"
+  "id,created_at,handle,title,subtitle,metadata,thumbnail,*images,*categories,*variants,*variants.options,+variants.inventory_quantity,*variants.calculated_price"
 
 function toView(p: HttpTypes.StoreProduct, locale: Locale): ProductView {
   const meta = (p.metadata ?? {}) as Record<string, unknown>
@@ -77,6 +79,7 @@ function toView(p: HttpTypes.StoreProduct, locale: Locale): ProductView {
   const ed = meta.edition_total ? { current: Number(meta.edition_current ?? 0), total: Number(meta.edition_total) } : null
   return {
     id: p.id,
+    createdAt: p.created_at ?? "",
     handle: p.handle,
     sku: (meta.sku_base as string) ?? p.subtitle ?? "",
     category: p.categories?.[0]?.handle ?? "",
@@ -104,20 +107,24 @@ export async function listProducts(locale: Locale, opts: { category?: string } =
     if (!product_categories.length) return []
     category_id = product_categories.map((c) => c.id)
   }
-  const { products } = await sdk.store.product.list({
-    region_id: region.id,
-    fields: FIELDS,
-    limit: 100,
-    order: "created_at",
-    ...(category_id ? { category_id } : {}),
+  const products = await collectPages(async (offset, limit) => {
+    const result = await sdk.store.product.list({
+      region_id: region.id,
+      fields: FIELDS,
+      offset,
+      limit,
+      order: "-created_at",
+      ...(category_id ? { category_id } : {}),
+    })
+    return result.products
   })
-  return products.map((p) => toView(p, locale))
+  return products.filter((p) => visibleProduct(p.metadata as Record<string, unknown> | null)).map((p) => toView(p, locale))
 }
 
 export async function getProduct(locale: Locale, handle: string) {
   const region = await currentRegion()
   const { products } = await sdk.store.product.list({ region_id: region.id, handle, fields: FIELDS, limit: 1 })
-  return products[0] ? toView(products[0], locale) : null
+  return products[0] && visibleProduct(products[0].metadata as Record<string, unknown> | null) ? toView(products[0], locale) : null
 }
 
 /* ---------- корзина ---------- */
