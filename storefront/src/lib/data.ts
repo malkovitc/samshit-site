@@ -33,6 +33,7 @@ type I18n = Record<Locale, { title: string; construction: string; material: stri
 export type ProductView = {
   id: string
   createdAt: string
+  updatedAt: string
   handle: string
   sku: string
   category: string
@@ -52,7 +53,7 @@ export type ProductView = {
 }
 
 const FIELDS =
-  "id,created_at,handle,title,subtitle,metadata,thumbnail,*images,*categories,*variants,*variants.options,+variants.inventory_quantity,*variants.calculated_price"
+  "id,created_at,updated_at,handle,title,subtitle,metadata,thumbnail,*images,*categories,*variants,*variants.options,+variants.inventory_quantity,*variants.calculated_price"
 
 function toView(p: HttpTypes.StoreProduct, locale: Locale): ProductView {
   const meta = (p.metadata ?? {}) as Record<string, unknown>
@@ -80,6 +81,7 @@ function toView(p: HttpTypes.StoreProduct, locale: Locale): ProductView {
   return {
     id: p.id,
     createdAt: p.created_at ?? "",
+    updatedAt: p.updated_at ?? "",
     handle: p.handle,
     sku: (meta.sku_base as string) ?? p.subtitle ?? "",
     category: p.categories?.[0]?.handle ?? "",

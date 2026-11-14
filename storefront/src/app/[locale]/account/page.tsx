@@ -5,10 +5,11 @@ import { getCustomer } from "@/lib/session"
 import { listMyOrders } from "@/lib/account-data"
 import { money } from "@/lib/format"
 import { ProfileForm, RegisterForm, SignInForm, SignOutButton } from "@/components/account"
+import { privateRobots } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({ locale: (await params).locale, namespace: "nav" })
-  return { title: t("account") }
+  return { title: t("account"), robots: privateRobots() }
 }
 
 export default async function Account({ params }: { params: Promise<{ locale: Locale }> }) {

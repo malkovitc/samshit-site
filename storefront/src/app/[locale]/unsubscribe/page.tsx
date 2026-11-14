@@ -1,5 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import type { Locale } from "@/i18n/routing"
+import { privateRobots } from "@/lib/seo"
+
+export const metadata = { robots: privateRobots() }
 import { Unsubscribe } from "@/components/account"
 
 // Отписка по ссылке из письма. Нужен клик: почтовые сканеры открывают ссылки сами и не должны отписывать.

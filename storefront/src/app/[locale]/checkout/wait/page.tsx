@@ -1,6 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
+import { privateRobots } from "@/lib/seo"
+
+export const metadata = { robots: privateRobots() }
 
 // Ждём подтверждения банка: страница сама возвращается на checkout/return, пока счётчик не кончится
 export default async function PaymentWait({ params, searchParams }: { params: Promise<{ locale: Locale }>; searchParams: Promise<{ cart?: string; n?: string; gone?: string }> }) {

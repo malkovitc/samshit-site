@@ -1,6 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
+import { privateRobots } from "@/lib/seo"
+
+export const metadata = { robots: privateRobots() }
 
 export default async function OrderDone({ params, searchParams }: { params: Promise<{ locale: Locale; id: string }>; searchParams: Promise<{ n?: string; paid?: string }> }) {
   const [{ locale }, { n, paid }] = await Promise.all([params, searchParams])

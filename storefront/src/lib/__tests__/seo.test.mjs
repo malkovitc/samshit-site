@@ -1,6 +1,6 @@
 import test from "node:test"
 import assert from "node:assert/strict"
-import { siteOrigin, publicUrl, pageAlternates, publicRobots, privateRobots } from "../seo.ts"
+import { siteOrigin, publicUrl, pageAlternates, publicRobots, privateRobots, pageMetadata } from "../seo.ts"
 
 test("canonical URLs use the selected origin and omit query parameters", () => {
   process.env.SITE_URL = "https://samshit.xyz/"
@@ -30,4 +30,14 @@ test("public pages remain noindex until explicitly enabled and private pages sta
   assert.deepEqual(publicRobots(), { index: true, follow: true })
   assert.deepEqual(privateRobots(), { index: false, follow: true })
   delete process.env.ALLOW_INDEXING
+})
+
+test("page metadata keeps one canonical and the launch gate", () => {
+  process.env.SITE_URL = "https://samshit.xyz"
+  delete process.env.ALLOW_INDEXING
+  const meta = pageMetadata("ru", "/shop", "Магазин", "Одежда Samshit")
+  assert.equal(meta.title, "Магазин")
+  assert.equal(meta.description, "Одежда Samshit")
+  assert.equal(meta.alternates.canonical, "https://samshit.xyz/ru/shop")
+  assert.deepEqual(meta.robots, { index: false, follow: true })
 })

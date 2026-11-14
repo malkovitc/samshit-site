@@ -1,6 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
+import { privateRobots } from "@/lib/seo"
+
+export const metadata = { robots: privateRobots() }
 import { ResetForm } from "@/components/account"
 
 // Ссылка из письма о смене пароля: токен Medusa действует 15 минут

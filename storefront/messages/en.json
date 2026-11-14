@@ -18,6 +18,16 @@
   "name": "Samshit",
   "copyright": "© 2026 Samshit, Tbilisi"
  },
+ "seo": {
+  "homeTitle": "Independent clothing made in Tbilisi",
+  "homeDescription": "Samshit is a small clothing workshop in Tbilisi. Original jackets, trousers and small-edition pieces designed and sewn by the maker.",
+  "shopDescription": "Explore Samshit jackets, trousers and other small-edition clothes designed and made in Tbilisi.",
+  "categoryDescription": "{category} by Samshit: small-edition clothing designed and made in a Tbilisi workshop.",
+  "aboutDescription": "The story of Samshit, a one-person clothing workshop in Tbilisi designing and sewing small editions.",
+  "workshopDescription": "Inside the Samshit workshop in Tbilisi: ideas, patterns, fabrics and the making of each piece.",
+  "deliveryDescription": "Information about shipping, fittings, returns and exchanges for Samshit clothing.",
+  "contactDescription": "Contact the Samshit workshop in Tbilisi and arrange a fitting by appointment."
+ },
  "notice": {
   "world": "Worldwide shipping · DHL Express",
   "tbilisi": "Tbilisi · courier and fitting at the workshop",

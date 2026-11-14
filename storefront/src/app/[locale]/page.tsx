@@ -4,6 +4,13 @@ import type { Locale } from "@/i18n/routing"
 import { listProducts } from "@/lib/data"
 import { newestProducts } from "@/lib/catalog-list"
 import { ProductCard } from "@/components/product-card"
+import { pageMetadata } from "@/lib/seo"
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "seo" })
+  return pageMetadata(locale, "", t("homeTitle"), t("homeDescription"))
+}
 
 export default async function Home({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params
@@ -17,7 +24,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
     <div className="view">
       <Link className="hero" href="/shop">
         <div className="frame">{heroImg && <img src={heroImg} alt="" />}</div>
-        <div className="hero-cap u"><span>{t("heroTitle")}</span><span>{t("view")} <span className="arrow">→</span></span></div>
+        <div className="hero-cap u"><h1>{t("heroTitle")}</h1><span>{t("view")} <span className="arrow">→</span></span></div>
       </Link>
       <div className="h u" style={{ marginTop: 36 }}><span>{t("new")}</span><Link className="ln" href="/shop">{t("allPieces")}</Link></div>
       <hr className="rule" />

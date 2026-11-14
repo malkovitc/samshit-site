@@ -8,13 +8,16 @@ import { OpenSizes } from "@/components/chrome"
 import { ProductCard } from "@/components/product-card"
 import { WishlistButton } from "@/components/account"
 import { getWishlist } from "@/lib/session"
+import { indexingEnabled, pageMetadata } from "@/lib/seo"
+import { productSchema, safeJsonLd } from "@/lib/product-schema"
 
 type Params = { params: Promise<{ locale: Locale; handle: string }> }
 
 export async function generateMetadata({ params }: Params) {
   const { locale, handle } = await params
   const p = await getProduct(locale, handle)
-  return p ? { title: p.title, description: p.construction } : {}
+  if (!p) notFound()
+  return pageMetadata(locale, `/p/${p.handle}`, p.title, p.construction)
 }
 
 export default async function Product({ params }: Params) {
@@ -27,6 +30,7 @@ export default async function Product({ params }: Params) {
   const ed = p.edition
   return (
     <div className="view">
+      {indexingEnabled() && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(productSchema(p, locale)) }} />}
       <div className="h u">
         <span><Link className="ln" href="/shop">{t("nav.shop")}</Link> / <Link className="ln" href={`/shop/${p.category}`}>{t(`cat.${p.category}`)}</Link></span>
         <span className="m tn">{p.sku}</span>

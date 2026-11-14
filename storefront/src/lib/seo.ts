@@ -33,3 +33,7 @@ export function publicRobots(): Metadata["robots"] {
 export function privateRobots(): Metadata["robots"] {
   return { index: false, follow: true }
 }
+
+export function pageMetadata(locale: Locale, path: string, title?: string, description?: string): Metadata {
+  return { title, description, alternates: pageAlternates(locale, path), robots: publicRobots() }
+}

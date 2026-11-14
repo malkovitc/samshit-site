@@ -1,4 +1,7 @@
 import { notFound } from "next/navigation"
+import { privateRobots } from "@/lib/seo"
+
+export const metadata = { robots: privateRobots() }
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"

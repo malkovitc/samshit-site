@@ -1,3 +1,5 @@
+export const CATALOG_CATEGORIES = ["jackets", "trousers", "sweatshirts", "long-sleeves"] as const
+
 export async function collectPages<T>(fetchPage: (offset: number, limit: number) => Promise<T[]>, limit = 100): Promise<T[]> {
   const all: T[] = []
   for (let offset = 0; ; offset += limit) {

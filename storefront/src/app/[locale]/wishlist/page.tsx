@@ -4,10 +4,11 @@ import type { Locale } from "@/i18n/routing"
 import { listProducts } from "@/lib/data"
 import { getCustomer, getWishlist } from "@/lib/session"
 import { ProductCard } from "@/components/product-card"
+import { privateRobots } from "@/lib/seo"
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({ locale: (await params).locale, namespace: "wishlist" })
-  return { title: t("title") }
+  return { title: t("title"), robots: privateRobots() }
 }
 
 export default async function Wishlist({ params }: { params: Promise<{ locale: Locale }> }) {

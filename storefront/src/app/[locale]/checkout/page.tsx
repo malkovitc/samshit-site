@@ -1,6 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server"
 import { Link } from "@/i18n/navigation"
 import type { Locale } from "@/i18n/routing"
+import { privateRobots } from "@/lib/seo"
+
+export const metadata = { robots: privateRobots() }
 import { getCart, listRegions } from "@/lib/data"
 import { getCustomer } from "@/lib/session"
 import { cartView } from "@/lib/cart-view"
