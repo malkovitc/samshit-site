@@ -1,7 +1,15 @@
-import { test, expect } from "@playwright/test"
+import { test, expect, type APIRequestContext } from "@playwright/test"
 
 const origin = new URL(process.env.BASE_URL || "https://samshit.linza-ai.xyz").origin
 const indexing = process.env.EXPECT_INDEXING === "true"
+
+async function publishedProductPath(request: APIRequestContext): Promise<string> {
+  const shop = await request.get("/ru/shop")
+  expect(shop.status()).toBe(200)
+  const match = (await shop.text()).match(/href="(\/ru\/p\/[^"?]+)"/)
+  expect(match, "at least one published product is needed for the SEO release test").toBeTruthy()
+  return match![1]
+}
 
 test("SEO endpoints are available while indexing is disabled", async ({ request }) => {
   const robots = await request.get("/robots.txt")
@@ -10,19 +18,20 @@ test("SEO endpoints are available while indexing is disabled", async ({ request 
   expect(await robots.text()).toContain(`${origin}/sitemap.xml`)
   const sitemap = await request.get("/sitemap.xml")
   expect(sitemap.status()).toBe(200)
-  if (indexing) expect(await sitemap.text()).toContain("/p/shield-indigo")
-  else expect(await sitemap.text()).not.toContain("/p/shield-indigo")
+  if (indexing) expect(await sitemap.text()).toContain(await publishedProductPath(request))
+  else expect(await sitemap.text()).not.toContain("/p/")
 })
 
 test("public pages have a canonical and direct language alternates", async ({ request }) => {
-  const response = await request.get("/ru/p/shield-indigo")
+  const productPath = await publishedProductPath(request)
+  const response = await request.get(productPath)
   const html = await response.text()
   expect(response.status()).toBe(200)
   expect(html).toMatch(indexing ? /<meta name="robots" content="index,\s*follow"/ : /<meta name="robots" content="noindex,\s*follow"/)
   const canonical = html.match(/<link\b[^>]*rel="canonical"[^>]*>/)?.[0]
-  expect(canonical).toContain(`href="${origin}/ru/p/shield-indigo"`)
+  expect(canonical).toContain(`href="${origin}${productPath}"`)
   expect(html).toContain('hreflang="x-default"')
-  expect(html).toContain(`${origin}/en/p/shield-indigo`)
+  expect(html).toContain(`${origin}${productPath.replace("/ru/", "/en/")}`)
 })
 
 test("private and filtered pages stay noindex", async ({ request }) => {

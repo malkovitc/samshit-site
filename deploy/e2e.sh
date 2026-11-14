@@ -12,6 +12,7 @@ printf 'ADMIN_EMAIL=%s\nADMIN_PASSWORD=%s\n' "$ADMIN_EMAIL" "$ADMIN_PASSWORD" > 
 docker run --rm --ipc=host --network host --user "$(id -u):$(id -g)" -e HOME=/tmp \
   --env-file "$ENVF" \
   -e BASE_URL="${BASE_URL:-https://samshit.linza-ai.xyz}" -e API_URL="${API_URL:-https://samshit-api.linza-ai.xyz}" \
+  -e EXPECT_INDEXING="${EXPECT_INDEXING:-false}" \
   -v "$(cd ../e2e && pwd)":/e2e -w /e2e \
   mcr.microsoft.com/playwright:v1.64.1-noble \
   sh -c 'npm install --no-audit --no-fund --silent && npx playwright test "$@"' -- "$@"
