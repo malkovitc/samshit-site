@@ -67,6 +67,8 @@ services:
     environment:
       MEDUSA_INTERNAL_URL: http://backend:9000
       MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+      SITE_URL: ${PUBLIC_STORE_URL:?}
+      ALLOW_INDEXING: ${ALLOW_INDEXING:-false}
       UMAMI_SCRIPT_URL: ${UMAMI_SCRIPT_URL:-}
       UMAMI_WEBSITE_ID: ${UMAMI_WEBSITE_ID:-}
     ports: ["127.0.0.1:18000:8000"]

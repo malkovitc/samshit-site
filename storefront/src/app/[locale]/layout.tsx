@@ -8,6 +8,7 @@ import { currentCurrency, getCart } from "@/lib/data"
 import { getCustomer, getWishlist } from "@/lib/session"
 import { cartView } from "@/lib/cart-view"
 import { CartDrawer, FontTweak, Header, SideNav, SizesModal, Subscribe, UiProvider } from "@/components/chrome"
+import { publicRobots, siteOrigin } from "@/lib/seo"
 import "../globals.css"
 
 export const dynamic = "force-dynamic"
@@ -17,7 +18,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const t = await getTranslations({ locale, namespace: "brand" })
   return {
     title: { default: t("name"), template: `%s · ${t("name")}` },
-    robots: process.env.ALLOW_INDEXING === "true" ? undefined : { index: false, follow: false },
+    metadataBase: new URL(siteOrigin()),
+    robots: publicRobots(),
   }
 }
 
