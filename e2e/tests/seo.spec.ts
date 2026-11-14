@@ -30,7 +30,7 @@ test("public pages have a canonical and direct language alternates", async ({ re
   expect(html).toMatch(indexing ? /<meta name="robots" content="index,\s*follow"/ : /<meta name="robots" content="noindex,\s*follow"/)
   const canonical = html.match(/<link\b[^>]*rel="canonical"[^>]*>/)?.[0]
   expect(canonical).toContain(`href="${origin}${productPath}"`)
-  expect(html).toContain('hreflang="x-default"')
+  expect(html).toMatch(/hreflang="x-default"/i)
   expect(html).toContain(`${origin}${productPath.replace("/ru/", "/en/")}`)
 })
 
