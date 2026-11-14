@@ -38,7 +38,7 @@ test.describe("каталог", () => {
 
   test("категория показывает только свои вещи", async ({ page }) => {
     await page.goto("/en/shop/trousers")
-    await expect(page.locator(".h span").first()).toHaveText(/Trousers/i)
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Trousers/i)
     const names = await page.locator(".grid .card .name").allInnerTexts()
     expect(names.length).toBeGreaterThan(0)
     for (const n of names) expect(n).toMatch(/trousers/i)
